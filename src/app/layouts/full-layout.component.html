@@ -43,10 +43,14 @@
         </li>
     </ul>
     
-     <a class="nav-title" href="">로그아웃</a>
+     <!-- <a class="nav-title" href="">로그아웃</a> -->
     <a class="navbar-brand" href="#"></a>
     
     <button class="navbar-toggler d-lg-none" type="button" appMobileSidebarToggler>&#9776;</button>
+
+    <div class="nav navbar-nav ml-auto">
+        <a class="nav-title" href="" style="margin-right: 10px;">로그아웃</a>
+    </div>
 </header>
 
 <div class="app-body">
@@ -76,10 +80,10 @@
                     <a class="nav-link" routerLinkActive="active" [routerLink]="['/worker-manager']"><i class="icon-basket-loaded"></i> 인적자원 관리</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/factory-environment-manager']"><i class="icon-basket-loaded"></i> 공장환경 관리</a>
+                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/factory-environment-manager']"><i class="icon-globe"></i> 공장환경 관리</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/setting']"><i class="icon-basket-loaded"></i> 관리자 설정</a>
+                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/setting']"><i class="icon-settings"></i> 관리자 설정</a>
                 </li>
             </ul>
         </nav>
