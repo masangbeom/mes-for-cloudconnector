@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './full-layout.component.html'
 })
 export class FullLayoutComponent implements OnInit {
+  private isAccept: boolean=false;
 
   public disabled = false;
   public status: {isopen: boolean} = {isopen: false};
@@ -20,4 +21,8 @@ export class FullLayoutComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
+  login(){
+    this.isAccept = true;
+  }
 }

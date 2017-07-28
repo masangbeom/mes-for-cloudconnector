@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 
 // Layouts
 import { FullLayoutComponent } from './layouts/full-layout.component';
-import { SimpleLayoutComponent } from './layouts/simple-layout.component';
 
 export const routes: Routes = [
   {
@@ -15,7 +14,7 @@ export const routes: Routes = [
     path: '',
     component: FullLayoutComponent,
     data: {
-      title: 'Home'
+      title: 'MES'
     },
     children: [
       {
@@ -23,34 +22,33 @@ export const routes: Routes = [
         loadChildren: './dashboard/dashboard.module#DashboardModule'
       },
       {
-        path: 'components',
-        loadChildren: './components/components.module#ComponentsModule'
+        path: 'line-process-monitoring',
+        loadChildren: './dashboard/dashboard.module#DashboardModule'
       },
       {
-        path: 'icons',
-        loadChildren: './icons/icons.module#IconsModule'
+        path: 'schedule-manager',
+        loadChildren: './dashboard/dashboard.module#DashboardModule'
       },
       {
-        path: 'widgets',
-        loadChildren: './widgets/widgets.module#WidgetsModule'
+        path: 'poor-manager',
+        loadChildren: './dashboard/dashboard.module#DashboardModule'
       },
       {
-        path: 'charts',
-        loadChildren: './chartjs/chartjs.module#ChartJSModule'
-      }
-    ]
-  },
-  {
-    path: 'pages',
-    component: SimpleLayoutComponent,
-    data: {
-      title: 'Pages'
-    },
-    children: [
+        path: 'stock-manager',
+        loadChildren: './dashboard/dashboard.module#DashboardModule'
+      },
       {
-        path: '',
-        loadChildren: './pages/pages.module#PagesModule',
-      }
+        path: 'worker-manager',
+        loadChildren: './dashboard/dashboard.module#DashboardModule'
+      },
+      {
+        path: 'factory-environment-manager',
+        loadChildren: './dashboard/dashboard.module#DashboardModule'
+      },
+      {
+        path: 'setting',
+        loadChildren: './dashboard/dashboard.module#DashboardModule'
+      },
     ]
   }
 ];
