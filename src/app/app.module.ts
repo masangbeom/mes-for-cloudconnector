@@ -1,3 +1,4 @@
+import { DataProvider } from './../providers/data';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
@@ -11,6 +12,8 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { SIDEBAR_TOGGLE_DIRECTIVES } from './shared/sidebar.directive';
 import { AsideToggleDirective } from './shared/aside.directive';
 import { BreadcrumbsComponent } from './shared/breadcrumb.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { JsonpModule } from '@angular/http';
 
 // Routing Module
 import { AppRoutingModule } from './app.routing';
@@ -18,18 +21,17 @@ import { AppRoutingModule } from './app.routing';
 // Layouts
 import { FullLayoutComponent } from './layouts/full-layout.component';
 
-// MES
-// import { LineProcessMonitoringComponent } from './MES/line-process-monitoring.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FormsModule, ReactiveFormsModule, JsonpModule,
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
+    NgbModule.forRoot(),
     ChartsModule,
-
-    // LineProcessMonitoringComponent
   ],
   declarations: [
     AppComponent,
@@ -38,10 +40,10 @@ import { FullLayoutComponent } from './layouts/full-layout.component';
     BreadcrumbsComponent,
     SIDEBAR_TOGGLE_DIRECTIVES,
     AsideToggleDirective,
-
-    // LineProcessMonitoringComponent,
   ],
-  providers: [{
+  providers: [
+    DataProvider,
+    {
     provide: LocationStrategy,
     useClass: HashLocationStrategy
   }],

@@ -1,1 +1,74 @@
 // Here you can add other styles
+.round-button {
+  display: block;
+  margin-left: 30px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  padding-bottom: 3px;
+  width: 110px;
+  height: 110px;
+  background: #20a8d8;
+  color: black;
+  text-align: center;
+  text-decoration: none;
+  box-shadow: 0 0 5px black;
+  font-size: 13px;
+  font-weight: bold;
+  transition: 800ms ease all;
+}
+
+.round-button:hover {
+  background: #ffffff;
+}
+
+.round-button-arrow {
+  display: block;
+  margin-left: 30px;
+  margin-bottom: 10px;
+  margin-top: 53px;
+  width: 40px;
+  height: 40px;
+  line-height: 50px;
+  border: 2px solid black;
+  border-radius: 50%;
+  color: black;
+  text-align: center;
+  text-decoration: none;
+  background: #ffffff;
+  box-shadow: 0 0 4px black;
+  cursor: pointer;
+  transition: 1000ms ease all;
+  outline: none;
+}
+
+.round-button-arrow:hover {
+  background: gray;
+}
+
+.round-button-arrow img {
+  display: block;
+  padding: 12%;
+  height: auto;
+}
+
+.round-button-end {
+  display: block;
+  margin-left: 25px;
+  margin-bottom: 20px;
+  margin-top: 25px;
+  width: 110px;
+  color: #ffffff;
+  text-align: center;
+  text-decoration: none;
+  background: #b00;
+  box-shadow: 0 0 5px black;
+  font-size: 18px;
+  font-weight: bold;
+  transition: 1000ms ease all;
+}
+
+.round-button-end:hover {
+  color: #000;
+  background: #ffffff;
+}
+
