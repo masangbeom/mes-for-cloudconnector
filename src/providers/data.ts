@@ -254,28 +254,60 @@ export class DataProvider {
       l_code: 1
     }]
 
+    let product1 = {
+      name: '철',
+      stock_amount: 20,
+      limit: 40,
+      p_factory: "Factory 1",
+      p_line: 1,
+    }
+    let product2 = {
+      name: '금',
+      stock_amount: 30,
+      limit: 10,
+      p_factory: "Factory 1",
+      p_line: 4,
+    }
+    let product3 = {
+      name: '은',
+      stock_amount: 40,
+      limit: 50,
+      p_factory: "Factory 2",
+      p_line: 2
+    }
+    let product4 = {
+      name: '스테인레스',
+      stock_amount: 50,
+      limit: 50,
+      p_factory: "Factory 3",
+      p_line: 3
+    }
 
 
 
     let line1 = {
       name: "Line 1",
       lineId: 1,
-      processes: processes1
+      processes: processes1,
+      product: product1
     }
     let line2 = {
       name: "Line 2",
       lineId: 2,
-      processes: processes2
+      processes: processes2,
+      product: product2
     }
     let line3 = {
       name: "Line 3",
       lineId: 3,
-      processes: processes1
+      processes: processes1,
+      product: product3
     }
     let line4 = {
       name: "Line 4",
       lineId: 4,
-      processes: processes2
+      processes: processes2,
+      product: product4
     }
 
     lines.push(line1);

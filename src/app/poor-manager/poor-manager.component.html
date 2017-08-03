@@ -19,7 +19,7 @@
   </div>
 
   <div class="col">
-    <form class="form-inline">
+    <form *ngIf="factory"  class="form-inline">
       <div class="form-group">
         <div style="width: 300px; height: 50px" class="input-group">
           <input class="form-control" placeholder="시작 날짜" name="dp1" [(ngModel)]="startDate" ngbDatepicker #d1="ngbDatepicker">
@@ -31,7 +31,7 @@
     </form>
   </div>
   <div class="col">
-      <form class="form-inline">
+      <form *ngIf="startDate"  class="form-inline">
       <div class="form-group">
         <div style="width: 300px; height: 50px" class="input-group">
           <input class="form-control" placeholder="종료 날짜" name="dp2" [(ngModel)]="endDate" ngbDatepicker #d2="ngbDatepicker">

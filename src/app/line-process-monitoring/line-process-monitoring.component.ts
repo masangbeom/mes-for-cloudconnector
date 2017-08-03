@@ -16,6 +16,7 @@ export class LineProcessMonitoringComponent {
   private tables: any = [];
   private count: number = 0;
   private machine:Array<any>;
+  private randomInterval: any;
   
 
   // lineChart
@@ -101,6 +102,9 @@ export class LineProcessMonitoringComponent {
           this.lineRunning = false;
         }
         console.log(this.line)
+        this.randomInterval = setInterval(()=>{
+          this.randomize();
+        }, 3000)
     this.processSelectStop();
   }
 
@@ -112,6 +116,7 @@ export class LineProcessMonitoringComponent {
   }
 
   processClick(process){
+    clearInterval(this.randomInterval);
     if(process==null){
       this.process = "END LINE";
     }else{
@@ -141,7 +146,6 @@ export class LineProcessMonitoringComponent {
 
   public chartClicked(e:any):void {
     console.log(e);
-    this.randomize();
   }
  
   public chartHovered(e:any):void {

@@ -44,7 +44,7 @@
   <div class="col">
   <div class="card">
         <div class="card-header" style="font-size: 20px;">
-          공정 모니터링
+          {{line.name}} > {{line.product.name}}
           <span *ngIf="lineRunning" class="badge badge-success float-right" style="font-size: 20px;">라인 진행 중</span>
           <span *ngIf="!lineRunning" class="badge badge-danger float-right" style="font-size: 20px;">라인 중단</span>
         </div>
@@ -74,102 +74,106 @@
 <tabset *ngIf="line && !process">
         <tab>
           <ng-template tabHeading><i class="icon-pie-chart"></i> 시간별</ng-template>
-          <div class="container">
           <div class="row">
             <div class="col">
-              <div style="display: block">
+              <span class="badge badge-info" style="font-size: 17px;">생산량 및 불량품</span>
+              <div style="display: block; width: 95%;">
                   <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend"
                     [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
                 </div>
             </div>
             <div class="col">
-              <div style="display: block;">
-                  <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColors"
+              <span class="badge badge-info" style="font-size: 17px;">설비 가동률</span>
+              <div style="display: block; width: 95%;">
+                  <canvas width="auto" height="auto" baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColors"
                     [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
                 </div>
             </div>
             <div class="col">
-              <div style="display: block">
-                  <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend"
+              <span class="badge badge-info" style="font-size: 17px;">재공 재고</span>
+              <div style="display: block; width: 95%;">
+                  <canvas width="auto" height="auto" baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend"
                     [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
                 </div>
             </div>
-          </div>
           </div>
         </tab>
         <tab>
           <ng-template tabHeading><i class="icon-pie-chart"></i> 일별</ng-template>
-          <div class="container">
           <div class="row">
             <div class="col">
-              <div style="display: block">
+              <span class="badge badge-info" style="font-size: 17px;">생산량 및 불량품</span>
+              <div style="display: block; width: 95%;">
                   <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend"
                     [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
                 </div>
             </div>
             <div class="col">
-              <div style="display: block;">
-                  <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColors"
+              <span class="badge badge-info" style="font-size: 17px;">설비 가동률</span>
+              <div style="display: block; width: 95%;">
+                  <canvas width="auto" height="auto" baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColors"
                     [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
                 </div>
             </div>
             <div class="col">
-              <div style="display: block">
-                  <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend"
+              <span class="badge badge-info" style="font-size: 17px;">재공 재고</span>
+              <div style="display: block; width: 95%;">
+                  <canvas width="auto" height="auto" baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend"
                     [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
                 </div>
             </div>
-          </div>
           </div>
         </tab>
         <tab>
           <ng-template tabHeading><i class="icon-pie-chart"></i> 월별</ng-template>
-          <div class="container">
           <div class="row">
             <div class="col">
-              <div style="display: block">
+              <span class="badge badge-info" style="font-size: 17px;">생산량 및 불량품</span>
+              <div style="display: block; width: 95%;">
                   <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend"
                     [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
                 </div>
             </div>
             <div class="col">
-              <div style="display: block;">
-                  <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColors"
+              <span class="badge badge-info" style="font-size: 17px;">설비 가동률</span>
+              <div style="display: block; width: 95%;">
+                  <canvas width="auto" height="auto" baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColors"
                     [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
                 </div>
             </div>
             <div class="col">
-              <div style="display: block">
-                  <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend"
+              <span class="badge badge-info" style="font-size: 17px;">재공 재고</span>
+              <div style="display: block; width: 95%;">
+                  <canvas width="auto" height="auto" baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend"
                     [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
                 </div>
             </div>
-          </div>
           </div>
         </tab>
         <tab>
-          <ng-template tabHeading><i class="icon-pie-chart"></i> 연도별</ng-template>
-          <div class="container">
+          <ng-template tabHeading><i class="icon-pie-chart"></i> 분기별</ng-template>
           <div class="row">
             <div class="col">
-              <div style="display: block">
+              <span class="badge badge-info" style="font-size: 17px;">생산량 및 불량품</span>
+              <div style="display: block; width: 95%;">
                   <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend"
                     [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
                 </div>
             </div>
             <div class="col">
-              <div style="display: block;">
-                  <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColors"
+              <span class="badge badge-info" style="font-size: 17px;">설비 가동률</span>
+              <div style="display: block; width: 95%;">
+                  <canvas width="auto" height="auto" baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColors"
                     [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
                 </div>
             </div>
             <div class="col">
-              <div style="display: block">
-                  <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend"
+              <span class="badge badge-info" style="font-size: 17px;">재공 재고</span>
+              <div style="display: block; width: 95%;">
+                  <canvas width="auto" height="auto" baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend"
                     [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
                 </div>
             </div>
-          </div>
           </div>
         </tab>
       </tabset>

@@ -1,5 +1,5 @@
 import { DataProvider } from './../../providers/data';
-import { Component } from '@angular/core'
+import { Component,Input } from '@angular/core'
 import { OnChanges } from '@angular/core';
 import { SimpleChanges } from '@angular/core';
   
@@ -20,15 +20,6 @@ export class PoorManagerComponent {
   private model: any;
   private changeLog: any;
 
-  ngOnChanges(changes: SimpleChanges) {
-  for (let propName in changes) {
-    let chng = changes[propName];
-    let cur  = JSON.stringify(chng.currentValue);
-    let prev = JSON.stringify(chng.previousValue);
-    this.changeLog.push(`${propName}: currentValue = ${cur}, previousValue = ${prev}`);
-    console.log(this.changeLog);
-    }
-  }
 
   //Bar Chart
   public barChartOptions:any = {
