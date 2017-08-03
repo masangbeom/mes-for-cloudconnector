@@ -4,6 +4,8 @@ import { Routes, RouterModule } from '@angular/router';
 // Layouts
 import { FullLayoutComponent } from './layouts/full-layout.component';
 
+// provider
+import { DataProvider } from '../providers/data';
 export const routes: Routes = [
   {
     path: '',
@@ -23,31 +25,31 @@ export const routes: Routes = [
       },
       {
         path: 'line-process-monitoring',
-        loadChildren: './dashboard/dashboard.module#DashboardModule'
+        loadChildren: './line-process-monitoring/line-process-monitoring.module#LineProcessMonitoringModule'
+      },
+      {
+        path: 'factory-environment',
+        loadChildren: './factory-environment/factory-environment.module#FactoryEnvironmentModule'
       },
       {
         path: 'schedule-manager',
-        loadChildren: './dashboard/dashboard.module#DashboardModule'
-      },
-      {
-        path: 'poor-manager',
-        loadChildren: './dashboard/dashboard.module#DashboardModule'
+        loadChildren: './schedule-manager/schedule-manager.module#ScheduleManagerModule'
       },
       {
         path: 'stock-manager',
-        loadChildren: './dashboard/dashboard.module#DashboardModule'
+        loadChildren: './stock-manager/stock-manager.module#StockManagerModule'
+      },
+      {
+        path: 'poor-manager',
+        loadChildren: './poor-manager/poor-manager.module#PoorManagerModule'
       },
       {
         path: 'worker-manager',
-        loadChildren: './dashboard/dashboard.module#DashboardModule'
+        loadChildren: './worker-manager/worker-manager.module#WorkerManagerModule'
       },
       {
-        path: 'factory-environment-manager',
-        loadChildren: './dashboard/dashboard.module#DashboardModule'
-      },
-      {
-        path: 'setting',
-        loadChildren: './dashboard/dashboard.module#DashboardModule'
+        path: 'manager-setting',
+        loadChildren: './manager-setting/manager-setting.module#ManagerSettingModule'
       },
     ]
   }
@@ -55,6 +57,9 @@ export const routes: Routes = [
 
 @NgModule({
   imports: [ RouterModule.forRoot(routes) ],
-  exports: [ RouterModule ]
+  exports: [ RouterModule ],
+  providers: [
+    DataProvider,
+  ]
 })
 export class AppRoutingModule {}

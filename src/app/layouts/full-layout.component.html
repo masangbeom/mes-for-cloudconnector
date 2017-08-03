@@ -1,4 +1,5 @@
-<div *ngIf="!isAccept" class="app flex-row align-items-center">
+<!-- 로그인 -->
+<!-- <div *ngIf="!isAccept" class="app flex-row align-items-center">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-8">
@@ -30,9 +31,9 @@
       </div>
     </div>
   </div>
-</div>
-
-<div *ngIf="isAccept">
+</div> -->
+<!-- -->
+ 
 <header class="app-header navbar">
     <ul class="nav navbar-nav mr-auto d-md-down-none">
         <li class="nav-item">
@@ -42,8 +43,6 @@
             <div class="nav-title" href="#">MES - For Cloud Connector</div>
         </li>
     </ul>
-    
-     <!-- <a class="nav-title" href="">로그아웃</a> -->
     <a class="navbar-brand" href="#"></a>
     
     <button class="navbar-toggler d-lg-none" type="button" appMobileSidebarToggler>&#9776;</button>
@@ -53,7 +52,7 @@
     </div>
 </header>
 
-<div class="app-body">
+<div  class="app-body">
     <div class="sidebar">
         <nav class="sidebar-nav">
             <ul class="nav">
@@ -77,13 +76,13 @@
                     <a class="nav-link" routerLinkActive="active" [routerLink]="['/stock-manager']"><i class="icon-basket-loaded"></i> 재고 관리</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/worker-manager']"><i class="icon-basket-loaded"></i> 인적자원 관리</a>
+                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/worker-manager']"><i class="icon-people"></i> 인적자원 관리</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/factory-environment-manager']"><i class="icon-globe"></i> 공장환경 관리</a>
+                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/factory-environment']"><i class="icon-globe"></i> 공장환경 관리</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/setting']"><i class="icon-settings"></i> 관리자 설정</a>
+                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/manager-setting']"><i class="icon-settings"></i> 관리자 설정</a>
                 </li>
             </ul>
         </nav>
@@ -109,4 +108,3 @@
     <span class="float-right">Powered by <a href="http://http://www.soosang.com/smain.html">MES - For CloudConnector</a>
     </span>
 </footer>
-</div>

@@ -18,13 +18,18 @@ import { AppRoutingModule } from './app.routing';
 // Layouts
 import { FullLayoutComponent } from './layouts/full-layout.component';
 
+// MES
+// import { LineProcessMonitoringComponent } from './MES/line-process-monitoring.component';
+
 @NgModule({
   imports: [
     BrowserModule,
     AppRoutingModule,
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
-    ChartsModule
+    ChartsModule,
+
+    // LineProcessMonitoringComponent
   ],
   declarations: [
     AppComponent,
@@ -32,7 +37,9 @@ import { FullLayoutComponent } from './layouts/full-layout.component';
     NAV_DROPDOWN_DIRECTIVES,
     BreadcrumbsComponent,
     SIDEBAR_TOGGLE_DIRECTIVES,
-    AsideToggleDirective
+    AsideToggleDirective,
+
+    // LineProcessMonitoringComponent,
   ],
   providers: [{
     provide: LocationStrategy,
