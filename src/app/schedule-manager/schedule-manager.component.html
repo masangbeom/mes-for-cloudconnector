@@ -1,0 +1,158 @@
+<div class="row">
+  <div class="col">
+    <div class="dropdown" dropdown>
+      <button *ngIf="!factory" style="width: 300px" class="btn btn-primary btn-lg dropdown-toggle" type="button" id="dropdownMenu2"
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" dropdownToggle>
+    공장 선택
+  </button>
+      <button *ngIf="factory" style="width: 300px" class="btn btn-success btn-lg dropdown-toggle" type="button" id="dropdownMenu2"
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" dropdownToggle>
+    {{factory.title}}
+  </button>
+      <div style="width: 300px;" class="dropdown-menu" aria-labelledby="dropdownMenu2" *dropdownMenu>
+        <button class="dropdown-item" (click)="onChange(factory)" *ngFor="let factory of factories">
+        {{factory.title}}
+    </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="col" *ngIf="factory">
+    <div class="dropdown" dropdown>
+      <button *ngIf="!line" style="width: 300px" class="btn btn-primary btn-lg dropdown-toggle" type="button" id="dropdownMenu2"
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" dropdownToggle>
+    라인 선택
+  </button>
+      <button *ngIf="line" style="width: 300px" class="btn btn-success btn-lg dropdown-toggle" type="button" id="dropdownMenu2"
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" dropdownToggle>
+    {{line.name}}
+  </button>
+      <div style="width: 300px" class="dropdown-menu" aria-labelledby="dropdownMenu2" *dropdownMenu>
+        <button class="dropdown-item" (click)="onLineChange(line)" type="button" *ngFor="let line of factory.lines">
+        {{line.name}}
+    </button>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+  </div>
+  <div class="col">
+  </div>
+</div>
+
+<div *ngIf="factory && !line" class="row" style="margin-top: 15px;">
+  <div class="col">
+
+    <div class="animated fadeIn">
+      <div class="card">
+        <div class="card-header" style="font-size: 20px;">
+          [{{factory.title}}] Gantt Chart
+        </div>
+        <div class="card-block" style="background: #607d8b; padding-left: 15px;">
+          <daypilot-gantt [config]="config"></daypilot-gantt>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="factory && !line" class="animated fadeIn card">
+  <table class="table table-responsive table-hover table-outline mb-0">
+    <thead class="thead-default">
+      <tr>
+        <th>Task</th>
+        <th>진행률</th>
+        <th>예상 종료일</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let task of tempTasks">
+        <td>
+          <div>{{task.text}}</div>
+          <div class="small text-muted">
+            <span>작업 시작 일자</span> | {{task.start}}
+          </div>
+        </td>
+        <td>
+          <div class="clearfix">
+            <div class="float-left">
+              <strong>{{task.complete}}%</strong>
+            </div>
+            <div class="float-right">
+              <small class="text-muted">{{task.start}} - {{task.end}}</small>
+            </div>
+          </div>
+          <div class="progress">
+            <div *ngIf="task.complete != 100" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" [style.width]="task.width"
+              aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+            <div *ngIf="task.complete == 100" class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar"
+              [style.width]="task.width" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+        </td>
+        <td>
+          <strong>{{task.end}}</strong>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="line" class="row" style="margin-top: 15px;">
+  <div class="col">
+    <div class="animated fadeIn">
+      <div class="card">
+        <div class="card-header" style="font-size: 20px;">
+          {{line.name}} 진행률
+          <button (click)="lineSelectStop()" class="badge badge-danger float-right" style="font-size: 20px;"><i class="icon-action-undo"></i></button>
+        </div>
+        <div class="card-block">
+          <div class="row">
+            <div class="col">
+              <span class="badge badge-info" style="font-size: 17px;">일별 생산량</span>
+              <div style="display: block; width: 95%;">
+                <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend"
+                  [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+              </div>
+            </div>
+            <div class="col">
+              <span class="badge badge-info" style="font-size: 17px;">실제 생산량 / 목표 생산량</span>
+              <ul class="horizontal-bars type-2">
+                <li>
+                  <i class="icon-tag"></i>
+                  <span class="title">일간 생산률</span>
+                  <span class="value">{{line.ratio.daily}} <span class="text-muted small">({{line.ratio.daily_per}})</span></span>
+                  <div class="bars">
+                    <div class="progress">
+                      <div class="progress-bar bg-success" role="progressbar" [style.width]="line.ratio.daily_per" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <i class="icon-tag"></i>
+                  <span class="title">주간 생산률</span>
+                  <span class="value">{{line.ratio.weekly}} <span class="text-muted small">({{line.ratio.weekly_per}})</span></span>
+                  <div class="bars">
+                    <div class="progress">
+                      <div class="progress-bar bg-success" role="progressbar" [style.width]="line.ratio.weekly_per" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <i class="icon-tag"></i>
+                  <span class="title">월간 생산률</span>
+                  <span class="value">{{line.ratio.monthly}} <span class="text-muted small">({{line.ratio.monthly_per}})</span></span>
+                  <div class="bars">
+                    <div class="progress">
+                      <div class="progress-bar bg-success" role="progressbar" [style.width]="line.ratio.monthly_per" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

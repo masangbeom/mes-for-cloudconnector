@@ -13,7 +13,7 @@ import { SIDEBAR_TOGGLE_DIRECTIVES } from './shared/sidebar.directive';
 import { AsideToggleDirective } from './shared/aside.directive';
 import { BreadcrumbsComponent } from './shared/breadcrumb.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { JsonpModule } from '@angular/http';
+import { JsonpModule, HttpModule } from '@angular/http';
 
 // Routing Module
 import { AppRoutingModule } from './app.routing';
@@ -32,6 +32,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     TabsModule.forRoot(),
     NgbModule.forRoot(),
     ChartsModule,
+    HttpModule,
   ],
   declarations: [
     AppComponent,
