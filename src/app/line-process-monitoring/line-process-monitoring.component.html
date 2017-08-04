@@ -42,14 +42,14 @@
 
 <div *ngIf="line" class="row" style="margin-top: 15px;">
   <div class="col">
-  <div class="card">
-        <div class="card-header" style="font-size: 20px;">
-          {{line.name}} > {{line.product.name}}
-          <span *ngIf="lineRunning" class="badge badge-success float-right" style="font-size: 20px;">라인 진행 중</span>
-          <span *ngIf="!lineRunning" class="badge badge-danger float-right" style="font-size: 20px;">라인 중단</span>
-        </div>
-        <div class="card-block" style="background: #607d8b; padding-left: 15px;">
-          <div class="row">
+    <div class="card">
+      <div class="card-header" style="font-size: 20px;">
+        {{line.name}} > {{line.product.name}}
+        <span *ngIf="lineRunning" class="badge badge-success float-right" style="font-size: 20px;">라인 진행 중</span>
+        <span *ngIf="!lineRunning" class="badge badge-danger float-right" style="font-size: 20px;">라인 중단</span>
+      </div>
+      <div class="card-block" style="background: #607d8b; padding-left: 15px;">
+        <div class="row">
           <div *ngFor="let process of line.processes">
             <button (click)="processClick(process)" *ngIf="!isEven(process.p_code) && !process.p_error" class="round-button">{{process.p_name}}<br/></button>
             <button (click)="processClick(process)" *ngIf="!isEven(process.p_code) && process.p_error" class="round-button" style="background-image: url('../assets/img/stop.png'); background-size:contain; padding-top: 5px;">{{process.p_name}}</button>
@@ -59,121 +59,356 @@
             <button (click)="processClick(process)" *ngIf="isEven(process.p_code) && !isLineEnd(process.p_code) && !process.p_error"
               class="round-button-arrow" style="background-image: url('../assets/img/right-arrow1.png'); background-size:contain;">
       </button>
-            <button (click)="processClick(process)" *ngIf="isEven(process.p_code) && isLineEnd(process.p_code)" class="round-button-arrow" style="background-image: url('../assets/img/right-arrow1.png'); background-size:contain;">
+            <button (click)="processClick(process)" *ngIf="isEven(process.p_code) && isLineEnd(process.p_code)" class="round-button-arrow"
+              style="background-image: url('../assets/img/right-arrow1.png'); background-size:contain;">
       </button>
-            
+
           </div>
 
           <button class="round-button-end">라인 종료</button>
         </div>
-        </div>
       </div>
-      </div>
+    </div>
+  </div>
 </div>
 
 <tabset *ngIf="line && !process">
-        <tab>
-          <ng-template tabHeading><i class="icon-pie-chart"></i> 시간별</ng-template>
-          <div class="row">
-            <div class="col">
-              <span class="badge badge-info" style="font-size: 17px;">생산량 및 불량품</span>
-              <div style="display: block; width: 95%;">
-                  <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend"
-                    [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
-                </div>
-            </div>
-            <div class="col">
-              <span class="badge badge-info" style="font-size: 17px;">설비 가동률</span>
-              <div style="display: block; width: 95%;">
-                  <canvas width="auto" height="auto" baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColors"
-                    [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
-                </div>
-            </div>
-            <div class="col">
-              <span class="badge badge-info" style="font-size: 17px;">재공 재고</span>
-              <div style="display: block; width: 95%;">
-                  <canvas width="auto" height="auto" baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend"
-                    [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
-                </div>
+  <tab>
+    <ng-template tabHeading><i class="icon-pie-chart"></i> 시간별</ng-template>
+    <div class="row">
+      <div class="col">
+        <span class="badge badge-info" style="font-size: 17px;">생산량 및 불량품</span>
+        <div style="display: block; width: 95%;">
+          <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend"
+            [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+        </div>
+      </div>
+      <div class="col">
+        <span class="badge badge-info" style="font-size: 17px;">설비 가동률</span>
+        <div style="display: block; width: 95%;">
+          <canvas width="auto" height="auto" baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
+            [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)"></canvas>
+        </div>
+      </div>
+      <div class="col">
+        <span class="badge badge-info" style="font-size: 17px;">재공 재고</span>
+        <div style="display: block; width: 95%;">
+          <canvas width="auto" height="auto" baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+            [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+        </div>
+      </div>
+    </div>
+  </tab>
+  <tab>
+    <ng-template tabHeading><i class="icon-pie-chart"></i> 일별</ng-template>
+    <div class="row">
+      <div class="col">
+        <span class="badge badge-info" style="font-size: 17px;">생산량 및 불량품</span>
+        <div style="display: block; width: 95%;">
+          <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend"
+            [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+        </div>
+      </div>
+      <div class="col">
+        <span class="badge badge-info" style="font-size: 17px;">설비 가동률</span>
+        <div style="display: block; width: 95%;">
+          <canvas width="auto" height="auto" baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
+            [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)"></canvas>
+        </div>
+      </div>
+      <div class="col">
+        <span class="badge badge-info" style="font-size: 17px;">재공 재고</span>
+        <div style="display: block; width: 95%;">
+          <canvas width="auto" height="auto" baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+            [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+        </div>
+      </div>
+    </div>
+  </tab>
+  <tab>
+    <ng-template tabHeading><i class="icon-pie-chart"></i> 월별</ng-template>
+    <div class="row">
+      <div class="col">
+        <span class="badge badge-info" style="font-size: 17px;">생산량 및 불량품</span>
+        <div style="display: block; width: 95%;">
+          <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend"
+            [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+        </div>
+      </div>
+      <div class="col">
+        <span class="badge badge-info" style="font-size: 17px;">설비 가동률</span>
+        <div style="display: block; width: 95%;">
+          <canvas width="auto" height="auto" baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
+            [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)"></canvas>
+        </div>
+      </div>
+      <div class="col">
+        <span class="badge badge-info" style="font-size: 17px;">재공 재고</span>
+        <div style="display: block; width: 95%;">
+          <canvas width="auto" height="auto" baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+            [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+        </div>
+      </div>
+    </div>
+  </tab>
+  <tab>
+    <ng-template tabHeading><i class="icon-pie-chart"></i> 분기별</ng-template>
+    <div class="row">
+      <div class="col">
+        <span class="badge badge-info" style="font-size: 17px;">생산량 및 불량품</span>
+        <div style="display: block; width: 95%;">
+          <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend"
+            [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+        </div>
+      </div>
+      <div class="col">
+        <span class="badge badge-info" style="font-size: 17px;">설비 가동률</span>
+        <div style="display: block; width: 95%;">
+          <canvas width="auto" height="auto" baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
+            [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)"></canvas>
+        </div>
+      </div>
+      <div class="col">
+        <span class="badge badge-info" style="font-size: 17px;">재공 재고</span>
+        <div style="display: block; width: 95%;">
+          <canvas width="auto" height="auto" baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+            [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+        </div>
+      </div>
+    </div>
+  </tab>
+</tabset>
+
+<div *ngIf="process && !isEven(process.p_code) &&!machine">
+  <div class="row">
+    <div class="col-xl-4" style="border: solid; border-top:0; border-bottom:0; border-color: #63C2DE; border-style: solid;">
+      <span class="badge badge-info" style="font-size: 17px; margin-bottom: 10px;">{{process.p_name}} 공정</span>
+      <div class="card">
+        <div class="card-block p-3 clearfix">
+          <i class="fa fa-cogs bg-primary p-3 font-2xl mr-3 float-left"></i>
+          <div class="h5 text-primary mb-0 mt-2">{{process.p_processing}}</div>
+          <div class="text-muted text-uppercase font-weight-bold font-xs">Processing</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col" style="padding-bottom: 0;">
+          <div class="card">
+            <div class="card-block text-center">
+              <div class="text-muted small text-uppercase font-weight-bold">완료</div>
+              <div class="h2 py-3">{{process.p_complete}}</div>
+              <div class="chart-wrapper " style="height:43px;width:170px;">
+                <canvas baseChart class="chart" [datasets]="lineChart5Data" [labels]="lineChart5Labels" [options]="lineChart5Options" [colors]="lineChart5Info"
+                  [legend]="lineChart5Legend" [chartType]="lineChart5Type" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+              </div>
             </div>
           </div>
-        </tab>
-        <tab>
-          <ng-template tabHeading><i class="icon-pie-chart"></i> 일별</ng-template>
-          <div class="row">
-            <div class="col">
-              <span class="badge badge-info" style="font-size: 17px;">생산량 및 불량품</span>
-              <div style="display: block; width: 95%;">
-                  <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend"
-                    [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
-                </div>
-            </div>
-            <div class="col">
-              <span class="badge badge-info" style="font-size: 17px;">설비 가동률</span>
-              <div style="display: block; width: 95%;">
-                  <canvas width="auto" height="auto" baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColors"
-                    [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
-                </div>
-            </div>
-            <div class="col">
-              <span class="badge badge-info" style="font-size: 17px;">재공 재고</span>
-              <div style="display: block; width: 95%;">
-                  <canvas width="auto" height="auto" baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend"
-                    [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
-                </div>
+        </div>
+        <div class="col" style="padding-bottom: 0;">
+          <div class="card">
+            <div class="card-block">
+              <div class="h4 m-1">{{process.poor_ppm}} PPM</div>
+              <div>불량률</div>
+              <div class="progress progress-xs my-3">
+                <div class="progress-bar bg-danger" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+              <small class="text-muted">현재 공정에서 발생한 불량에 대한 PPM 수치입니다.</small>
             </div>
           </div>
-        </tab>
-        <tab>
-          <ng-template tabHeading><i class="icon-pie-chart"></i> 월별</ng-template>
-          <div class="row">
-            <div class="col">
-              <span class="badge badge-info" style="font-size: 17px;">생산량 및 불량품</span>
-              <div style="display: block; width: 95%;">
-                  <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend"
-                    [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
-                </div>
-            </div>
-            <div class="col">
-              <span class="badge badge-info" style="font-size: 17px;">설비 가동률</span>
-              <div style="display: block; width: 95%;">
-                  <canvas width="auto" height="auto" baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColors"
-                    [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
-                </div>
-            </div>
-            <div class="col">
-              <span class="badge badge-info" style="font-size: 17px;">재공 재고</span>
-              <div style="display: block; width: 95%;">
-                  <canvas width="auto" height="auto" baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend"
-                    [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
-                </div>
-            </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-2">
+      <span class="badge badge-info" style="font-size: 17px; margin-bottom: 10px;">{{process.p_name}} Cycle-Time</span>
+      <div class="card">
+        <div class="card-block" style="height: 286px">
+          <div class="h3 text-muted text-right mb-4">
+            Cycle Time
           </div>
-        </tab>
-        <tab>
-          <ng-template tabHeading><i class="icon-pie-chart"></i> 분기별</ng-template>
-          <div class="row">
-            <div class="col">
-              <span class="badge badge-info" style="font-size: 17px;">생산량 및 불량품</span>
-              <div style="display: block; width: 95%;">
-                  <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend"
-                    [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
-                </div>
-            </div>
-            <div class="col">
-              <span class="badge badge-info" style="font-size: 17px;">설비 가동률</span>
-              <div style="display: block; width: 95%;">
-                  <canvas width="auto" height="auto" baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColors"
-                    [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
-                </div>
-            </div>
-            <div class="col">
-              <span class="badge badge-info" style="font-size: 17px;">재공 재고</span>
-              <div style="display: block; width: 95%;">
-                  <canvas width="auto" height="auto" baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend"
-                    [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
-                </div>
-            </div>
+          <div class="h1 text-muted text-right mb-4">
+            <i class="icon-speedometer"></i>
           </div>
-        </tab>
-      </tabset>
+          <div class="h4 mb-0">{{process.cycle_time}} sec</div>
+          <small class="text-muted text-uppercase font-weight-bold">Avg. Time</small>
+          <div class="progress progress-xs mt-3 mb-0">
+            <div class="progress-bar bg-danger" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-2">
+      <span class="badge badge-info" style="font-size: 17px; margin-bottom: 10px;">{{process.p_name}} 가동시간</span>
+      <div class="card card-inverse card-danger">
+        <div class="card-block" style="height: 286px">
+          <div class="h3 text-muted text-right mb-4">
+            Operating Time
+          </div>
+          <div class="h1 text-muted text-right mb-4">
+            <i class="icon-speedometer"></i>
+          </div>
+          <div class="h4 mb-0">{{process.running_time}} / day</div>
+          <small class="text-muted text-uppercase font-weight-bold">Avg. Time</small>
+          <div class="progress progress-white progress-xs mt-3">
+            <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-2">
+      <span class="badge badge-info" style="font-size: 17px; margin-bottom: 10px;">{{process.p_name}} 가동률</span>
+      <div class="card">
+        <div class="card-block" style="height: 286px">
+          <div class="h3 text-muted text-right mb-4">
+            Operating Ratio
+          </div>
+          <div *ngIf="process.running_percentage >= 90" class="progress2 blue">
+            <span class="progress-left">
+                    <span class="progress-bar"></span>
+            </span>
+            <span class="progress-right">
+                    <span class="progress-bar"></span>
+            </span>
+            <div class="progress-value">{{process.running_percentage}}%</div>
+          </div>
+
+          <div *ngIf="process.running_percentage < 90 && process.running_percentage >= 70" class="progress2 green">
+            <span class="progress-left">
+                    <span class="progress-bar"></span>
+            </span>
+            <span class="progress-right">
+                    <span class="progress-bar"></span>
+            </span>
+            <div class="progress-value">{{process.running_percentage}}%</div>
+          </div>
+
+          <div *ngIf="process.running_percentage < 70 && process.running_percentage >= 50" class="progress2 yellow">
+            <span class="progress-left">
+                    <span class="progress-bar"></span>
+            </span>
+            <span class="progress-right">
+                    <span class="progress-bar"></span>
+            </span>
+            <div class="progress-value">{{process.running_percentage}}%</div>
+          </div>
+
+          <div *ngIf="process.running_percentage < 50" class="progress2 pink">
+            <span class="progress-left">
+                    <span class="progress-bar"></span>
+            </span>
+            <span class="progress-right">
+                    <span class="progress-bar"></span>
+            </span>
+            <div class="progress-value">{{process.running_percentage}}%</div>
+          </div>
+
+        </div>
+      </div>
+
+
+    </div>
+    <div class="col-xl-2">
+      <span class="badge badge-info" style="font-size: 17px; margin-bottom: 10px;">{{process.p_name}} 설비</span>
+      <div class="card" style="overflow-x:scroll;">
+        <div class="card-block" style="height: 286px;">
+          <small class="text-muted">설비 정보를 확인하려면 클릭.</small>
+          <button (click)="showMachine(machine)" class="item-button" *ngFor="let machine of process.machines" style="height: 60px">{{machine.m_name}}</button>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <br/>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="process && isEven(process.p_code) &&!machine">
+  <div class="card card-inverse card-primary">
+        <div class="card-block pb-0">
+          <h4 class="mb-0">{{process.p_processing}}개 이동 중</h4>
+          <p>시간 별 평균 이동 제품 수</p>
+        </div>
+        <div class="chart-wrapper px-3" style="height:170px;">
+          <canvas baseChart class="chart"
+          [datasets]="barChart1Data"
+          [labels]="barChart1Labels"
+          [options]="barChart1Options"
+          [colors]="barChart1Colours"
+          [legend]="barChart1Legend"
+          [chartType]="barChart1Type"
+          (chartHover)="chartHovered($event)"
+          (chartClick)="chartClicked($event)"></canvas>
+        </div>
+      </div>
+</div>
+
+<div *ngIf="machine">
+  <div class="row">
+    <div class="col-xl-4">
+      <span class="badge badge-info" style="font-size: 17px; margin-bottom: 10px;">{{machine.m_name}} 고장/수리 내역</span>
+      <div class="card" style="overflow-x:scroll;">
+        <div class="card-block" style="height: 286px;">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>발생 일자</th>
+                <th>내역</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let poor of machine.m_poor">
+                <td>{{poor.o_time}}</td>
+                <td>{{poor.poor_what}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-4">
+      <span class="badge badge-info" style="font-size: 17px; margin-bottom: 10px;">{{machine.m_name}} 점검 일자</span>
+      <div class="card" style="overflow-x:scroll;">
+        <div class="card-block" style="height: 286px;">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>점검 일자</th>
+                <th>내역</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let poor of machine.m_poor">
+                <td>{{poor.o_time}}</td>
+                <td>Error #{{poor.o_process}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-4">
+      <span class="badge badge-info" style="font-size: 17px; margin-bottom: 10px;">{{machine.m_name}} 고장 발생 예측</span>
+      <div class="card" style="overflow-x:scroll;">
+        <div class="card-block" style="height: 286px;">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>예측 일자</th>
+                <th>내역</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>None</td>
+                <td>None</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

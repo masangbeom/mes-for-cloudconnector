@@ -604,21 +604,40 @@ export class DataProvider {
         m_cycle: (Math.round(Math.random() * 10)),
         m_runtime: (Math.round(Math.random() * 10)),
         m_runpercentage: (Math.round(Math.random() * 10)),
-        m_fix: machine_fix
+        m_fix: machine_fix,
+        m_poor: this.sampleProductPoor(machine_fix),
       },
       {
         m_name: 'Machine 2',
         m_cycle: (Math.round(Math.random() * 10)),
         m_runtime: (Math.round(Math.random() * 10)),
         m_runpercentage: (Math.round(Math.random() * 10)),
-        m_fix: machine_fix
+        m_fix: machine_fix,
+        m_poor: this.sampleProductPoor(machine_fix),
       },
       {
         m_name: 'Machine 3',
         m_cycle: (Math.round(Math.random() * 10)),
         m_runtime: (Math.round(Math.random() * 10)),
         m_runpercentage: (Math.round(Math.random() * 10)),
-        m_fix: machine_fix
+        m_fix: machine_fix,
+        m_poor: this.sampleProductPoor(machine_fix),
+      },
+      {
+        m_name: 'Machine 4',
+        m_cycle: (Math.round(Math.random() * 10)),
+        m_runtime: (Math.round(Math.random() * 10)),
+        m_runpercentage: (Math.round(Math.random() * 10)),
+        m_fix: machine_fix,
+        m_poor: this.sampleProductPoor(machine_fix),
+      },
+      {
+        m_name: 'Machine 5',
+        m_cycle: (Math.round(Math.random() * 10)),
+        m_runtime: (Math.round(Math.random() * 10)),
+        m_runpercentage: (Math.round(Math.random() * 10)),
+        m_fix: machine_fix,
+        m_poor: this.sampleProductPoor(machine_fix),
       }
     ]
     return machines;
