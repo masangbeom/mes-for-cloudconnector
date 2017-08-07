@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col">
     <div class="dropdown" dropdown>
-      <button *ngIf="!factory" style="width: 300px" class="btn btn-primary btn-lg dropdown-toggle" type="button" id="dropdownMenu2"
+      <button *ngIf="!factory" style="width: 300px" class="btn btn-secondary btn-lg dropdown-toggle" type="button" id="dropdownMenu2"
         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" dropdownToggle>
     공장 선택
   </button>
@@ -19,7 +19,7 @@
 
   <div class="col" *ngIf="factory">
     <div class="dropdown" dropdown>
-      <button *ngIf="!line" style="width: 300px" class="btn btn-primary btn-lg dropdown-toggle" type="button" id="dropdownMenu2"
+      <button *ngIf="!line" style="width: 300px" class="btn btn-secondary btn-lg dropdown-toggle" type="button" id="dropdownMenu2"
         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" dropdownToggle>
     라인 선택
   </button>
@@ -42,7 +42,6 @@
 
 <div *ngIf="factory && !line" class="row" style="margin-top: 15px;">
   <div class="col">
-
     <div class="animated fadeIn">
       <div class="card">
         <div class="card-header" style="font-size: 20px;">
@@ -55,6 +54,7 @@
     </div>
   </div>
 </div>
+
 
 <div *ngIf="factory && !line" class="animated fadeIn card">
   <table class="table table-responsive table-hover table-outline mb-0">

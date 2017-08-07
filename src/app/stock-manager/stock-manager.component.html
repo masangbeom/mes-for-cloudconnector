@@ -1,0 +1,67 @@
+<div class="row">
+  <div class="col">
+    <div class="dropdown" dropdown>
+      <button *ngIf="!warehouse" style="width: 300px" class="btn btn-secondary btn-lg dropdown-toggle" type="button" id="dropdownMenu2"
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" dropdownToggle>
+    창고 선택
+  </button>
+      <button *ngIf="warehouse" style="width: 300px" class="btn btn-success btn-lg dropdown-toggle" type="button" id="dropdownMenu2"
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" dropdownToggle>
+    {{warehouse.title}}
+  </button>
+      <div style="width: 300px;" class="dropdown-menu" aria-labelledby="dropdownMenu2" *dropdownMenu>
+        <button class="dropdown-item" (click)="onChange(warehouse)" *ngFor="let warehouse of warehouses">
+        {{warehouse.title}}
+    </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="warehouse" class="row" style="margin-top: 15px;">
+  <div class="col-5">
+    <div class="animated fadeIn">
+      <span class="badge badge-info" style="font-size: 17px; margin-bottom: 10px;">{{warehouse.title}} 재고 정보</span>
+      <div class="card">
+        <div class="card-block">
+          <div *ngFor="let tempWare of warehouses">
+            <div *ngIf="warehouse.title == tempWare.title">
+              <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend"
+                [chartType]="barChartType" [colors]="barChartColors" (chartClick)="chartClicked($event)"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <alert type="warning" *ngFor="let leakProduct of leakProducts">
+      <strong>[{{leakProduct.leakProductName}}]</strong> 의 재고가 <strong>[{{leakProduct.leakNumber}}]</strong> 만큼 부족합니다.
+    </alert>
+  </div>
+    <div class="col-7" *ngIf="product && selectProduct==1">
+        <div class="animated fadeIn">
+      <div class="card">
+          <div class="card-header" style="font-size: 20px;">
+          <strong>[{{product.name}}]</strong>의 재고 정보 <strong>[사용 : {{product.p_factory}} - {{product.p_line}}]</strong>
+          <span *ngIf="!product.isLeak" class="badge badge-success float-right" style="font-size: 20px;">재고 기준치 준수</span>
+          <span *ngIf="product.isLeak" class="badge badge-danger float-right" style="font-size: 20px;">재고 기준치 미달</span>
+        </div>
+        <div class="card-block">
+          <div *ngFor="let tempWare of warehouses">
+            <div *ngIf="warehouse.title == tempWare.title">
+              <canvas baseChart class="chart"
+          [datasets]="lineChartData"
+          [labels]="lineChartLabels"
+          [options]="lineChartOptions"
+          [colors]="lineChartColours"
+          [legend]="lineChartLegend"
+          [chartType]="lineChartType"
+          (chartHover)="chartHovered($event)"
+          (chartClick)="chartClicked($event)"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+</div>
+
