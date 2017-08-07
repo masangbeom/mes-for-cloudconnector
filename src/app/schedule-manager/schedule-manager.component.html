@@ -117,33 +117,33 @@
             <div class="col">
               <span class="badge badge-info" style="font-size: 17px;">실제 생산량 / 목표 생산량</span>
               <ul class="horizontal-bars type-2">
-                <li>
+                <li style="height: 70px; margin-top: 20px; margin-bottom: 40px;">
                   <i class="icon-tag"></i>
                   <span class="title">일간 생산률</span>
                   <span class="value">{{line.ratio.daily}} <span class="text-muted small">({{line.ratio.daily_per}})</span></span>
-                  <div class="bars">
+                  <div class="bars" style="margin-top: 10px;">
                     <div class="progress">
-                      <div class="progress-bar bg-success" role="progressbar" [style.width]="line.ratio.daily_per" aria-valuemin="0" aria-valuemax="100"></div>
+                      <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" [style.width]="line.ratio.daily_per" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                   </div>
                 </li>
-                <li>
+                <li style="height: 70px; margin-top: 20px; margin-bottom: 40px;">
                   <i class="icon-tag"></i>
                   <span class="title">주간 생산률</span>
                   <span class="value">{{line.ratio.weekly}} <span class="text-muted small">({{line.ratio.weekly_per}})</span></span>
                   <div class="bars">
                     <div class="progress">
-                      <div class="progress-bar bg-success" role="progressbar" [style.width]="line.ratio.weekly_per" aria-valuemin="0" aria-valuemax="100"></div>
+                      <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" [style.width]="line.ratio.weekly_per" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                   </div>
                 </li>
-                <li>
+                <li style="height: 70px; margin-top: 20px;">
                   <i class="icon-tag"></i>
                   <span class="title">월간 생산률</span>
                   <span class="value">{{line.ratio.monthly}} <span class="text-muted small">({{line.ratio.monthly_per}})</span></span>
                   <div class="bars">
                     <div class="progress">
-                      <div class="progress-bar bg-success" role="progressbar" [style.width]="line.ratio.monthly_per" aria-valuemin="0" aria-valuemax="100"></div>
+                      <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" [style.width]="line.ratio.monthly_per" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                   </div>
                 </li>

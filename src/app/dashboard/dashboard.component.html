@@ -1,3 +1,69 @@
-<div class="animated fadeIn">
-    Hello World!
-</div>
+<tabset>
+  <tab style="background: #cfd8dc;" *ngFor="let factory of factories" (select)="onChange(factory)">
+    <ng-template tabHeading>
+      <i class="icon-speedometer"></i> {{factory.title}}
+    </ng-template>
+    <div class="card card-accent-primary row" *ngFor="let line of lines" style="padding: 0;">
+      <div class="card-header" style="font-size: 20px;">
+        {{line.name}} > {{line.product.name}}
+        <span *ngIf="line.lineRunning" class="badge badge-success float-right" style="font-size: 20px;">라인 진행 중</span>
+        <span *ngIf="!line.lineRunning" class="badge badge-danger float-right" style="font-size: 20px;">라인 중단</span>
+      </div>
+      <div class="card-block" style="background: #ffffff; padding-left: 15px;">
+        <div class="row">
+          <div class="col-10">
+            <div class="row">
+            <div *ngFor="let process of line.processes">
+              <button *ngIf="!(process.p_code % 2 == 0) && !process.p_error" class="round-button2">{{process.p_name}}<br/></button>
+              <button *ngIf="!(process.p_code % 2 == 0) && process.p_error" class="round-button2" style="background-image: url('../assets/img/stop.png'); background-size:contain; padding-top: 5px;">{{process.p_name}}</button>
+              <button *ngIf="(process.p_code % 2 == 0) && !(process.p_code == line.processes.length)  && process.p_error" class="round-button-arrow2"
+                style="background-image: url('../assets/img/stop.png'); background-size:contain;">
+      </button>
+              <button *ngIf="(process.p_code % 2 == 0) && !(process.p_code == line.processes.length) && !process.p_error" class="round-button-arrow2"
+                style="background-image: url('../assets/img/right-arrow1.png'); background-size:contain;">
+      </button>
+              <button *ngIf="(process.p_code % 2 == 0) && (process.p_code == line.processes.length)" class="round-button-arrow2" style="background-image: url('../assets/img/right-arrow1.png'); background-size:contain;">
+      </button>
+            </div>
+            <button class="round-button-end2">라인 종료</button>
+            </div>
+          </div>
+          <div class="col-2">
+         <ul class="horizontal-bars type-2">
+                <li>
+                  <span class="title">생 산 량</span>
+                  <span class="value">51,223 <span class="text-muted small">(15%)</span></span>
+                  <div class="bars">
+                    <div class="progress progress-xs">
+                      <div class="progress-bar bg-success" role="progressbar" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <span class="title">재 고 량</span>
+                  <span class="value">37,564 <span class="text-muted small">(11%)</span></span>
+                  <div class="bars">
+                    <div class="progress progress-xs">
+                      <div class="progress-bar bg-success" role="progressbar" style="width: 11%" aria-valuenow="11" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <span class="title">불 량 률</span>
+                  <span class="value">27,319 <span class="text-muted small">(8%)</span></span>
+                  <div class="bars">
+                    <div class="progress progress-xs">
+                      <div class="progress-bar bg-success" role="progressbar" style="width: 8%" aria-valuenow="8" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+      </div>
+          </div>
+        </div>
+
+        </div>
+    
+  </tab>
+</tabset>
+

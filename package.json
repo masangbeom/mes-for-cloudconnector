@@ -31,7 +31,7 @@
     "core-js": "2.4.1",
     "daypilot-pro-angular": "https://npm.daypilot.org/daypilot-pro-angular/trial/8.3.2869.tar.gz",
     "dhtmlx-gantt": "^4.1.0",
-    "moment": "2.18.1",
+    "moment": "^2.18.1",
     "ng2-charts": "1.6.0",
     "ng2-gantt": "^1.11.1-alpha.9",
     "ngx-bootstrap": "1.7.1",

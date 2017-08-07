@@ -107,6 +107,7 @@ export class ScheduleManagerComponent {
     }
     this.randomInterval = setInterval(() => {
       this.randomize();
+      this.randomProcess();
     }, 3000);
   }
 
@@ -143,6 +144,17 @@ export class ScheduleManagerComponent {
      * so one way around it, is to clone the data, change it and then
      * assign it;
      */
+  }
+  
+  randomProcess(){
+    this.line.ratio = {
+      daily: (Math.round(Math.random() * 1000)),
+      daily_per: (Math.round(Math.random() * 100)) + '%',
+      weekly: (Math.round(Math.random() * 10000)),
+      weekly_per: (Math.round(Math.random() * 100)) + '%',
+      monthly: (Math.round(Math.random() * 100000)),
+      monthly_per: (Math.round(Math.random() * 100)) + '%',
+    }
   }
 
 }

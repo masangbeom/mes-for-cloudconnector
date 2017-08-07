@@ -159,7 +159,6 @@ export class LineProcessMonitoringComponent {
 
   constructor(public dataProvider: DataProvider) {
     this.factories = this.dataProvider.sampleFactories();
-    console.log(this.factories);
   }
 
   onChange(factory) {

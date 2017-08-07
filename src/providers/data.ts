@@ -11,6 +11,7 @@ export class DataProvider {
   sampleFactories(){
     let factories = [];
     let lines = [];
+    let lines2 = [];
 
     let processes1 = [{
       p_code: 1,
@@ -315,6 +316,11 @@ export class DataProvider {
     lines.push(line3);
     lines.push(line4);
 
+    lines2.push(line2);
+    lines2.push(line1);
+    lines2.push(line4);
+    lines2.push(line3);
+
 
     let factory1 = {
       title: "Factory 1",
@@ -325,7 +331,7 @@ export class DataProvider {
     let factory2 = {
       title: "Factory 2",
       description: "공장 설명",
-      lines: lines,
+      lines: lines2,
       products: this.sampleProducts()
     }
     let factory3 = {
@@ -338,7 +344,7 @@ export class DataProvider {
     let factory4 = {
       title: "Factory 4",
       description: "공장 설명",
-      lines: lines,
+      lines: lines2,
       products: this.sampleProducts()
     }
     factories.push(factory1);
@@ -588,6 +594,7 @@ export class DataProvider {
       poor2_num: (Math.round(Math.random() * 10)),
       poor3_num: (Math.round(Math.random() * 10)),             
       cause: (Math.round(Math.random() * 100)),
+      ppm: (Math.round(Math.random() * 10)),
       m_num: 3,
       product_num: (Math.round(Math.random() * 100)),
     }

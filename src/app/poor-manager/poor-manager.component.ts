@@ -1,12 +1,13 @@
 import { DataProvider } from './../../providers/data';
-import { Component,Input } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { OnChanges } from '@angular/core';
 import { SimpleChanges } from '@angular/core';
-  
+import * as moment from 'moment';
+
 @Component({
   templateUrl: 'poor-manager.component.html',
 })
-export class PoorManagerComponent {
+export class PoorManagerComponent implements OnInit{
   private select_view: any = "background";
   private factories: any;
   private factory: any;
@@ -19,6 +20,8 @@ export class PoorManagerComponent {
   private loadProgress: number = 80;
   private model: any;
   private changeLog: any;
+  private alert: any = false;
+  private randomInterval: any;
 
 
   //Bar Chart
@@ -45,6 +48,20 @@ export class PoorManagerComponent {
     this.factories = this.dataProvider.sampleFactories();
   }
 
+  ngOnInit(){
+  }
+
+  
+  ngDoCheck(){
+    //Check endDate & startDate
+    if(this.endDate != null && this.startDate != null && moment(this.endDate).isBefore(this.startDate)){
+      this.alert = true;
+      }else{
+        this.alert=false;
+      }
+  }
+  
+
   onEndDateChange() {
     if (this.startDate > this.endDate) {
       this.endDate = null;
@@ -63,50 +80,48 @@ export class PoorManagerComponent {
     this.factory = factory;
   }
 
-  onLineChange(selectLine) {
-    let temp: string = selectLine.trim();
-    for (let i = 0; i < this.factory.lines.length; i++) {
-      if (temp == this.factory.lines[i].name) {
-        let line = {
-          name: temp,
-          lineId: this.factory.lines[i].lineId,
-          processes: this.factory.lines[i].processes
-        }
-        this.line = line;
-        this.line.processes.forEach(process => {
-          process.poor = this.dataProvider.getProcessPoor(process);
-          process.poorPercent = (Math.random()).toFixed(2);
-        });
-        
-        console.log(this.line)
-      }
-    }
+  onLineChange(line) {
+    this.line = line;
+    let count1 = 0;
+    let count2 = 0;
+    let count3 = 0;
+    let count4 = 0;
+    this.line.processes.forEach(process => {
+      process.poor = this.dataProvider.getProcessPoor(process);
+      count1 += process.poor.poor1_num;
+      count2 += process.poor.poor2_num;
+      count3 += process.poor.poor3_num;
+      count4 += process.poor.ppm;
+
+    });
+    this.line.poor_num1 = count1;
+    this.line.poor_num2 = count2;
+    this.line.poor_num3 = count3;
+    this.line.ppm = count4;
+    this.line.poor_per = (Math.round(Math.random() * 100)) + '%';
+
+    // this.randomInterval = setInterval(() => {
+    //   this.randomize();
+    // }, 3000)
+
+    this.pieChartLabels = ['외관불량', '치수불량','설비고장'];
+    this.pieChartData = [this.line.poor_num1, this.line.poor_num2, this.line.poor_num3];
   }
 
   isEven(n) {
     return n % 2 == 0;
   }
 
-  onProductChange(selectProduct) {
-    let temp: string = selectProduct.trim();
-    for (let i = 0; i < this.factory.products.length; i++) {
-      if (temp == this.factory.products[i].name) {
-        let product = {
-          name: temp,
-          stock_amount: this.factory.products[i].stock_amount,
-          limit: this.factory.products[i].limit,
-          p_factory: this.factory.products[i].p_factory,
-          p_line: this.factory.products[i].p_line
-        }
+  onProductChange(product) {
         this.product = product;
         this.product.productPoor = this.dataProvider.sampleProductPoor(this.product);
-        console.log(this.product)
-      }
-    }
-
-    this.pieChartLabels = ['외관불량', '치수불량','설비고장'];
-    this.pieChartData = [Math.round(Math.random() * 10), Math.round(Math.random() * 10), Math.round(Math.random() * 10)];
+        this.pieChartLabels = ['외관불량', '치수불량','설비고장'];
+        this.pieChartData = [Math.round(Math.random() * 10), Math.round(Math.random() * 10), Math.round(Math.random() * 10)];
   }
+    
+
+    
+  
 
   public chartClicked(e:any):void {
     console.log(e);

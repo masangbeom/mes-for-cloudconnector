@@ -10,6 +10,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { JsonpModule } from '@angular/http';
 
+// Tabs Component
+import { TabsModule } from 'ngx-bootstrap/tabs';
+
 @NgModule({
   imports: [
     PoorManagerRoutingModule,
@@ -18,6 +21,7 @@ import { JsonpModule } from '@angular/http';
     CommonModule,
     HttpModule,
     NgbModule,
+    TabsModule,
     FormsModule, ReactiveFormsModule, JsonpModule,
   ],
   declarations: [ 
