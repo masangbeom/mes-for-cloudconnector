@@ -1,0 +1,91 @@
+<div class="row">
+  <div class="col">
+    <div class="dropdown" dropdown>
+      <button *ngIf="!company" style="width: 300px" class="btn btn-secondary btn-lg dropdown-toggle" type="button" id="dropdownMenu2"
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" dropdownToggle>
+    본부 선택
+  </button>
+      <button *ngIf="company" style="width: 300px" class="btn btn-success btn-lg dropdown-toggle" type="button" id="dropdownMenu2"
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" dropdownToggle>
+    {{company.c_name}}
+  </button>
+      <div style="width: 300px;" class="dropdown-menu" aria-labelledby="dropdownMenu2" *dropdownMenu>
+        <button class="dropdown-item" (click)="onChange(company)" *ngFor="let company of companies">
+        {{company.c_name}}
+    </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="col" *ngIf="company">
+    <div class="dropdown" dropdown>
+      <button *ngIf="!department" style="width: 300px" class="btn btn-secondary btn-lg dropdown-toggle" type="button" id="dropdownMenu2"
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" dropdownToggle>
+    부서 선택
+  </button>
+      <button *ngIf="department" style="width: 300px" class="btn btn-success btn-lg dropdown-toggle" type="button" id="dropdownMenu2"
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" dropdownToggle>
+    {{department.d_name}}
+  </button>
+      <div style="width: 300px" class="dropdown-menu" aria-labelledby="dropdownMenu2" *dropdownMenu>
+        <button class="dropdown-item" (click)="onDepartmentChange(department)" type="button" *ngFor="let department of departments">
+        {{department.d_name}}
+    </button>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+      <div class="dropdown" dropdown>
+      <button *ngIf="!team && department" style="width: 300px" class="btn btn-secondary btn-lg dropdown-toggle" type="button" id="dropdownMenu2"
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" dropdownToggle>
+    팀 선택
+  </button>
+      <button *ngIf="team" style="width: 300px" class="btn btn-success btn-lg dropdown-toggle" type="button" id="dropdownMenu2"
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" dropdownToggle>
+    {{team.t_name}}
+  </button>
+      <div style="width: 300px" class="dropdown-menu" aria-labelledby="dropdownMenu2" *dropdownMenu>
+        <button class="dropdown-item" (click)="onTeamChange(team)" type="button" *ngFor="let team of teams">
+        {{team.t_name}}
+    </button>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+  </div>
+</div>
+
+<div *ngIf="team" class="row">
+  <div class="col animated fadeIn">
+  <span class="badge badge-info" style="font-size: 17px; margin-top:20px; margin-bottom: 10px;">{{team.t_name}}</span>
+    <table class="table table-bordered table-striped table-sm" style="background: #ffffff; text-align: center;">
+            <thead>
+              <tr>
+                <th style="padding-top: 20px;padding-bottom: 20px;color: #ffffff;background-color: #424242; text-align: center;">직위</th>
+                <th style="padding-top: 20px;padding-bottom: 20px;color: #ffffff;background-color: #424242; text-align: center;">직급</th> 
+                <th style="padding-top: 20px;padding-bottom: 20px;color: #ffffff;background-color: #424242; text-align: center;">이름</th>
+                <th style="padding-top: 20px;padding-bottom: 20px;color: #ffffff;background-color: #424242; text-align: center;">입사일</th>
+                <th style="padding-top: 20px;padding-bottom: 20px;color: #ffffff;background-color: #424242; text-align: center;">Phone</th>
+                <th style="padding-top: 20px;padding-bottom: 20px;color: #ffffff;background-color: #424242; text-align: center;">E-mail</th>
+                <th style="padding-top: 20px;padding-bottom: 20px;color: #ffffff;background-color: #424242; text-align: center;">출근여부</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let worker of team.workers">
+                <td style="padding-top: 10px; padding-bottom: 10px;">{{worker.w_position}}</td>
+                <td style="padding-top: 10px; padding-bottom: 10px;">{{worker.w_class}}</td>
+                <td style="padding-top: 10px; padding-bottom: 10px;">{{worker.w_name}}</td>
+                <td style="padding-top: 10px; padding-bottom: 10px;">{{worker.w_enter}}</td>
+                <td style="padding-top: 10px; padding-bottom: 10px;">{{worker.w_phone}}</td>
+                <td style="padding-top: 10px; padding-bottom: 10px;">{{worker.w_email}}</td>
+                <td style="padding-top: 10px; padding-bottom: 10px;" *ngIf="worker.w_isWork">
+                  <span class="badge badge-success">O</span>
+                </td>
+                <td *ngIf="!worker.w_isWork" style="padding-top: 5px">
+                  <span class="badge badge-danger">X</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          </div>
+</div>

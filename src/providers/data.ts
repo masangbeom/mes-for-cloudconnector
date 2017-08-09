@@ -326,26 +326,30 @@ export class DataProvider {
       title: "Factory 1",
       description: "공장 설명",
       lines: lines,
-      products: this.sampleProducts()
+      products: this.sampleProducts(),
+      wares: this.sampleFactoryWare(4)
     }
     let factory2 = {
       title: "Factory 2",
       description: "공장 설명",
       lines: lines2,
-      products: this.sampleProducts()
+      products: this.sampleProducts(),
+      wares: this.sampleFactoryWare(3)
     }
     let factory3 = {
       title: "Factory 3",
       description: "공장 설명",
       lines: lines,
-      products: this.sampleProducts()
+      products: this.sampleProducts(),
+      wares: this.sampleFactoryWare(2)
     }
     
     let factory4 = {
       title: "Factory 4",
       description: "공장 설명",
       lines: lines2,
-      products: this.sampleProducts()
+      products: this.sampleProducts(),
+      wares: this.sampleFactoryWare(1)
     }
     factories.push(factory1);
     factories.push(factory2);
@@ -600,6 +604,7 @@ export class DataProvider {
     }
     return poor;
   }
+
   getProcessMachine(process){
     let machine_fix = {
       date: '17/0'+(Math.round(Math.random() * 10)).toString()+'/0'+(Math.round(Math.random() * 10)).toString(),
@@ -648,5 +653,212 @@ export class DataProvider {
       }
     ]
     return machines;
+  }
+
+  sampleWorker(){
+    let workers = [
+      {
+        w_position: '차장',
+        w_name: '홍길동',
+        w_class: '팀장',
+        w_enter: '2005.10.10',
+        w_phone: '010-0000-0000',
+        w_email: '1@naver.com',
+        w_isWork: true,
+      },
+      {
+        w_position: '과장',
+        w_name: '임꺽정',
+        w_class: '팀원',
+        w_enter: '2008.2.23',
+        w_phone: '010-0000-0000',
+        w_email: '2@naver.com',
+        w_isWork: true,
+      },
+      {
+        w_position: '대리',
+        w_name: '김덕배',
+        w_class: '팀원',
+        w_enter: '2013.4.11',
+        w_phone: '010-0000-0000',
+        w_email: '3@naver.com',
+        w_isWork: false,
+      },
+      {
+        w_position: '사원',
+        w_name: '홍길홍',
+        w_class: '팀원',
+        w_enter: '2014.12.10',
+        w_phone: '010-0000-0000',
+        w_email: '4@naver.com',
+        w_isWork: true,
+      },
+      {
+        w_position: '사원',
+        w_name: '존레논',
+        w_class: '팀원',
+        w_enter: '2015.1.10',
+        w_phone: '010-0000-0000',
+        w_email: '5@naver.com',
+        w_isWork: false,
+      },
+      {
+        w_position: '차장',
+        w_name: '홍길동',
+        w_class: '팀장',
+        w_enter: '2005.10.10',
+        w_phone: '010-0000-0000',
+        w_email: '1@naver.com',
+        w_isWork: false,
+      },
+      {
+        w_position: '과장',
+        w_name: '임꺽정',
+        w_class: '팀원',
+        w_enter: '2008.2.23',
+        w_phone: '010-0000-0000',
+        w_email: '2@naver.com',
+        w_isWork: true,
+      },
+      {
+        w_position: '대리',
+        w_name: '김덕배',
+        w_class: '팀원',
+        w_enter: '2013.4.11',
+        w_phone: '010-0000-0000',
+        w_email: '3@naver.com',
+        w_isWork: true,
+      },
+      {
+        w_position: '사원',
+        w_name: '홍길홍',
+        w_class: '팀원',
+        w_enter: '2014.12.10',
+        w_phone: '010-0000-0000',
+        w_email: '4@naver.com',
+        w_isWork: true,
+      },
+      {
+        w_position: '사원',
+        w_name: '존레논',
+        w_class: '팀원',
+        w_enter: '2015.1.10',
+        w_phone: '010-0000-0000',
+        w_email: '5@naver.com',
+        w_isWork: true,
+      },
+    ];
+
+    let teams1 = [
+      {
+        t_name: '생산관리팀',
+        workers: workers
+      },{
+        t_name: '생산지원팀',
+        workers: workers
+      },{
+        t_name: '생산 1팀',
+        workers: workers
+      },{
+        t_name: '생산 2팀',
+        workers: workers
+      }
+    ]
+
+    let teams2 = [{
+        t_name: '영업관리팀',
+        workers: workers
+      },{
+        t_name: '영업지원팀',
+        workers: workers
+      },{
+        t_name: '영업 1팀',
+        workers: workers
+      },{
+        t_name: '영업 2팀',
+        workers: workers
+      }];
+    
+    let teams3 = [{
+        t_name: 'PM관리팀',
+        workers: workers
+      },{
+        t_name: 'PM지원팀',
+        workers: workers
+      },{
+        t_name: 'PM 1팀',
+        workers: workers
+      },{
+        t_name: 'PM 2팀',
+        workers: workers
+      }];
+
+
+    let departments = [
+      {
+        d_name: '영업부',
+        teams: teams2,
+      },{
+        d_name: '생산부',
+        teams: teams1,
+      },{
+        d_name: 'PM 본부',
+        teams: teams3,
+      },
+    ];
+
+    let companies = [
+      {
+        c_name: '생산 본부',
+        departments: departments,
+      },{
+        c_name: '영업 본부',
+        departments: departments,
+      },{
+        c_name: 'PM 본부',
+        departments: departments,
+      }
+    ];
+
+    return companies;
+  }
+
+  sampleFactoryWare(index: number){
+    let product_ware1: Array<string> = [];
+
+    product_ware1.push('자재1');
+    product_ware1.push('자재2');
+    product_ware1.push('자재3');
+
+    let product_ware2: Array<string> = [];
+
+    product_ware2.push('자재4');
+    product_ware2.push('자재5');
+
+    let product_ware3: Array<string> = [];
+
+    product_ware3.push('자재6');
+    product_ware3.push('자재7');
+    product_ware3.push('자재8');
+
+    let product_ware4: Array<string> = [];
+
+    product_ware4.push('자재9');
+    product_ware4.push('자재10');
+    product_ware4.push('자재11');
+    product_ware4.push('자재12');
+    product_ware4.push('자재13');
+
+    let factoryWareTemp = [];
+    factoryWareTemp.push(product_ware1);
+    factoryWareTemp.push(product_ware2);
+    factoryWareTemp.push(product_ware3);
+    factoryWareTemp.push(product_ware4);
+
+    let factoryWare = [];
+    for(let i=0; i<index; i++){
+      factoryWare.push(factoryWareTemp[i]);
+    }
+    return factoryWare;
   }
 }

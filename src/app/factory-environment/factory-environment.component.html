@@ -1,0 +1,167 @@
+<div class="row">
+  <div class="col-3">
+    <div class="dropdown" dropdown>
+      <button *ngIf="!factory" style="width: 300px" class="btn btn-secondary btn-lg dropdown-toggle" type="button" id="dropdownMenu2"
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" dropdownToggle>
+    공장 선택
+  </button>
+      <button *ngIf="factory" style="width: 300px" class="btn btn-success btn-lg dropdown-toggle" type="button" id="dropdownMenu2"
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" dropdownToggle>
+    {{factory.title}}
+  </button>
+
+      <div style="width: 300px;" class="dropdown-menu" aria-labelledby="dropdownMenu2" *dropdownMenu>
+        <button class="dropdown-item" (click)="onChange(factory)" *ngFor="let factory of factories">
+        {{factory.title}}
+    </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="factory" class="animated fadeIn" style="margin-top: 10px;">
+  <tabset>
+    <tab>
+      <ng-template tabHeading><i class="icon-location-pin"></i> 자재 위치 관리</ng-template>
+      <div class="row">
+        <div class="col-9">
+          <span class="badge badge-info" style="font-size: 17px; margin-bottom: 10px;">자재 창고</span>
+          <div class="card" style="overflow-x:scroll;">
+            <div class="card-block">
+              <div class="row">
+                <div class="col" *ngFor="let ware of product_wares">
+                  <div class="panel panel-warning">
+                    <div class="panel-heading">
+                      {{ware.name}}
+                    </div>
+                    <div class="panel-body" dnd-sortable-container [dropZones]="['boxers-zone']" [sortableData]="ware">
+                      <ul class="list-group">
+                        <li *ngFor="let product of ware; let i = index" class="list-group-item" dnd-sortable [sortableIndex]="i">{{product}}</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-3">
+          <span class="badge badge-danger" style="font-size: 17px; margin-bottom: 10px;">자재</span>
+          <div class="text-muted small text-uppercase font-weight-bold">이동은 관리자설정에서 해주세요.</div>
+          <div class="card" style="overflow-x:scroll;">
+            <div class="card-block">
+              <div class="row">
+                <div class="col">
+                  <div class="panel panel-danger">
+                    <div class="panel-heading">
+                      자재 목록
+                    </div>
+                    <div class="panel-body" dnd-sortable-container [dropZones]="['boxers-zone']" [sortableData]="factory_products">
+                      <ul class="list-group">
+                        <li *ngFor="let product of factory_products; let i = index" class="list-group-item" dnd-sortable [sortableIndex]="i">{{product}}</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </tab>
+
+    <tab>
+      <ng-template tabHeading><i class="icon-globe"></i> 공장 환경 관리</ng-template>
+      <div class="row">
+        <div class="col-8">
+          <span class="badge badge-info" style="font-size: 17px; margin-bottom: 10px;">세부항목</span>
+          <div class="card" style="overflow-x:scroll;">
+            <div class="card-block">
+              <div class="row">
+                <div class="col-4">
+                  <ul class="horizontal-bars type-2">
+                    <li style="height: 70px; margin-top: 20px; margin-bottom: 40px;">
+                      <i class="icon-tag"></i>
+                      <span class="title">온도</span>
+                      <span class="value">{{factory.celsius}} °C</span>
+                    </li>
+                    <li style="height: 70px; margin-top: 20px; margin-bottom: 40px;">
+                      <i class="icon-tag"></i>
+                      <span class="title">습도</span>
+                      <span class="value">{{factory.humid}} %</span>
+                    </li>
+                    <li style="height: 70px; margin-top: 20px;">
+                      <i class="icon-tag"></i>
+                      <span class="title">소음</span>
+                      <span class="value">{{factory.decibel}} db</span>
+
+                    </li>
+                    <li style="height: 70px; margin-top: 20px;">
+                      <i class="icon-tag"></i>
+                      <span class="title">분진</span>
+                      <span class="value">{{factory.dust}}</span>
+
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-8">
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-4">
+          <span class="badge badge-info" style="font-size: 17px; margin-bottom: 10px;">공장 환경 위험도</span>
+          <div class="card" style="overflow-x:scroll;">
+            <div class="card-block">
+              <div class="h3 text-muted text-right mb-4">
+                Factory Environment Danger Ratio
+              </div>
+              <div *ngIf="factory.danger_percentage >= 90" class="progress2 blue">
+                <span class="progress-left">
+                    <span class="progress-bar"></span>
+                </span>
+                <span class="progress-right">
+                    <span class="progress-bar"></span>
+                </span>
+                <div class="progress-value">{{factory.danger_percentage}}%</div>
+              </div>
+
+              <div *ngIf="factory.danger_percentage < 90 && factory.danger_percentage >= 70" class="progress2 green">
+                <span class="progress-left">
+                    <span class="progress-bar"></span>
+                </span>
+                <span class="progress-right">
+                    <span class="progress-bar"></span>
+                </span>
+                <div class="progress-value">{{factory.danger_percentage}}%</div>
+              </div>
+
+              <div *ngIf="factory.danger_percentage < 70 && factory.danger_percentage >= 50" class="progress2 yellow">
+                <span class="progress-left">
+                    <span class="progress-bar"></span>
+                </span>
+                <span class="progress-right">
+                    <span class="progress-bar"></span>
+                </span>
+                <div class="progress-value">{{factory.danger_percentage}}%</div>
+              </div>
+
+              <div *ngIf="factory.danger_percentage < 50" class="progress2 pink">
+                <span class="progress-left">
+                    <span class="progress-bar"></span>
+                </span>
+                <span class="progress-right">
+                    <span class="progress-bar"></span>
+                </span>
+                <div class="progress-value">{{factory.danger_percentage}}%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </tab>
+  </tabset>
+</div>
+
