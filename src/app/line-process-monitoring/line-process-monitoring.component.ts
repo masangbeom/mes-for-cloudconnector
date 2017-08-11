@@ -1,9 +1,11 @@
+import { Http } from '@angular/http';
 import { Component } from '@angular/core';
 import { DataProvider } from '../../providers/data'
 
 @Component({
   templateUrl: 'line-process-monitoring.component.html'
 })
+
 export class LineProcessMonitoringComponent {
   private factories: any;
   private factory: any;
@@ -154,6 +156,7 @@ export class LineProcessMonitoringComponent {
 
   // Pie
   public pieChartLabels: string[];
+
   public pieChartData: number[];
   public pieChartType: string = 'pie';
 
@@ -172,8 +175,8 @@ export class LineProcessMonitoringComponent {
       if (process.p_error) {
         count += 1;
       }
-      process.poor = this.dataProvider.getProcessPoor(process);
-      console.log(process);
+      process.poor = this.dataProvider.getProcessPoor();
+  
     });
     if (count == 0) {
       this.lineRunning = true;
@@ -223,7 +226,7 @@ export class LineProcessMonitoringComponent {
         cycle_time: Math.round(Math.random() * 10),
         running_time: (Math.round(Math.random() * 10)).toString() + ':' + (Math.round(Math.random() * 60)).toString() + ':' + (Math.round(Math.random() * 60)).toString(),
         running_percentage: Math.round(Math.random() * 100 + 1),
-        machines: this.dataProvider.getProcessMachine(process),
+        machines: this.dataProvider.getProcessMachine(),
       }
       this.process = _process;
       console.log(this.process);

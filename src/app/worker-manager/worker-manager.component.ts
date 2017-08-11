@@ -30,5 +30,4 @@ export class WorkerManagerComponent {
   onTeamChange(team){
     this.team = team;
   }
-
 }

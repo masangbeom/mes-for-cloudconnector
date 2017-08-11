@@ -87,7 +87,7 @@ export class PoorManagerComponent implements OnInit{
     let count3 = 0;
     let count4 = 0;
     this.line.processes.forEach(process => {
-      process.poor = this.dataProvider.getProcessPoor(process);
+      process.poor = this.dataProvider.getProcessPoor();
       count1 += process.poor.poor1_num;
       count2 += process.poor.poor2_num;
       count3 += process.poor.poor3_num;
@@ -114,7 +114,7 @@ export class PoorManagerComponent implements OnInit{
 
   onProductChange(product) {
         this.product = product;
-        this.product.productPoor = this.dataProvider.sampleProductPoor(this.product);
+        this.product.productPoor = this.dataProvider.sampleProductPoor();
         this.pieChartLabels = ['외관불량', '치수불량','설비고장'];
         this.pieChartData = [Math.round(Math.random() * 10), Math.round(Math.random() * 10), Math.round(Math.random() * 10)];
   }

@@ -94,7 +94,7 @@ export class ScheduleManagerComponent {
       if (process.p_error) {
         count += 1;
       }
-      process.poor = this.dataProvider.getProcessPoor(process);
+      process.poor = this.dataProvider.getProcessPoor();
       console.log(process);
     });
     this.line.ratio = {

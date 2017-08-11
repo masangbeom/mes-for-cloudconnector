@@ -47,7 +47,7 @@
         </div>
         <div class="col-3">
           <span class="badge badge-danger" style="font-size: 17px; margin-bottom: 10px;">자재</span>
-          <div class="text-muted small text-uppercase font-weight-bold">이동은 관리자설정에서 해주세요.</div>
+          <div class="text-muted small text-uppercase font-weight-bold">자재 추가 및 이동은 관리자설정에서 해주세요.</div>
           <div class="card" style="overflow-x:scroll;">
             <div class="card-block">
               <div class="row">
@@ -73,44 +73,6 @@
     <tab>
       <ng-template tabHeading><i class="icon-globe"></i> 공장 환경 관리</ng-template>
       <div class="row">
-        <div class="col-8">
-          <span class="badge badge-info" style="font-size: 17px; margin-bottom: 10px;">세부항목</span>
-          <div class="card" style="overflow-x:scroll;">
-            <div class="card-block">
-              <div class="row">
-                <div class="col-4">
-                  <ul class="horizontal-bars type-2">
-                    <li style="height: 70px; margin-top: 20px; margin-bottom: 40px;">
-                      <i class="icon-tag"></i>
-                      <span class="title">온도</span>
-                      <span class="value">{{factory.celsius}} °C</span>
-                    </li>
-                    <li style="height: 70px; margin-top: 20px; margin-bottom: 40px;">
-                      <i class="icon-tag"></i>
-                      <span class="title">습도</span>
-                      <span class="value">{{factory.humid}} %</span>
-                    </li>
-                    <li style="height: 70px; margin-top: 20px;">
-                      <i class="icon-tag"></i>
-                      <span class="title">소음</span>
-                      <span class="value">{{factory.decibel}} db</span>
-
-                    </li>
-                    <li style="height: 70px; margin-top: 20px;">
-                      <i class="icon-tag"></i>
-                      <span class="title">분진</span>
-                      <span class="value">{{factory.dust}}</span>
-
-                    </li>
-                  </ul>
-                </div>
-                <div class="col-8">
-
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
         <div class="col-4">
           <span class="badge badge-info" style="font-size: 17px; margin-bottom: 10px;">공장 환경 위험도</span>
           <div class="card" style="overflow-x:scroll;">
@@ -128,6 +90,10 @@
                 <div class="progress-value">{{factory.danger_percentage}}%</div>
               </div>
 
+              <div *ngIf="factory.danger_percentage >= 90" class="h3 text-muted text-right mb-4">
+                안정
+              </div>
+
               <div *ngIf="factory.danger_percentage < 90 && factory.danger_percentage >= 70" class="progress2 green">
                 <span class="progress-left">
                     <span class="progress-bar"></span>
@@ -136,6 +102,10 @@
                     <span class="progress-bar"></span>
                 </span>
                 <div class="progress-value">{{factory.danger_percentage}}%</div>
+              </div>
+
+              <div class="h3 text-muted text-right mb-4" *ngIf="factory.danger_percentage < 90 && factory.danger_percentage >= 70">
+                정상
               </div>
 
               <div *ngIf="factory.danger_percentage < 70 && factory.danger_percentage >= 50" class="progress2 yellow">
@@ -148,6 +118,10 @@
                 <div class="progress-value">{{factory.danger_percentage}}%</div>
               </div>
 
+              <div class="h3 text-muted text-right mb-4" *ngIf="factory.danger_percentage < 70 && factory.danger_percentage >= 50">
+                주의
+              </div>
+
               <div *ngIf="factory.danger_percentage < 50" class="progress2 pink">
                 <span class="progress-left">
                     <span class="progress-bar"></span>
@@ -156,7 +130,277 @@
                     <span class="progress-bar"></span>
                 </span>
                 <div class="progress-value">{{factory.danger_percentage}}%</div>
+
               </div>
+              <div *ngIf="factory.danger_percentage < 50" class="h3 text-muted text-right mb-4">
+                위험
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-8">
+            <span class="badge badge-info" style="font-size: 17px; margin-bottom: 10px;">세부항목</span>
+          <div class="row">
+            <div class="col">
+              <div class="card" style="overflow-x:scroll;">
+            <div class="card-block">
+              <div class="h3 text-muted text-right mb-4">
+                <i class="icon-speedometer"></i> 온도
+              </div>
+              <div *ngIf="factory.celsius >= 30" class="progress2 blue">
+                <span class="progress-left">
+                    <span class="progress-bar"></span>
+                </span>
+                <span class="progress-right">
+                    <span class="progress-bar"></span>
+                </span>
+                <div class="progress-value">{{factory.celsius}} °C</div>
+              </div>
+
+              <div *ngIf="factory.celsius >= 30" class="h3 text-muted text-right mb-4">
+                안정
+              </div>
+
+              <div *ngIf="factory.celsius < 30 && factory.celsius >= 25" class="progress2 green">
+                <span class="progress-left">
+                    <span class="progress-bar"></span>
+                </span>
+                <span class="progress-right">
+                    <span class="progress-bar"></span>
+                </span>
+                <div class="progress-value">{{factory.celsius}} °C</div>
+              </div>
+
+              <div class="h3 text-muted text-right mb-4" *ngIf="factory.celsius < 30 && factory.celsius >= 25">
+                정상
+              </div>
+
+              <div *ngIf="factory.celsius < 25 && factory.celsius >= 20" class="progress2 yellow">
+                <span class="progress-left">
+                    <span class="progress-bar"></span>
+                </span>
+                <span class="progress-right">
+                    <span class="progress-bar"></span>
+                </span>
+                <div class="progress-value">{{factory.celsius}} °C</div>
+              </div>
+
+              <div class="h3 text-muted text-right mb-4" *ngIf="factory.celsius < 25 && factory.celsius >= 20">
+                주의
+              </div>
+
+              <div *ngIf="factory.celsius < 20" class="progress2 pink">
+                <span class="progress-left">
+                    <span class="progress-bar"></span>
+                </span>
+                <span class="progress-right">
+                    <span class="progress-bar"></span>
+                </span>
+                <div class="progress-value">{{factory.celsius}} °C</div>
+
+              </div>
+              <div *ngIf="factory.celsius < 20" class="h3 text-muted text-right mb-4">
+                위험
+              </div>
+            </div>
+          </div>
+            </div>
+            <div class="col">
+              <div class="card" style="overflow-x:scroll;">
+            <div class="card-block">
+              <div class="h3 text-muted text-right mb-4">
+                <i class="icon-drop"></i> 습도
+              </div>
+              <div *ngIf="factory.danger_percentage >= 90" class="progress2 pink">
+                <span class="progress-left">
+                    <span class="progress-bar"></span>
+                </span>
+                <span class="progress-right">
+                    <span class="progress-bar"></span>
+                </span>
+                <div class="progress-value">{{factory.humid}} %</div>
+              </div>
+
+              <div *ngIf="factory.humid >= 90" class="h3 text-muted text-right mb-4">
+                위험
+              </div>
+
+              <div *ngIf="factory.humid < 90 && factory.humid >= 70" class="progress2 yellow">
+                <span class="progress-left">
+                    <span class="progress-bar"></span>
+                </span>
+                <span class="progress-right">
+                    <span class="progress-bar"></span>
+                </span>
+                <div class="progress-value">{{factory.humid}} %</div>
+              </div>
+
+              <div class="h3 text-muted text-right mb-4" *ngIf="factory.humid < 90 && factory.humid >= 70">
+                주의
+              </div>
+
+              <div *ngIf="factory.humid < 70 && factory.humid >= 50" class="progress2 green">
+                <span class="progress-left">
+                    <span class="progress-bar"></span>
+                </span>
+                <span class="progress-right">
+                    <span class="progress-bar"></span>
+                </span>
+                <div class="progress-value">{{factory.humid}} %</div>
+              </div>
+
+              <div class="h3 text-muted text-right mb-4" *ngIf="factory.humid < 70 && factory.humid >= 50">
+                정상
+              </div>
+
+              <div *ngIf="factory.humid < 50" class="progress2 blue">
+                <span class="progress-left">
+                    <span class="progress-bar"></span>
+                </span>
+                <span class="progress-right">
+                    <span class="progress-bar"></span>
+                </span>
+                <div class="progress-value">{{factory.humid}} %</div>
+
+              </div>
+              <div *ngIf="factory.humid < 50" class="h3 text-muted text-right mb-4">
+                안정
+              </div>
+            </div>
+          </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <div class="card">
+            <div class="card-block">
+              <div class="h3 text-muted text-right mb-4">
+                  <i class="icon-volume-off"></i> 소음
+              </div>
+              <div *ngIf="factory.decibel < 400" class="progress2 blue">
+                <span class="progress-left">
+                    <span class="progress-bar"></span>
+                </span>
+                <span class="progress-right">
+                    <span class="progress-bar"></span>
+                </span>
+                <div class="progress-value">{{factory.decibel}} db</div>
+              </div>
+
+              <div *ngIf="factory.decibel < 400" class="h3 text-muted text-right mb-4">
+                안정
+              </div>
+
+              <div *ngIf="factory.decibel >= 400 && factory.decibel < 600" class="progress2 green">
+                <span class="progress-left">
+                    <span class="progress-bar"></span>
+                </span>
+                <span class="progress-right">
+                    <span class="progress-bar"></span>
+                </span>
+                <div class="progress-value">{{factory.decibel}} db</div>
+              </div>
+
+              <div class="h3 text-muted text-right mb-4" *ngIf="factory.decibel >= 400 && factory.decibel < 600">
+                정상
+              </div>
+
+              <div *ngIf="factory.decibel >= 600 && factory.decibel < 800" class="progress2 yellow">
+                <span class="progress-left">
+                    <span class="progress-bar"></span>
+                </span>
+                <span class="progress-right">
+                    <span class="progress-bar"></span>
+                </span>
+                <div class="progress-value">{{factory.decibel}} db</div>
+              </div>
+
+              <div class="h3 text-muted text-right mb-4" *ngIf="factory.decibel >= 600 && factory.decibel < 800">
+                주의
+              </div>
+
+              <div *ngIf="factory.decibel >= 800" class="progress2 pink">
+                <span class="progress-left">
+                    <span class="progress-bar"></span>
+                </span>
+                <span class="progress-right">
+                    <span class="progress-bar"></span>
+                </span>
+                <div class="progress-value">{{factory.decibel}} db</div>
+
+              </div>
+              <div *ngIf="factory.decibel >= 800" class="h3 text-muted text-right mb-4">
+                위험
+              </div>
+            </div>
+          </div>
+            </div>
+            <div class="col">
+              <div class="card" style="overflow-x:scroll;">
+            <div class="card-block">
+              <div class="h3 text-muted text-right mb-4">
+                <i class="icon-feed"></i> 분진
+              </div>
+              <div *ngIf="factory.dust >= 90" class="progress2 pink">
+                <span class="progress-left">
+                    <span class="progress-bar"></span>
+                </span>
+                <span class="progress-right">
+                    <span class="progress-bar"></span>
+                </span>
+                <div class="progress-value">{{factory.dust}}%</div>
+              </div>
+
+              <div *ngIf="factory.dust >= 90" class="h3 text-muted text-right mb-4">
+                위험
+              </div>
+
+              <div *ngIf="factory.dust < 90 && factory.dust >= 70" class="progress2 yellow">
+                <span class="progress-left">
+                    <span class="progress-bar"></span>
+                </span>
+                <span class="progress-right">
+                    <span class="progress-bar"></span>
+                </span>
+                <div class="progress-value">{{factory.dust}}%</div>
+              </div>
+
+              <div class="h3 text-muted text-right mb-4" *ngIf="factory.dust < 90 && factory.dust >= 70">
+                주의
+              </div>
+
+              <div *ngIf="factory.dust < 70 && factory.dust >= 50" class="progress2 green">
+                <span class="progress-left">
+                    <span class="progress-bar"></span>
+                </span>
+                <span class="progress-right">
+                    <span class="progress-bar"></span>
+                </span>
+                <div class="progress-value">{{factory.dust}}%</div>
+              </div>
+
+              <div class="h3 text-muted text-right mb-4" *ngIf="factory.dust < 70 && factory.dust >= 50">
+                정상
+              </div>
+
+              <div *ngIf="factory.dust < 50" class="progress2 blue">
+                <span class="progress-left">
+                    <span class="progress-bar"></span>
+                </span>
+                <span class="progress-right">
+                    <span class="progress-bar"></span>
+                </span>
+                <div class="progress-value">{{factory.dust}}%</div>
+
+              </div>
+              <div *ngIf="factory.dust < 50" class="h3 text-muted text-right mb-4">
+                정상
+              </div>
+            </div>
+          </div>
+
             </div>
           </div>
         </div>

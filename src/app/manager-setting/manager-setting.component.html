@@ -1,0 +1,186 @@
+  <!-- 로그인 
+<div *ngIf="!isAccept" class="flex-row align-items-center" style="margin-top:200px">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card-group mb-0">
+          <div class="card p-4">
+            <div class="card-block">
+              <h1>관리자 로그인</h1>
+              <p class="text-muted">관리자 ID와 PASSWORD를 통해 로그인.</p>
+              <div class="input-group mb-3">
+                <span class="input-group-addon"><i class="icon-user"></i></span>
+                <input type="text" class="form-control" placeholder="관리자 ID">
+              </div>
+              <div class="input-group mb-4">
+                <span class="input-group-addon"><i class="icon-lock"></i></span>
+                <input type="password" class="form-control" placeholder="관리자 Password">
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <button type="button" (click)="login()" class="btn btn-primary px-4">로그인</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card card-inverse card-danger py-5 d-md-down-none" style="width:44%">
+            <div class="card-block text-center" style="background-image: url('../../assets/img/logo.png'); background-size: contain; background-repeat: no-repeat; background-position: center;">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<div class="row">
+  <div class="col">
+    <div class="dropdown" dropdown>
+      <button *ngIf="!factory" style="width: 300px" class="btn btn-secondary btn-lg dropdown-toggle" type="button" id="dropdownMenu2"
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" dropdownToggle>
+    공장 선택 또는 추가
+  </button>
+      <button *ngIf="factory" style="width: 300px" class="btn btn-success btn-lg dropdown-toggle" type="button" id="dropdownMenu2"
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" dropdownToggle>
+    {{factory.title}}
+  </button>
+
+      <div style="width: 300px;" class="dropdown-menu" aria-labelledby="dropdownMenu2" *dropdownMenu>
+        <div *ngIf="factories">
+        <button class="dropdown-item" (click)="onChange(factory)" *ngFor="let factory of factories">
+        {{factory.title}}
+    </button></div>
+      <button class="dropdown-item" (click)="addFactory()">공장 추가</button>
+      </div>
+    </div>
+    
+  </div>
+   <div class="col" *ngIf="factory">
+    <div class="dropdown" dropdown>
+      <button *ngIf="!line" style="width: 300px" class="btn btn-secondary btn-lg dropdown-toggle" type="button" id="dropdownMenu2"
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" dropdownToggle>
+    라인 선택 또는 추가
+  </button>
+      <button *ngIf="line" style="width: 300px" class="btn btn-success btn-lg dropdown-toggle" type="button" id="dropdownMenu2"
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" dropdownToggle>
+    {{line.name}}
+  </button>
+      <div style="width: 300px" class="dropdown-menu" aria-labelledby="dropdownMenu2" *dropdownMenu>
+        <button class="dropdown-item" (click)="onLineChange(line)" type="button" *ngFor="let line of lines">
+        {{line.name}}
+    </button><button class="dropdown-item" (click)="addLine()">라인 추가</button>
+      </div>
+    </div>
+  </div>
+  <div class="col" *ngIf="line">
+    <div class="dropdown" dropdown>
+      <button *ngIf="!process" style="width: 300px" class="btn btn-secondary btn-lg dropdown-toggle" type="button" id="dropdownMenu2"
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" dropdownToggle>
+    공정 선택 또는 추가
+  </button>
+      <button *ngIf="process" style="width: 300px" class="btn btn-success btn-lg dropdown-toggle" type="button" id="dropdownMenu2"
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" dropdownToggle>
+    {{process.p_name}}
+  </button>
+      <div style="width: 300px" class="dropdown-menu" aria-labelledby="dropdownMenu2" *dropdownMenu>
+        <button class="dropdown-item" (click)="onProcessChange(process)" type="button" *ngFor="let process of processes">
+        {{process.p_name}}
+    </button><button class="dropdown-item" (click)="addProcess()">공정 추가</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row" *ngIf="addFactoryView">
+  <div class="card" style="margin-top: 15px; margin-left: 15px;">
+        <div class="card-header">
+          <strong>공장 추가</strong>
+        </div>
+        <div class="card-block">
+          <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+            <div class="form-group row">
+              <label class="col-5 form-control-label" for="text-input">공장 이름 입력</label>
+              <div class="col-7">
+                 <input #factoryName>
+              </div>
+            </div>
+            
+          </form>
+        </div>
+        <div class="card-footer">
+          <button type="submit" (click)="factoryAdd(factoryName.value)" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> 확인</button>
+         <button type="reset" (click)="cancelFactoryAdd()" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> 취소</button>
+        </div>
+      </div>
+</div>
+
+<div class="row" *ngIf="addLineView">
+  <div class="card" style="margin-top: 15px; margin-left: 15px;">
+        <div class="card-header">
+          <strong>라인 추가</strong>
+        </div>
+        <div class="card-block">
+          <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+            <div class="form-group row">
+              <label class="col-6 form-control-label" for="text-input">라인 이름 입력</label>
+              <div class="col-6">
+                 <input #lineName>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-6 form-control-label" for="text-input">라인 생산 제품명 입력</label>
+              <div class="col-6">
+                 <input #productName>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-6 form-control-label" for="text-input">제품 재고량 입력</label>
+              <div class="col-6">
+                 <input #stockAmount>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-6 form-control-label" for="text-input">제품 상한재고량 입력</label>
+              <div class="col-6">
+                 <input #stockLimitAmount>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="card-footer">
+          <button type="submit" (click)="lineAdd(lineName.value, productName.value, stockAmount.value, stockLimitAmount.value)" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> 확인</button>
+         <button type="reset" (click)="cancelLineAdd()" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> 취소</button>
+        </div>
+      </div>
+</div>
+
+<div class="row" *ngIf="addProcessView">
+  <div class="card" style="margin-top: 15px; margin-left: 15px;">
+        <div class="card-header">
+          <strong>공정 추가</strong>
+        </div>
+        <div class="card-block">
+          <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+            <div class="form-group row">
+              <label class="col-3 form-control-label" for="text-input">공정 이름 입력</label>
+              <div class="col-6">
+                 <input #processName>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-6 form-control-label" for="text-input">공정 번호 입력</label>
+              <div class="col-6">
+                 <input #processCode>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="card-footer">
+          <button type="submit" (click)="processAdd(processName.value, processCode.value)" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> 확인</button>
+         <button type="reset" (click)="cancelProcessAdd()" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> 취소</button>
+        </div>
+      </div>
+</div>
+
+
+

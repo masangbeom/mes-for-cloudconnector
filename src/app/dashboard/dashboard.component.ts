@@ -59,7 +59,7 @@ export class DashboardComponent {
         if (process.p_error) {
           count += 1;
         }
-        process.poor = this.dataProvider.getProcessPoor(process);
+        process.poor = this.dataProvider.getProcessPoor();
       });
       if (count == 0) {
         line.lineRunning = true;

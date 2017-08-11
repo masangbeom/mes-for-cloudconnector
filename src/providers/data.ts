@@ -1,12 +1,383 @@
+import { AngularFireDatabase } from 'angularfire2/database';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
+import * as firebase from 'firebase/app';
 
 @Injectable()
 export class DataProvider {
+  constructor(public http:Http, public db:AngularFireDatabase) {
+    // 샘플 공장 초기화
 
-  constructor(public http:Http) {
+    let factories = [];
+    let lines = [];
+    let lines2 = [];
+
+    let processes1 = [{
+      p_code: 1,
+      p_name: '설비제어',
+      description: '설명',
+      pro_code: '제품 번호',
+      p_error: false,
+      l_code: 1
+    }, {
+      p_code: 2,
+      p_name: 'line1p1p2',
+      description: '설명',
+      pro_code: '제품 번호',
+      p_error: false,
+      l_code: 1
+    }, {
+      p_code: 3,
+      p_name: '렉킹(소재투입)',
+      description: '설명',
+      pro_code: '제품 번호',
+      p_error: false,
+      l_code: 1
+    }, {
+      p_code: 4,
+      p_name: 'line1p2p3',
+      description: '설명',
+      pro_code: '제품 번호',
+      p_error: false,
+      l_code: 1
+    }, {
+      p_code: 5,
+      p_name: '탈지',
+      description: '설명',
+      pro_code: '제품 번호',
+      p_error: false,
+      l_code: 1
+    }, {
+      p_code: 6,
+      p_name: 'line1p3p4',
+      description: '설명',
+      pro_code: '제품 번호',
+      p_error: false,
+      l_code: 1
+    }, {
+      p_code: 7,
+      p_name: '에칭',
+      description: '설명',
+      pro_code: '제품 번호',
+      p_error: false,
+      l_code: 1
+    }, {
+      p_code: 8,
+      p_name: 'line1p4p5',
+      description: '설명',
+      pro_code: '제품 번호',
+      p_error: false,
+      l_code: 1
+    }, {
+      p_code: 9,
+      p_name: '중화',
+      description: '설명',
+      pro_code: '제품 번호',
+      p_error: false,
+      l_code: 1
+    }, {
+      p_code: 10,
+      p_name: 'line1p5p6',
+      description: '설명',
+      pro_code: '제품 번호',
+      p_error: false,
+      l_code: 1
+    }, {
+      p_code: 11,
+      p_name: '활성1',
+      description: '설명',
+      pro_code: '제품 번호',
+      p_error: false,
+      l_code: 1
+    }, {
+      p_code: 12,
+      p_name: 'line1p6p7',
+      description: '설명',
+      pro_code: '제품 번호',
+      p_error: false,
+      l_code: 1
+    }, {
+      p_code: 13,
+      p_name: '활성2',
+      description: '설명',
+      pro_code: '제품 번호',
+      p_error: false,
+      l_code: 1
+    }, {
+      p_code: 14,
+      p_name: 'line1p7p8',
+      description: '설명',
+      pro_code: '제품 번호',
+      p_error: false,
+      l_code: 1
+    }, {
+      p_code: 15,
+      p_name: '화학니켈',
+      description: '설명',
+      pro_code: '제품 번호',
+      p_error: false,
+      l_code: 1
+    }, {
+      p_code: 16,
+      p_name: 'line1p8p9',
+      description: '설명',
+      pro_code: '제품 번호',
+      p_error: false,
+      l_code: 1
+    }, {
+      p_code: 17,
+      p_name: '치환동',
+      description: '설명',
+      pro_code: '제품 번호',
+      p_error: false,
+      l_code: 1
+    }, {
+      p_code: 18,
+      p_name: 'line1p9end',
+      description: '설명',
+      pro_code: '제품 번호',
+      p_error: false,
+      l_code: 1
+    }, ];
+
+    let processes2 = [{
+      p_code: 1,
+      p_name: '유산동',
+      description: '설명',
+      pro_code: '제품 번호',
+      p_error: false,
+      l_code: 1
+    }, {
+      p_code: 2,
+      p_name: 'line1p1p2',
+      description: '설명',
+      pro_code: '제품 번호',
+      p_error: false,
+      l_code: 1
+    }, {
+      p_code: 3,
+      p_name: '반광택',
+      description: '설명',
+      pro_code: '제품 번호',
+      p_error: true,
+      l_code: 1
+    }, {
+      p_code: 4,
+      p_name: 'line1p2p3',
+      description: '설명',
+      pro_code: '제품 번호',
+      p_error: false,
+      l_code: 1
+    }, {
+      p_code: 5,
+      p_name: '광택',
+      description: '설명',
+      pro_code: '제품 번호',
+      p_error: false,
+      l_code: 1
+    }, {
+      p_code: 6,
+      p_name: 'line1p3p4',
+      description: '설명',
+      pro_code: '제품 번호',
+      p_error: false,
+      l_code: 1
+    }, {
+      p_code: 7,
+      p_name: '사틴',
+      description: '설명',
+      pro_code: '제품 번호',
+      p_error: true,
+      l_code: 1
+    }, {
+      p_code: 8,
+      p_name: 'line1p4p5',
+      description: '설명',
+      pro_code: '제품 번호',
+      p_error: false,
+      l_code: 1
+    }, {
+      p_code: 9,
+      p_name: 'MP니켈',
+      description: '설명',
+      pro_code: '제품 번호',
+      p_error: false,
+      l_code: 1
+    }, {
+      p_code: 10,
+      p_name: 'line1p5p6',
+      description: '설명',
+      pro_code: '제품 번호',
+      p_error: false,
+      l_code: 1
+    }, {
+      p_code: 11,
+      p_name: '크롬',
+      description: '설명',
+      pro_code: '제품 번호',
+      p_error: false,
+      l_code: 1
+    }, {
+      p_code: 12,
+      p_name: 'line1p6p7',
+      description: '설명',
+      pro_code: '제품 번호',
+      p_error: false,
+      l_code: 1
+    }, {
+      p_code: 13,
+      p_name: '도금완료',
+      description: '설명',
+      pro_code: '제품 번호',
+      p_error: false,
+      l_code: 1
+    }, {
+      p_code: 14,
+      p_name: 'line1p7p8',
+      description: '설명',
+      pro_code: '제품 번호',
+      p_error: false,
+      l_code: 1
+    }, {
+      p_code: 15,
+      p_name: '디렉킹',
+      description: '설명',
+      pro_code: '제품 번호',
+      p_error: true,
+      l_code: 1
+    }, {
+      p_code: 16,
+      p_name: 'line1p8end',
+      description: '설명',
+      pro_code: '제품 번호',
+      p_error: false,
+      l_code: 1
+    }]
+
+    let product1 = {
+      name: '철',
+      stock_amount: 20,
+      limit: 40,
+      p_factory: "Factory 1",
+      p_line: 1,
+    }
+    let product2 = {
+      name: '금',
+      stock_amount: 30,
+      limit: 10,
+      p_factory: "Factory 1",
+      p_line: 4,
+    }
+    let product3 = {
+      name: '은',
+      stock_amount: 40,
+      limit: 50,
+      p_factory: "Factory 2",
+      p_line: 2
+    }
+    let product4 = {
+      name: '스테인레스',
+      stock_amount: 50,
+      limit: 50,
+      p_factory: "Factory 3",
+      p_line: 3
+    }
+
+
+
+    let line1 = {
+      name: "Line 1",
+      lineId: 1,
+    // processes: processes1,
+      product: product1
+    }
+    let line2 = {
+      name: "Line 2",
+      lineId: 2,
+      //processes: processes2,
+      product: product2
+    }
+    let line3 = {
+      name: "Line 3",
+      lineId: 3,
+     // processes: processes1,
+      product: product3
+    }
+    let line4 = {
+      name: "Line 4",
+      lineId: 4,
+      //processes: processes2,
+      product: product4
+    }
+
+    // this.db.list('factories').subscribe((factories)=>{
+    // //  console.log(factories[0])
+    //   factories.forEach(factory => {
+    //       this.db.list('factories/'+factory.$key+'/lines').push(line1).then((success)=>{
+    //         this.db.object('factories/'+factory.$key+'/lines/'+success.key).update({
+    //           linesKey: success.key
+    //         })
+    //       })
+    //   });
+    // })
+
+    let factory1 = {
+      title: "Factory 1",
+      description: "공장 설명",
+      // lines: lines,
+      // products: this.sampleProducts(),
+      // wares: this.sampleFactoryWare(4)
+    }
+    let factory2 = {
+      title: "Factory 2",
+      description: "공장 설명",
+      // lines: lines2,
+      // products: this.sampleProducts(),
+      // wares: this.sampleFactoryWare(3)
+    }
+    let factory3 = {
+      title: "Factory 3",
+      description: "공장 설명",
+      // lines: lines,
+      // products: this.sampleProducts(),
+      // wares: this.sampleFactoryWare(2)
+    }
+    
+    let factory4 = {
+      title: "Factory 4",
+      description: "공장 설명",
+      // lines: lines2,
+      // products: this.sampleProducts(),
+      // wares: this.sampleFactoryWare(1)
+    }
+    factories.push(factory1);
+    factories.push(factory2);
+    factories.push(factory3);
+    factories.push(factory4);
+
+  //   for(let i=0; i<factories.length; i++){
+  //   this.db.list('factories').push(factories[i]).then((success)=>{
+  //     this.db.object('factories/'+success.key).update({
+  //       factoryKey: success.key
+  //     });
+  //   })
+  // }
   }
+
+  // getFactories(){
+  //    return this.db.list('/factories');
+  // }
+
+
+
+  // getFactories(){
+  //   let _factories = [];
+  //   this.db.list('factories/'+ factoriesKey).subscribe((factories=>{
+  //     _factories = factories;
+  //   }))
+  //   return _factories;
+  // }
   
   sampleFactories(){
     let factories = [];
@@ -289,7 +660,7 @@ export class DataProvider {
     let line1 = {
       name: "Line 1",
       lineId: 1,
-      processes: processes1,
+     processes: processes1,
       product: product1
     }
     let line2 = {
@@ -315,7 +686,7 @@ export class DataProvider {
     lines.push(line2);
     lines.push(line3);
     lines.push(line4);
-
+    
     lines2.push(line2);
     lines2.push(line1);
     lines2.push(line4);
@@ -512,7 +883,7 @@ export class DataProvider {
     return products;
   }
 
-  sampleProductPoor(product){
+  sampleProductPoor(){
     let productPoor = [{
       o_line: (Math.floor(Math.random() * 5)+1),
       o_process: (Math.floor(Math.random() * 16)+1),
@@ -592,7 +963,7 @@ export class DataProvider {
     return productPoor;
   }
 
-  getProcessPoor(process){
+  getProcessPoor(){
     let poor = {
       poor1_num: (Math.round(Math.random() * 10)),
       poor2_num: (Math.round(Math.random() * 10)),
@@ -605,7 +976,7 @@ export class DataProvider {
     return poor;
   }
 
-  getProcessMachine(process){
+  getProcessMachine(){
     let machine_fix = {
       date: '17/0'+(Math.round(Math.random() * 10)).toString()+'/0'+(Math.round(Math.random() * 10)).toString(),
       fix_what: 'code #'+(Math.round(Math.random() * 100)).toString()
@@ -617,7 +988,7 @@ export class DataProvider {
         m_runtime: (Math.round(Math.random() * 10)),
         m_runpercentage: (Math.round(Math.random() * 10)),
         m_fix: machine_fix,
-        m_poor: this.sampleProductPoor(machine_fix),
+        m_poor: this.sampleProductPoor(),
       },
       {
         m_name: 'Machine 2',
@@ -625,7 +996,7 @@ export class DataProvider {
         m_runtime: (Math.round(Math.random() * 10)),
         m_runpercentage: (Math.round(Math.random() * 10)),
         m_fix: machine_fix,
-        m_poor: this.sampleProductPoor(machine_fix),
+        m_poor: this.sampleProductPoor(),
       },
       {
         m_name: 'Machine 3',
@@ -633,7 +1004,7 @@ export class DataProvider {
         m_runtime: (Math.round(Math.random() * 10)),
         m_runpercentage: (Math.round(Math.random() * 10)),
         m_fix: machine_fix,
-        m_poor: this.sampleProductPoor(machine_fix),
+        m_poor: this.sampleProductPoor(),
       },
       {
         m_name: 'Machine 4',
@@ -641,7 +1012,7 @@ export class DataProvider {
         m_runtime: (Math.round(Math.random() * 10)),
         m_runpercentage: (Math.round(Math.random() * 10)),
         m_fix: machine_fix,
-        m_poor: this.sampleProductPoor(machine_fix),
+        m_poor: this.sampleProductPoor(),
       },
       {
         m_name: 'Machine 5',
@@ -649,7 +1020,7 @@ export class DataProvider {
         m_runtime: (Math.round(Math.random() * 10)),
         m_runpercentage: (Math.round(Math.random() * 10)),
         m_fix: machine_fix,
-        m_poor: this.sampleProductPoor(machine_fix),
+        m_poor: this.sampleProductPoor(),
       }
     ]
     return machines;
