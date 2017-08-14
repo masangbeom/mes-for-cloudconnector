@@ -67,8 +67,6 @@ export class DashboardComponent {
         line.lineRunning = false;
       }
     });
-
-    console.log(factory);
   }
 
   isEven(n) {

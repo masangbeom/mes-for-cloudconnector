@@ -1,6 +1,8 @@
 import { Http } from '@angular/http';
 import { Component } from '@angular/core';
 import { DataProvider } from '../../providers/data'
+import { AngularFireDatabase } from 'angularfire2/database';
+import * as moment from 'moment';
 
 @Component({
   templateUrl: 'line-process-monitoring.component.html'
@@ -10,8 +12,10 @@ export class LineProcessMonitoringComponent {
   private factories: any;
   private factory: any;
   private line: any;
+  private lines: any;
   private selectProcess: number = 0;
   private process: any;
+  private processes: any;
   private check: number = 0;
   private select_view: any = "timely";
   private lineRunning: boolean = true;
@@ -19,6 +23,7 @@ export class LineProcessMonitoringComponent {
   private count: number = 0;
   private machine: Array < any > ;
   private randomInterval: any;
+  private ProcessRandomGenerate: any;
 
   public brandInfo = '#63c2de';
   public brandWarning = '#f8cb00';
@@ -160,23 +165,31 @@ export class LineProcessMonitoringComponent {
   public pieChartData: number[];
   public pieChartType: string = 'pie';
 
-  constructor(public dataProvider: DataProvider) {
-    this.factories = this.dataProvider.sampleFactories();
+  constructor(public dataProvider: DataProvider, public db: AngularFireDatabase) {
+    this.db.list('factories').subscribe(factories=>{
+      this.factories = factories;
+    })
   }
 
   onChange(factory) {
     this.factory = factory;
+    this.db.list('factories/'+this.factory.factoryKey+'/lines/').subscribe(lines=>{
+      this.lines = lines;
+    })
   }
 
   onLineChange(line) {
+    clearInterval(this.randomInterval);
+    clearInterval(this.ProcessRandomGenerate);
     this.line = line;
+    this.db.list('factories/'+this.factory.factoryKey+'/lines/'+this.line.lineKey+'/processes/').subscribe(processes=>{
+      this.processes = processes;
+    })
     let count = 0;
-    this.line.processes.forEach(process => {
+    this.processes.forEach(process => {
       if (process.p_error) {
         count += 1;
       }
-      process.poor = this.dataProvider.getProcessPoor();
-  
     });
     if (count == 0) {
       this.lineRunning = true;
@@ -186,7 +199,7 @@ export class LineProcessMonitoringComponent {
     console.log(this.line)
     this.randomInterval = setInterval(() => {
       this.randomize();
-    }, 3000)
+    }, 5000)
     this.processSelectStop();
   }
 
@@ -199,6 +212,7 @@ export class LineProcessMonitoringComponent {
 
   processClick(process) {
     clearInterval(this.randomInterval);
+    clearInterval(this.ProcessRandomGenerate);
     let data = [{
       data: [Math.round(Math.random() * 100), Math.round(Math.random() * 100), Math.round(Math.random() * 100), Math.round(Math.random() * 100), Math.round(Math.random() * 100), Math.round(Math.random() * 100), Math.round(Math.random() * 100), Math.round(Math.random() * 100)],
       label: 'Series A'
@@ -212,28 +226,23 @@ export class LineProcessMonitoringComponent {
     if (process == null) {
       this.process = "ENDLINE";
     } else {
-      let _process = {
-        p_code: process.p_code,
-        p_name: process.p_name,
-        description: process.description,
-        pro_code: process.pro_code,
-        p_error: process.p_error,
-        l_code: process.l_code,
-        p_processing: Math.round(Math.random() * 100),
-        p_complete: Math.round(Math.random() * 1000),
-        poor: process.poor,
-        poor_ppm: Math.round(Math.random() * 10),
-        cycle_time: Math.round(Math.random() * 10),
-        running_time: (Math.round(Math.random() * 10)).toString() + ':' + (Math.round(Math.random() * 60)).toString() + ':' + (Math.round(Math.random() * 60)).toString(),
-        running_percentage: Math.round(Math.random() * 100 + 1),
-        machines: this.dataProvider.getProcessMachine(),
-      }
-      this.process = _process;
-      console.log(this.process);
+      this.db.object('factories/'+this.factory.factoryKey+'/lines/'+this.line.lineKey+'/processes/'+process.processKey).subscribe((process)=>{
+        this.process = process;
+      })
     }
     this.pieChartLabels = ['외관불량', '치수불량', '설비고장'];
     this.pieChartData = [Math.round(Math.random() * 10), Math.round(Math.random() * 10), Math.round(Math.random() * 10)];
     this.machine = null;
+    this.ProcessRandomGenerate = setInterval(()=>{
+      this.db.object('factories/'+this.factory.factoryKey+'/lines/'+this.line.lineKey+'/processes/'+this.process.processKey).update({
+        p_processing: Math.round(Math.random() * 10),
+        p_complete: Math.round(Math.random() * 1000),
+        poor_ppm: Math.round(Math.random() * 10),
+        cycle_time: Math.round(Math.random() * 10),
+        running_time: Math.round(moment.duration(Date.now() - process.createTime).asMinutes())
+      })
+    }, 5000)
+    
   }
 
   processSelectStop() {

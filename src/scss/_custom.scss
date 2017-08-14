@@ -79,7 +79,7 @@
 .progress2{
     width: 150px;
     height: 150px;
-    line-height: 150px;
+    //line-height: 150px;
     background: none;
     margin-top: 25px;
     margin-left: 10px;
@@ -668,4 +668,11 @@ div.gantt_default_corner div{
 .panel-danger {
   @include panel-variant($panel-danger-border, $panel-danger-text, $panel-danger-heading-bg, $panel-danger-border);
 }
+
+// input.form-control.ng-untouched.ng-pristine.ng-valid{
+//   display: none;
+// }
+// label.form-check-label{
+//   display: none;
+// }
 

@@ -28,7 +28,7 @@
     {{line.name}}
   </button>
       <div style="width: 300px" class="dropdown-menu" aria-labelledby="dropdownMenu2" *dropdownMenu>
-        <button class="dropdown-item" (click)="onLineChange(line)" type="button" *ngFor="let line of factory.lines">
+        <button class="dropdown-item" (click)="onLineChange(line)" type="button" *ngFor="let line of lines">
         {{line.name}}
     </button>
       </div>
@@ -52,7 +52,7 @@
         </div>
         <div class="card-block" style="background: #607d8b; padding-left: 15px;">
           <div class="row">
-            <div *ngFor="let process of line.processes">
+            <div *ngFor="let process of processes">
               <button (click)="processClick(process)" *ngIf="!isEven(process.p_code) && !process.p_error" class="round-button">{{process.p_name}}<br/></button>
               <button (click)="processClick(process)" *ngIf="!isEven(process.p_code) && process.p_error" class="round-button" style="background-image: url('../assets/img/stop.png'); background-size:contain; padding-top: 5px;">{{process.p_name}}</button>
               <button (click)="processClick(process)" *ngIf="isEven(process.p_code) && !isLineEnd(process.p_code)  && process.p_error"
@@ -254,7 +254,7 @@
           <div class="h1 text-muted text-right mb-4">
             <i class="icon-speedometer"></i>
           </div>
-          <div class="h4 mb-0">{{process.running_time}} / day</div>
+          <div class="h4 mb-0">{{process.running_time}} 분</div>
           <small class="text-muted text-uppercase font-weight-bold">Avg. Time</small>
           <div class="progress progress-white progress-xs mt-3">
             <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
