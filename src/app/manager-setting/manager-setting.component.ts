@@ -32,7 +32,6 @@ export class ProductTreeviewConfig extends TreeviewConfig {
 export class ManagerSettingComponent implements OnInit {
   @ViewChild(TreeviewComponent) treeviewComponent: TreeviewComponent;
   items: TreeviewItem[];
-  // rows: string[];
 
   private isAccept: boolean = false;
 
@@ -54,11 +53,33 @@ export class ManagerSettingComponent implements OnInit {
 
   private ProcessRandomGenerate: any;
 
+  private tempTasks:any = [];
+  private startDate: any;
+  private endDate: any;
+
   constructor(public dataProvider: DataProvider, public db: AngularFireDatabase) {
     this.db.list('factories').subscribe(factories => {
       this.factories = factories;
     })
     this.getTreeView();
+
+    this.db.object('/tasks').subscribe((tasks)=>{
+      if(tasks){
+      this.tempTasks = tasks
+      }
+    })
+    if(this.tempTasks!=null){
+    for(let i=0; i<this.tempTasks.length; i++){  
+      this.tempTasks[i] = {
+        start: this.tempTasks[i].start,
+        end: this.tempTasks[i].end,
+        id: this.tempTasks[i].id,
+        text: this.tempTasks[i].text,
+        complete: this.tempTasks[i].complete,
+        width: this.tempTasks[i].complete + '%'
+      }
+   }
+    }
   }
   
 
@@ -74,22 +95,42 @@ export class ManagerSettingComponent implements OnInit {
     return count; 
   }
 
-  // onSelectedChange(downlineItems: DownlineTreeviewItem[]) {
-  //   this.rows = [];
-  //   downlineItems.forEach(downlineItem => {
-  //     const item = downlineItem.item;
-  //     const value = item.value;
-  //     const texts = [item.text];
-  //     let parent = downlineItem.parent;
-  //     while (!_.isNil(parent)) {
-  //       texts.push(parent.item.text);
-  //       parent = parent.parent;
-  //     }
-  //     const reverseTexts = _.reverse(texts);
-  //     const row = `${reverseTexts.join(' -> ')} : ${value}`;
-  //     this.rows.push(row);
-  //   });
-  // }
+  deleteTask(task){
+    let temp = this.tempTasks;
+    for(let i=0; i<temp.length; i++){
+      if(temp[i].id == task.id){
+        temp.splice(i,1);
+        break;
+      }
+    }
+    this.db.object('/').update({
+      tasks: temp
+    })
+  }
+
+  addTask(name, id){
+    let temp= [];
+    if(this.tempTasks.length > 0){temp = this.tempTasks;}
+    
+    temp.push({
+      complete: (Math.floor(Math.random() * 100)+1),
+      end: moment(this.endDate).subtract(1, 'months').format('YYYY-MM-DD'),
+      start: moment(this.startDate).subtract(1, 'months').format('YYYY-MM-DD'),
+      id: id,
+      text: name,
+      width: (Math.floor(Math.random() * 100)+1)+'%'
+    })
+    this.db.object('/').update({
+      tasks: temp
+    })
+    console.log(moment(this.startDate).subtract(1, 'months').format('YYYY-MM-DD'))
+    console.log(moment(this.endDate).subtract(1, 'months').format('YYYY-MM-DD'))
+  }
+
+  modifyTask(task){
+    let temp = this.tempTasks;
+    
+  }
 
   // Tree-View 설정
   getTreeView(){

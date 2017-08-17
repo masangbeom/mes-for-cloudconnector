@@ -7,37 +7,8 @@ import { DayPilot, DayPilotGanttComponent } from "daypilot-pro-angular";
   templateUrl: 'schedule-manager.component.html'
 })
 export class ScheduleManagerComponent {
-
-  config: any = {
-    startDate: "2017-01-01",
-    days: new DayPilot.Date().daysInMonth(),
-    cellWidthSpec: "Auto",
-    tasks: [
-      {start: "2014-01-05", end: "2017-01-07", id: 1, text: "물품1 생산", complete: 40},
-      {start: "2017-01-06", end: "2017-01-14", id: 2, text: "물품2 생산", complete: 100},
-      {start: "2017-01-07", end: "2017-01-23", id: 3, text: "물품3 생산", complete: 30},
-      {start: "2017-01-08", end: "2017-01-22", id: 4, text: "물품4 생산", complete: 60},
-      {start: "2017-01-09", end: "2017-01-21", id: 5, text: "물품5 생산", complete: 50},
-      {start: "2017-01-10", end: "2017-01-20", id: 6, text: "물품6 생산", complete: 100},
-      {start: "2014-01-05", end: "2017-01-07", id: 7, text: "물품7 생산", complete: 70},
-      {start: "2017-01-06", end: "2017-01-14", id: 8, text: "물품8 생산", complete: 80},
-      {start: "2017-01-07", end: "2017-01-23", id: 9, text: "물품9 생산", complete: 90},
-      {start: "2017-01-08", end: "2017-01-22", id: 10, text: "물품10 생산", complete: 100},
-    ]
-    
-  };
-  private tempTasks:any = [
-      {start: "2014-01-05", end: "2017-01-07", id: 1, text: "물품1 생산", complete: 40},
-      {start: "2017-01-06", end: "2017-01-14", id: 2, text: "물품2 생산", complete: 100},
-      {start: "2017-01-07", end: "2017-01-23", id: 3, text: "물품3 생산", complete: 30},
-      {start: "2017-01-08", end: "2017-01-22", id: 4, text: "물품4 생산", complete: 60},
-      {start: "2017-01-09", end: "2017-01-21", id: 5, text: "물품5 생산", complete: 50},
-      {start: "2017-01-10", end: "2017-01-20", id: 6, text: "물품6 생산", complete: 100},
-      {start: "2014-01-05", end: "2017-01-07", id: 7, text: "물품7 생산", complete: 70},
-      {start: "2017-01-06", end: "2017-01-14", id: 8, text: "물품8 생산", complete: 80},
-      {start: "2017-01-07", end: "2017-01-23", id: 9, text: "물품9 생산", complete: 90},
-      {start: "2017-01-08", end: "2017-01-22", id: 10, text: "물품10 생산", complete: 100},
-    ];
+  private config: any;
+  private tempTasks:any = [];
   private randomInterval: any;
   private factories: any;
   private selectOn: string = "";
@@ -61,7 +32,26 @@ export class ScheduleManagerComponent {
   ];
 
   constructor(public dataProvider: DataProvider, public db: AngularFireDatabase) {
-     for(let i=0; i<this.tempTasks.length; i++){  
+    this.db.object('/tasks').subscribe((tasks)=>{
+      this.config = {
+        days: new DayPilot.Date().daysInMonth(),
+        cellWidthSpec: "Auto",
+        tasks: tasks
+      };
+    }) 
+    this.db.list('factories').subscribe(factories=>{
+      this.factories = factories;
+    })
+
+  }
+
+  
+
+  onChange(factory){
+    this.db.object('/tasks').subscribe((tasks)=>{
+      this.tempTasks = tasks;
+    }) 
+    for(let i=0; i<this.tempTasks.length; i++){  
         this.tempTasks[i] = {
           start: this.tempTasks[i].start,
           end: this.tempTasks[i].end,
@@ -79,16 +69,6 @@ export class ScheduleManagerComponent {
     this.config.tasks[i].text += " ~ ";
     this.config.tasks[i].text += this.config.tasks[i].end+ ") ";
     }
-    
-    this.db.list('factories').subscribe(factories=>{
-      this.factories = factories;
-    })
-
-  }
-
-  
-
-  onChange(factory){
     this.factory = factory;
     this.db.list('factories/'+this.factory.factoryKey+'/lines/').subscribe(lines=>{
       this.lines = lines;
@@ -113,6 +93,8 @@ export class ScheduleManagerComponent {
 
 
   lineSelectStop(){
+    clearInterval(this.randomInterval);
+    this.line.ratio = null;
     this.line = null;
   }
 

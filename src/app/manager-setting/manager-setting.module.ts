@@ -10,6 +10,10 @@ import { CommonModule } from '@angular/common';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TreeviewModule } from 'ngx-treeview';
+import { JsonpModule } from '@angular/http';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+// Tabs Component
+import { TabsModule } from 'ngx-bootstrap/tabs';
 
 @NgModule({
   imports: [
@@ -19,7 +23,9 @@ import { TreeviewModule } from 'ngx-treeview';
     CommonModule,
     FormsModule, ReactiveFormsModule,
     AngularFireDatabaseModule,
-    // AngularFireDatabase,
+    TabsModule,
+    JsonpModule,
+    NgbModule
   ],
   declarations: [ 
       ManagerSettingComponent,
