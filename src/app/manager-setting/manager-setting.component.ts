@@ -34,7 +34,7 @@ export class ManagerSettingComponent implements OnInit {
   items: TreeviewItem[];
   // rows: string[];
 
-  private isAccept: boolean = true;
+  private isAccept: boolean = false;
 
   private factories: any;
   private factory: any;

@@ -28,7 +28,7 @@
     {{line.name}}
   </button>
       <div style="width: 300px" class="dropdown-menu" aria-labelledby="dropdownMenu2" *dropdownMenu>
-        <button class="dropdown-item" (click)="onLineChange(line)" type="button" *ngFor="let line of factory.lines">
+        <button class="dropdown-item" (click)="onLineChange(line)" type="button" *ngFor="let line of lines">
         {{line.name}}
     </button>
       </div>

@@ -1,5 +1,5 @@
 <!-- 로그인  -->
-<!-- <div *ngIf="!isAccept" class="flex-row align-items-center" style="margin-top:200px">
+<div *ngIf="!isAccept" class="flex-row align-items-center" style="margin-top:200px">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-8">
@@ -27,7 +27,7 @@
       </div>
     </div>
   </div>
-</div> -->
+</div>
 
 <div class="row" *ngIf="isAccept">
   <div class="col">
@@ -87,7 +87,7 @@
   </div>
 </div>
 
-<div class="row animated fadeIn">
+<div class="row animated fadeIn" *ngIf="isAccept">
 
   <ng-template #itemTemplate let-item="item" let-onCollapseExpand="onCollapseExpand" let-onCheckedChange="onCheckedChange">
     <div class="form-check">

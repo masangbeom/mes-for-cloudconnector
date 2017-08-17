@@ -64,7 +64,7 @@
           <div class="card" style="overflow-x:scroll;">
             <div class="card-block">
               <small class="text-muted">라인 별 불량정보를 확인하려면 클릭.</small>
-              <button (click)="onLineChange(line)" class="item-button" *ngFor="let line of factory.lines" style="height: 60px; width: 98%">{{line.name}}</button>
+              <button (click)="onLineChange(line)" class="item-button" *ngFor="let line of lines" style="height: 60px; width: 98%">{{line.name}}</button>
             </div>
           </div>
         </div>
@@ -84,7 +84,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let process of line.processes">
+                    <tr *ngFor="let process of processes">
                       <td *ngIf="!isEven(process.p_code)">{{process.p_name}}</td>
                       <td *ngIf="!isEven(process.p_code)">{{process.poor.poor1_num}}</td>
                       <td *ngIf="!isEven(process.p_code)">{{process.poor.poor2_num}}</td>

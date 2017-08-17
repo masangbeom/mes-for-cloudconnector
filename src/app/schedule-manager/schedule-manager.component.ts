@@ -1,3 +1,4 @@
+import { AngularFireDatabase } from 'angularfire2/database';
 import { Component } from '@angular/core';
 import { DataProvider } from '../../providers/data'
 import { DayPilot, DayPilotGanttComponent } from "daypilot-pro-angular";
@@ -43,6 +44,7 @@ export class ScheduleManagerComponent {
   private factory: any;
   private selectLine: string = "";
   private line: any;
+  private lines: any;
   private loadProgress: number = 80;
 
   public barChartOptions:any = {
@@ -58,7 +60,7 @@ export class ScheduleManagerComponent {
     {data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B'}
   ];
 
-  constructor(public dataProvider: DataProvider) {
+  constructor(public dataProvider: DataProvider, public db: AngularFireDatabase) {
      for(let i=0; i<this.tempTasks.length; i++){  
         this.tempTasks[i] = {
           start: this.tempTasks[i].start,
@@ -77,26 +79,24 @@ export class ScheduleManagerComponent {
     this.config.tasks[i].text += " ~ ";
     this.config.tasks[i].text += this.config.tasks[i].end+ ") ";
     }
-
-    this.factories= this.dataProvider.sampleFactories();
+    
+    this.db.list('factories').subscribe(factories=>{
+      this.factories = factories;
+    })
 
   }
 
   
 
   onChange(factory){
-    this.factory = factory
+    this.factory = factory;
+    this.db.list('factories/'+this.factory.factoryKey+'/lines/').subscribe(lines=>{
+      this.lines = lines;
+    })
   }
    onLineChange(line) {
     this.line = line;
-    let count = 0;
-    this.line.processes.forEach(process => {
-      if (process.p_error) {
-        count += 1;
-      }
-      process.poor = this.dataProvider.getProcessPoor();
-      console.log(process);
-    });
+   
     this.line.ratio = {
       daily: (Math.round(Math.random() * 1000)),
       daily_per: (Math.round(Math.random() * 100)) + '%',

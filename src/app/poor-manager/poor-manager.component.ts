@@ -1,3 +1,4 @@
+import { AngularFireDatabase } from 'angularfire2/database';
 import { DataProvider } from './../../providers/data';
 import { Component, OnInit } from '@angular/core'
 import { OnChanges } from '@angular/core';
@@ -11,11 +12,12 @@ export class PoorManagerComponent implements OnInit{
   private select_view: any = "background";
   private factories: any;
   private factory: any;
+  private lines: any;
   private startDate: Date;
   private endDate: Date;
   private product: any;
   private line: any;
-  private processes: any = [];
+  private processes: any;
   private count: number = 0;
   private loadProgress: number = 80;
   private model: any;
@@ -44,8 +46,10 @@ export class PoorManagerComponent implements OnInit{
   public pieChartType:string = 'pie';
 
 
-  constructor(public dataProvider: DataProvider) {
-    this.factories = this.dataProvider.sampleFactories();
+  constructor(public dataProvider: DataProvider, public db: AngularFireDatabase) {
+    this.db.list('factories').subscribe(factories=>{
+      this.factories = factories;
+    })
   }
 
   ngOnInit(){
@@ -78,6 +82,10 @@ export class PoorManagerComponent implements OnInit{
 
   onChange(factory) {
     this.factory = factory;
+    this.factory.products = this.dataProvider.sampleProducts();
+    this.db.list('factories/'+this.factory.factoryKey+'/lines/').subscribe(lines=>{
+      this.lines = lines;
+    })
   }
 
   onLineChange(line) {
@@ -86,14 +94,16 @@ export class PoorManagerComponent implements OnInit{
     let count2 = 0;
     let count3 = 0;
     let count4 = 0;
-    this.line.processes.forEach(process => {
-      process.poor = this.dataProvider.getProcessPoor();
-      count1 += process.poor.poor1_num;
-      count2 += process.poor.poor2_num;
-      count3 += process.poor.poor3_num;
-      count4 += process.poor.ppm;
-
-    });
+    this.db.list('factories/'+this.factory.factoryKey+'/lines/'+this.line.lineKey+'/processes').subscribe(processes=>{
+      this.processes = processes;
+      processes.forEach(process => {
+        process.poor = this.dataProvider.getProcessPoor();
+        count1 += process.poor.poor1_num;
+        count2 += process.poor.poor2_num;
+        count3 += process.poor.poor3_num;
+        count4 += process.poor.ppm;
+      });
+    })
     this.line.poor_num1 = count1;
     this.line.poor_num2 = count2;
     this.line.poor_num3 = count3;
