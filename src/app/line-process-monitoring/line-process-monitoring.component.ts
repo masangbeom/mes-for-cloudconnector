@@ -1,5 +1,5 @@
 import { Http } from '@angular/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DataProvider } from '../../providers/data'
 import { AngularFireDatabase } from 'angularfire2/database';
 import * as moment from 'moment';
@@ -8,7 +8,13 @@ import * as moment from 'moment';
   templateUrl: 'line-process-monitoring.component.html'
 })
 
-export class LineProcessMonitoringComponent {
+export class LineProcessMonitoringComponent implements OnInit{
+  ngOnInit(){
+
+  }
+  ngDoCheck(){
+    console.log('change');
+  }
   private factories: any;
   private factory: any;
   private line: any;
@@ -248,6 +254,9 @@ export class LineProcessMonitoringComponent {
         running_time: Math.round(moment.duration(Date.now() - process.createTime).asMinutes())
       })
     }, 5000)
+    setTimeout(()=>{
+      clearInterval(this.ProcessRandomGenerate)
+    }, 30000)
     
   }
 

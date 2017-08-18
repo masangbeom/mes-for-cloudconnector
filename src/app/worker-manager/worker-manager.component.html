@@ -71,7 +71,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let worker of team.workers">
+              <tr *ngFor="let worker of workers">
                 <td style="padding-top: 10px; padding-bottom: 10px;">{{worker.w_position}}</td>
                 <td style="padding-top: 10px; padding-bottom: 10px;">{{worker.w_class}}</td>
                 <td style="padding-top: 10px; padding-bottom: 10px;">{{worker.w_name}}</td>
@@ -81,7 +81,7 @@
                 <td style="padding-top: 10px; padding-bottom: 10px;" *ngIf="worker.w_isWork">
                   <span class="badge badge-success">O</span>
                 </td>
-                <td *ngIf="!worker.w_isWork" style="padding-top: 5px">
+                <td *ngIf="!worker.w_isWork" style="padding-top: 10px; padding-bottom: 10px;">
                   <span class="badge badge-danger">X</span>
                 </td>
               </tr>

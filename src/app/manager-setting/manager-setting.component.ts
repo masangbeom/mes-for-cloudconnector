@@ -32,14 +32,6 @@ export class ProductTreeviewConfig extends TreeviewConfig {
 export class ManagerSettingComponent implements OnInit {
   @ViewChild(TreeviewComponent) treeviewComponent: TreeviewComponent;
   items: TreeviewItem[];
-  
-  private companies: any;
-  private departments: any;
-  private teams: any;
-  
-  private company: any;
-  private department: any;
-  private team: any;
 
   private isAccept: boolean = false;
 
@@ -69,6 +61,10 @@ export class ManagerSettingComponent implements OnInit {
     this.db.list('factories').subscribe(factories => {
       this.factories = factories;
     })
+
+    this.db.list('companies').subscribe(companies=>{
+      this.companies = companies;
+    })
     this.getTreeView();
 
     this.db.object('/tasks').subscribe((tasks)=>{
@@ -88,8 +84,6 @@ export class ManagerSettingComponent implements OnInit {
       }
    }
     }
-    this.companies = this.dataProvider.sampleWorker();
-    this.getWorkerTreeView();
   }
   
 
@@ -256,6 +250,7 @@ export class ManagerSettingComponent implements OnInit {
     })
 
     this.addProcessView = false;
+    this.addLineView = false;
   }
 
   factoryAdd(factoryName) {
@@ -344,7 +339,7 @@ export class ManagerSettingComponent implements OnInit {
     this.db.list('factories/' + this.factory.factoryKey + '/lines/' + this.line.lineKey + '/processes/').push(_process).then((success) => {
       this.db.object('factories/' + this.factory.factoryKey + '/lines/' + this.line.lineKey + '/processes/' + success.key).update({
         processKey: success.key,
-        p_error: Math.random() >= 0.99,
+        p_error: Math.random() >= 0.95,
         running_percentage: Math.floor((Math.random() * 100) + 1),
       })
       this.db.object('factories/' + this.factory.factoryKey + '/lines/' + this.line.lineKey + '/processes/' + success.key).subscribe((process) => {
@@ -359,70 +354,166 @@ export class ManagerSettingComponent implements OnInit {
     this.process = process;
   }
 
+  //인적자원관리
+  private companies: any;
+  private departments: any;
+  private teams: any;
+  private workers: any;
+  
+  private company: any;
+  private department: any;
+  private team: any;
 
-  // 직원 Tree-View 설정
-  getWorkerTreeView(){
-    this.db.list('workers').subscribe(workers => {
-      if (workers) {
-        let temp1 = new TreeviewItem({
-          text: '회사', value: workers, children: [
-              { text: 'temp', value: 0 },
-          ]
-      });
-      temp1.children.splice(0,1);
-        
-        for (let i = 0; i < workers.length; i++) {
-          
-          this.db.list('workers/' + '/' + i  +'/'+ '/lines').subscribe(lines => {
-            // if (lines) {
-            //   let temp2 = new TreeviewItem({
-            //     text: factories[i].title, value: factories[i].$key, children: [
-            //         { text: 'temp', value: 0 },
-            //     ]
-            // });
-            // temp2.children.splice(0,1);
-            //   for (let j = 0; j < lines.length; j++) {
-            //     let temp3 = [];
-            //     this.db.list('factories/' + factories[i].$key + '/lines/' + lines[j].$key + '/processes', {
-            //       query: {
-            //         orderByChild: 'p_code'
-            //       }
-            //     }).subscribe(processes => {
-            //       if (processes) {
-            //         for (let k = 0; k < processes.length; k++) {
-            //           temp3.push(new TreeviewItem({
-            //             text: processes[k].p_name,
-            //             value: factories[i].$key + '/lines/' + lines[j].$key + '/processes/' +processes[k].$key
-            //           }));
-            //         }
+  private addCompanyView:boolean;
+  private addDepartmentView:boolean;
+  private addTeamView:boolean;
+  private addWorkerView:boolean;
 
-            //       }
-            //       if (temp3.length > 0) {
-            //         temp2.children.push(new TreeviewItem({
-            //           text: lines[j].name,
-            //           value: factories[i].$key + '/lines/' + lines[j].$key,
-            //           children: temp3
-            //         }));
-            //       } else {
-            //         temp2.children.push(new TreeviewItem({
-            //           text: lines[j].name,
-            //           value: factories[i].$key + '/lines/' + lines[j].$key
-            //         }));
-            //       }
-            //     })
-            //   }
-            //   temp1.children.push(temp2);
-              
-            // }
-        });
-          
-        }
+  onCompanyChange(company){
+    this.company = company;
+    this.addCompanyView  = false;
+    this.addDepartmentView = false;
+    this.addTeamView = false;
+    this.addWorkerView = false;
+    this.db.list('companies/' + this.company.companyKey + '/departments/').subscribe(departments => {
+      if(departments)
+      this.departments = departments;
+    })
+  }
+  
+  companyAdd(c_name){
+    let _company = {
+      c_name: c_name
+    }
+    this.db.list('companies/').push(_company).then((success)=>{
+      this.db.object('companies/' + success.key).update({
+        companyKey: success.key
+      })
+      this.db.object('companies/' + success.key).subscribe(company => {
+             this.company = company;
+             this.departments = company.departments;
+       })
+    })
+    this.addCompanyView = false;
+  }
+  
+  cancelCompanyAdd(){ this.addCompanyView=false; }
+  
+  addCompany(){ 
+    this.addCompanyView = true;
+    this.addDepartmentView = false;
+    this.addTeamView = false;
+    this.addWorkerView = false;
+  }
 
-      // this.items = [temp1];
-      }
+  onDepartmentChange(department){
+    this.department = department;
+    this.addCompanyView  = false;
+    this.addDepartmentView = false;
+    this.addTeamView = false;
+    this.addWorkerView = false;
+    this.db.list('companies/' + this.company.companyKey + '/departments/' + this.department.departmentKey + '/teams/').subscribe(teams => {
+      if(teams)
+      this.teams = teams;
+    })
+  }
+
+  addDepartment(){ 
+    this.addDepartmentView = true; 
+    this.addCompanyView  = false;
+    this.addTeamView = false;
+    this.addWorkerView = false;
+  }
+
+  cancelDepartmentAdd(){ this.addDepartmentView = false; }
+
+  departmentAdd(d_name){
+    let _department = {
+      d_name: d_name
+    }
+    this.db.list('companies/' + this.company.companyKey + '/departments/').push(_department).then((success)=>{
+      this.db.object('companies/'+ this.company.companyKey + '/departments/' + success.key).update({
+        departmentKey: success.key
+      })
+      this.db.object('companies/'+ this.company.companyKey + '/departments/' + success.key).subscribe(department => {
+             this.department = department;
+             this.teams = department.teams;
+       })
+    })
+    this.addDepartmentView = false;
+  }
+
+  onTeamChange(team){
+    this.team = team;
+    this.db.list('companies/' + this.company.companyKey + '/departments/' + this.department.departmentKey + '/teams/' + this.team.teamKey + '/workers/').subscribe(workers => {
+      if(workers)
+      this.workers = workers;
+    })
+    this.addCompanyView  = false;
+    this.addDepartmentView = false;
+    this.addTeamView = false;
+    this.addWorkerView = false;
+  }
+
+  addTeam(){ 
+    this.addTeamView = true; 
+    this.addCompanyView  = false;
+    this.addDepartmentView = false;
+    this.addWorkerView = false;
+  }
+
+  cancelTeamAdd() { this.addTeamView = false; } 
+
+  teamAdd(t_name){
+    let _team = {
+      t_name: t_name
+    }
+    this.db.list('companies/' + this.company.companyKey + '/departments/' + this.department.departmentKey + '/teams/').push(_team).then((success)=>{
+      this.db.object('companies/'+ this.company.companyKey + '/departments/' + this.department.departmentKey + '/teams/' + success.key).update({
+        teamKey: success.key
+      })
+      this.db.object('companies/'+ this.company.companyKey + '/departments/' + this.department.departmentKey + '/teams/' + success.key).subscribe(team => {
+             this.team = team;
+       })
+    })
+    this.addTeamView = false;
+  }
+
+  addWorker(){ 
+    this.addWorkerView = true; 
+    this.addCompanyView  = false;
+    this.addDepartmentView = false;
+    this.addTeamView = false;
+  }
+
+  cancelWorkerAdd(){ this.addWorkerView = false; }
+
+  workerAdd(w_name, w_email, w_enter, w_phone, w_class, w_position){
+    let _worker = {
+      w_name: w_name,
+      w_email: w_email,
+      w_enter: w_enter,
+      w_phone: w_phone,
+      w_class: w_class,
+      w_position: w_position,
+      w_isWork: false,
+    }
+    this.db.list('companies/' + this.company.companyKey + '/departments/' + this.department.departmentKey + '/teams/' + this.team.teamKey + '/workers/').push(_worker).then((success)=>{
+      this.db.object('companies/'+ this.company.companyKey + '/departments/' + this.department.departmentKey + '/teams/' + this.team.teamKey + '/workers/' + success.key).update({
+        workerKey: success.key
+      })
+    })
+    this.addWorkerView = false;
+  }
+
+  workCheck(worker){
+    this.db.object('companies/'+ this.company.companyKey + '/departments/' + this.department.departmentKey + '/teams/' + this.team.teamKey + '/workers/' + worker.workerKey).update({
+      w_isWork: !(worker.w_isWork)
     });
   }
 
-
+  deleteWorker(worker){
+    this.db.object('companies/'+ this.company.companyKey + '/departments/' + this.department.departmentKey + '/teams/' + this.team.teamKey + '/workers/' + worker.workerKey).remove();
+  }
 }
 

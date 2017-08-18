@@ -1,6 +1,7 @@
+import { AngularFireDatabase } from 'angularfire2/database';
 import { Component } from '@angular/core';
 import { DataProvider } from '../../providers/data'
-import { Router } from '@angular/router';
+import { Router } from '@angular/router'; 
 
 @Component({
   templateUrl: 'dashboard.component.html'
@@ -45,7 +46,7 @@ export class DashboardComponent {
   public barChart1Type = 'bar';
 
 
-  constructor(public dataProvider: DataProvider) {
+  constructor(public dataProvider: DataProvider, public db: AngularFireDatabase) {
     this.factories = this.dataProvider.sampleFactories();
     this.onChange(this.factories[0]);
   }
