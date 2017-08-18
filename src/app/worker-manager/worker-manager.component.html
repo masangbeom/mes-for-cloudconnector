@@ -10,7 +10,7 @@
     {{company.c_name}}
   </button>
       <div style="width: 300px;" class="dropdown-menu" aria-labelledby="dropdownMenu2" *dropdownMenu>
-        <button class="dropdown-item" (click)="onChange(company)" *ngFor="let company of companies">
+        <button class="dropdown-item" (click)="onCompanyChange(company)" *ngFor="let company of companies">
         {{company.c_name}}
     </button>
       </div>

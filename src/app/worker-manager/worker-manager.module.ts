@@ -1,3 +1,4 @@
+import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { WorkerManagerRoutingModule } from './worker-manager-routing.module';
 import { WorkerManagerComponent } from './worker-manager.component';
 import { NgModule } from '@angular/core';
@@ -11,6 +12,7 @@ import { HttpModule } from '@angular/http';
     WorkerManagerRoutingModule,
     BsDropdownModule,
     CommonModule,
+    AngularFireDatabaseModule,
     HttpModule,
   ],
   declarations: [ 

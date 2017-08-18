@@ -1,3 +1,4 @@
+import { AngularFireDatabase } from 'angularfire2/database';
 import { DataProvider } from './../../providers/data';
 import { Component } from '@angular/core';
 
@@ -13,11 +14,12 @@ export class WorkerManagerComponent {
   private department: any;
   private team: any;
 
-  constructor(public dataProvider: DataProvider) {
+  constructor(public dataProvider: DataProvider, public db: AngularFireDatabase) {
     this.companies = this.dataProvider.sampleWorker();
+    
   }
 
-  onChange(company){
+  onCompanyChange(company){
     this.company = company;
     this.departments = this.company.departments;
   }

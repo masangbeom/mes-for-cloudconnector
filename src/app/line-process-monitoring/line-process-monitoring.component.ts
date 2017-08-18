@@ -182,25 +182,31 @@ export class LineProcessMonitoringComponent {
     clearInterval(this.randomInterval);
     clearInterval(this.ProcessRandomGenerate);
     this.line = line;
-    this.db.list('factories/'+this.factory.factoryKey+'/lines/'+this.line.lineKey+'/processes/').subscribe(processes=>{
-      this.processes = processes;
-    })
     let count = 0;
-    this.processes.forEach(process => {
-      if (process.p_error) {
-        count += 1;
+    this.db.list('factories/'+this.factory.factoryKey+'/lines/'+this.line.lineKey+'/processes/', {
+      query: {
+        orderByChild: 'p_code',
+        startAt: 1
       }
-    });
-    if (count == 0) {
-      this.lineRunning = true;
-    } else {
-      this.lineRunning = false;
-    }
-    console.log(this.line)
+    }).subscribe(processes=>{
+      console.log(processes)
+      this.processes = processes;
+      processes.forEach(process => {
+        if (process.p_error) {
+          count += 1;
+        }
+      });
+      if (count == 0) {
+        this.lineRunning = true;
+      } else {
+        this.lineRunning = false;
+      }
+    })
+    
     this.randomInterval = setInterval(() => {
       this.randomize();
     }, 5000)
-    this.processSelectStop();
+    this.process=null
   }
 
   isEven(n) {
@@ -247,6 +253,8 @@ export class LineProcessMonitoringComponent {
 
   processSelectStop() {
     this.process = null;
+    clearInterval(this.randomInterval);
+    clearInterval(this.ProcessRandomGenerate);
   }
 
   public chartClicked(e: any): void {

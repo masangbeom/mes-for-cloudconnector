@@ -1,10 +1,9 @@
 {
-  "name": "coreui-angular",
+  "name": "mes-for-cloudconnector",
   "version": "1.0.0-alpha.6",
-  "description": "Open Source Bootstrap Admin Template",
+  "description": "Soosang Cloud Connector DEMO - MES",
   "author": "",
-  "url": "http://coreui.io",
-  "copyright": "Copyright 2017 creativeLabs Łukasz Holeczek",
+  "copyright": "Copyright 2017 creative Soosang",
   "license": "MIT",
   "scripts": {
     "ng": "ng",

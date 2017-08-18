@@ -9,10 +9,10 @@ import * as _ from 'lodash';
 
 @Injectable()
 export class ProductTreeviewConfig extends TreeviewConfig {
-  hasAllCheckBox = true;
-  hasFilter = true;
+  hasAllCheckBox = false;
+  hasFilter = false;
   hasCollapseExpand = false;
-  maxHeight = 400;
+  maxHeight = 800;
 }
 
 @Component({
@@ -32,6 +32,14 @@ export class ProductTreeviewConfig extends TreeviewConfig {
 export class ManagerSettingComponent implements OnInit {
   @ViewChild(TreeviewComponent) treeviewComponent: TreeviewComponent;
   items: TreeviewItem[];
+  
+  private companies: any;
+  private departments: any;
+  private teams: any;
+  
+  private company: any;
+  private department: any;
+  private team: any;
 
   private isAccept: boolean = false;
 
@@ -80,6 +88,8 @@ export class ManagerSettingComponent implements OnInit {
       }
    }
     }
+    this.companies = this.dataProvider.sampleWorker();
+    this.getWorkerTreeView();
   }
   
 
@@ -132,7 +142,7 @@ export class ManagerSettingComponent implements OnInit {
     
   }
 
-  // Tree-View 설정
+  // 공장/라인/공정 Tree-View 설정
   getTreeView(){
     this.db.list('factories').subscribe(factories => {
       if (factories) {
@@ -155,7 +165,11 @@ export class ManagerSettingComponent implements OnInit {
             temp2.children.splice(0,1);
               for (let j = 0; j < lines.length; j++) {
                 let temp3 = [];
-                this.db.list('factories/' + factories[i].$key + '/lines/' + lines[j].$key + '/processes').subscribe(processes => {
+                this.db.list('factories/' + factories[i].$key + '/lines/' + lines[j].$key + '/processes', {
+                  query: {
+                    orderByChild: 'p_code'
+                  }
+                }).subscribe(processes => {
                   if (processes) {
                     for (let k = 0; k < processes.length; k++) {
                       temp3.push(new TreeviewItem({
@@ -240,6 +254,8 @@ export class ManagerSettingComponent implements OnInit {
     this.db.list('factories/' + this.factory.factoryKey + '/lines/').subscribe(lines => {
       this.lines = lines;
     })
+
+    this.addProcessView = false;
   }
 
   factoryAdd(factoryName) {
@@ -292,6 +308,7 @@ export class ManagerSettingComponent implements OnInit {
     this.db.list('factories/' + this.factory.factoryKey + '/lines/' + this.line.lineKey + '/processes/').subscribe(processes => {
       this.processes = processes;
     })
+    this.addProcessView = false;
   }
 
   addProcess() {
@@ -301,9 +318,10 @@ export class ManagerSettingComponent implements OnInit {
     this.addProcessView = false;
   }
   processAdd(processName, processCode) {
+    let process_code:number = +processCode;
     let _process = {
       p_name: processName,
-      p_code: processCode,
+      p_code: process_code,
       poor: this.dataProvider.getProcessPoor(),
 
       machines: this.dataProvider.getProcessMachine(),
@@ -334,12 +352,77 @@ export class ManagerSettingComponent implements OnInit {
       })
     })
   }
-    this.addProcessView = false;
+  this.process = null;
   }
   onProcessChange(process) {
     this.addProcessView = false;
     this.process = process;
   }
+
+
+  // 직원 Tree-View 설정
+  getWorkerTreeView(){
+    this.db.list('workers').subscribe(workers => {
+      if (workers) {
+        let temp1 = new TreeviewItem({
+          text: '회사', value: workers, children: [
+              { text: 'temp', value: 0 },
+          ]
+      });
+      temp1.children.splice(0,1);
+        
+        for (let i = 0; i < workers.length; i++) {
+          
+          this.db.list('workers/' + '/' + i  +'/'+ '/lines').subscribe(lines => {
+            // if (lines) {
+            //   let temp2 = new TreeviewItem({
+            //     text: factories[i].title, value: factories[i].$key, children: [
+            //         { text: 'temp', value: 0 },
+            //     ]
+            // });
+            // temp2.children.splice(0,1);
+            //   for (let j = 0; j < lines.length; j++) {
+            //     let temp3 = [];
+            //     this.db.list('factories/' + factories[i].$key + '/lines/' + lines[j].$key + '/processes', {
+            //       query: {
+            //         orderByChild: 'p_code'
+            //       }
+            //     }).subscribe(processes => {
+            //       if (processes) {
+            //         for (let k = 0; k < processes.length; k++) {
+            //           temp3.push(new TreeviewItem({
+            //             text: processes[k].p_name,
+            //             value: factories[i].$key + '/lines/' + lines[j].$key + '/processes/' +processes[k].$key
+            //           }));
+            //         }
+
+            //       }
+            //       if (temp3.length > 0) {
+            //         temp2.children.push(new TreeviewItem({
+            //           text: lines[j].name,
+            //           value: factories[i].$key + '/lines/' + lines[j].$key,
+            //           children: temp3
+            //         }));
+            //       } else {
+            //         temp2.children.push(new TreeviewItem({
+            //           text: lines[j].name,
+            //           value: factories[i].$key + '/lines/' + lines[j].$key
+            //         }));
+            //       }
+            //     })
+            //   }
+            //   temp1.children.push(temp2);
+              
+            // }
+        });
+          
+        }
+
+      // this.items = [temp1];
+      }
+    });
+  }
+
 
 }
 

@@ -70,20 +70,15 @@
           <div style="width: 300px" class="dropdown-menu" aria-labelledby="dropdownMenu2" *dropdownMenu>
             <button class="dropdown-item" (click)="onLineChange(line)" type="button" *ngFor="let line of lines">
         {{line.name}}
-    </button><button class="dropdown-item" (click)="addLine()">라인 추가</button>
+    </button>
+            <button class="dropdown-item" (click)="addLine()">라인 추가</button>
           </div>
         </div>
       </div>
       <div class="col-4" *ngIf="line">
-        <div class="dropdown" dropdown>
-          <button *ngIf="!process" style="width: 300px" class="btn btn-secondary btn-lg dropdown-toggle" type="button" id="dropdownMenu2"
-            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" dropdownToggle>
-    공정 추가
-  </button>
-          <div style="width: 300px" class="dropdown-menu" aria-labelledby="dropdownMenu2" *dropdownMenu>
-            <button class="dropdown-item" (click)="addProcess()">공정 추가</button>
-          </div>
-        </div>
+
+        <button *ngIf="!process" style="width: 300px" class="btn btn-secondary btn-lg bg-primary" (click)="addProcess()">공정 추가</button>
+
       </div>
     </div>
 
@@ -191,7 +186,7 @@
               </div>
               <div class="form-group">
                 <label>공정 코드</label>
-                <input type="text" #processCode class="form-control" id="company" placeholder="공장 이름을 입력하세요.">
+                <input type="number" #processCode class="form-control" id="company" placeholder="공정 코드를 입력하세요.">
               </div>
             </form>
           </div>
@@ -210,6 +205,47 @@
       <i class="icon-calendar"></i> 일정 관리 설정
     </ng-template>
     <div class="row">
+      <div class="col-4">
+        <div class="card">
+          <div class="card-header">
+            <strong>일정 추가</strong>
+          </div>
+          <div class="card-block">
+            <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+              <div class="form-group">
+                <label>일정 이름</label>
+                <input type="text" #taskName class="form-control" placeholder="일정 제목을 입력하세요.">
+              </div>
+              <div class="form-group">
+                <label>일정 ID</label>
+                <input type="number" #taskId class="form-control" placeholder="일정 ID는 중복불가.">
+              </div>
+              <div class="form-group">
+                <label>시작일 설정</label>
+                <div style="width: 300px; height: 50px" class="input-group">
+                  <input class="form-control" placeholder="시작 날짜" name="dp1" [(ngModel)]="startDate" ngbDatepicker #d1="ngbDatepicker">
+                  <div class="input-group-addon" (click)="d1.toggle()">
+                    <i class="icon-calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>종료일 설정</label>
+                <div style="width: 300px; height: 50px" class="input-group">
+                  <input class="form-control" placeholder="종료 날짜" name="dp2" [(ngModel)]="endDate" ngbDatepicker #d2="ngbDatepicker">
+                  <div class="input-group-addon" (click)="d2.toggle()">
+                    <i class="icon-calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></i>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="card-footer">
+            <button type="submit" (click)="addTask(taskName.value, taskId.value)" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> 확인</button>
+            <button type="reset" (click)="cancelProcessAdd()" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> 취소</button>
+          </div>
+        </div>
+      </div>
       <div class="col-8" *ngIf="tempTasks.length>0">
         <table class="table table-responsive table-hover table-outline mb-0">
           <thead class="thead-default">
@@ -249,8 +285,8 @@
                 <strong>{{task.end}}</strong>
               </td>
               <td>
-                  <strong>{{task.id}}</strong>
-                </td>
+                <strong>{{task.id}}</strong>
+              </td>
               <td>
                 <button class="bg-danger" (click)="deleteTask(task)"><i class="icon-trash"></i>삭제</button>
               </td>
@@ -258,70 +294,208 @@
           </tbody>
         </table>
       </div>
-      <div class="col-4">
-          <div class="card">
-              <div class="card-header">
-                <strong>일정 추가</strong>
-              </div>
-              <div class="card-block">
-                <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
-                  <div class="form-group">
-                    <label>일정 이름</label>
-                    <input type="text" #taskName class="form-control" placeholder="공정 이름을 입력하세요.">
-                  </div>
-                  <div class="form-group">
-                      <label>일정 ID</label>
-                      <input type="number" #taskId class="form-control" placeholder="일정 ID는 중복불가.">
-                    </div>
-                  <div class="form-group">
-                    <label>시작일 설정</label>
-                    <div style="width: 300px; height: 50px" class="input-group">
-                    <input class="form-control" placeholder="시작 날짜" name="dp1" [(ngModel)]="startDate" ngbDatepicker #d1="ngbDatepicker">
-                    <div class="input-group-addon" (click)="d1.toggle()">
-                      <i class="icon-calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></i>
-                    </div>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label>종료일 설정</label>
-                    <div style="width: 300px; height: 50px" class="input-group">
-                    <input class="form-control" placeholder="종료 날짜" name="dp2" [(ngModel)]="endDate" ngbDatepicker #d2="ngbDatepicker">
-                    <div class="input-group-addon" (click)="d2.toggle()">
-                      <i class="icon-calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></i>
-                    </div>
-                    </div>
-                  </div>
-                </form>
-              </div>
-              <div class="card-footer">
-                <button type="submit" (click)="addTask(taskName.value, taskId.value)" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> 확인</button>
-                <button type="reset" (click)="cancelProcessAdd()" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> 취소</button>
-              </div>
-            </div>
-      </div>
     </div>
   </tab>
-
-  <tab>
-    <ng-template tabHeading>
-      <i class="icon-energy"></i> 불량 설정
-    </ng-template>
-    <div class="row"></div>
-  </tab>
-
-  <tab>
-    <ng-template tabHeading>
-      <i class="icon-basket-loaded"></i> 재고 설정
-    </ng-template>
-    <div class="row"></div>
-  </tab>
-
+  
   <tab>
     <ng-template tabHeading>
       <i class="icon-people"></i> 인적자원 설정
     </ng-template>
-    <div class="row"></div>
+    <div class="row">
+        <div class="col-3">
+          <div class="dropdown" dropdown>
+            <button *ngIf="!company" style="width: 300px" class="btn btn-secondary btn-lg dropdown-toggle" type="button" id="dropdownMenu2"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" dropdownToggle>
+      본부 선택 또는 추가
+    </button>
+            <button *ngIf="company" style="width: 300px" class="btn btn-success btn-lg dropdown-toggle" type="button" id="dropdownMenu2"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" dropdownToggle>
+      {{company.c_name}}
+    </button>
+  
+            <div style="width: 300px;" class="dropdown-menu" aria-labelledby="dropdownMenu2" *dropdownMenu>
+              <div *ngIf="companies">
+                <button class="dropdown-item" (click)="onCompanyChange(company)" *ngFor="let company of companies">
+          {{company.c_name}}
+      </button></div>
+              <button class="dropdown-item" (click)="addCompany()">본부 추가</button>
+            </div>
+          </div>
+  
+        </div>
+        <div class="col-3" *ngIf="company">
+          <div class="dropdown" dropdown>
+            <button *ngIf="!department" style="width: 300px" class="btn btn-secondary btn-lg dropdown-toggle" type="button" id="dropdownMenu2"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" dropdownToggle>
+      부서 선택 또는 추가
+    </button>
+            <button *ngIf="department" style="width: 300px" class="btn btn-success btn-lg dropdown-toggle" type="button" id="dropdownMenu2"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" dropdownToggle>
+      {{department.d_name}}
+    </button>
+            <div style="width: 300px" class="dropdown-menu" aria-labelledby="dropdownMenu2" *dropdownMenu>
+              <button class="dropdown-item" (click)="onDepartmentChange(department)" type="button" *ngFor="let line of lines">
+          {{department.d_name}}
+      </button>
+             <button class="dropdown-item" (click)="addDepartmentLine()">부서 추가</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-3" *ngIf="">
+          <div class="dropdown" dropdown>
+            <button *ngIf="!department" style="width: 300px" class="btn btn-secondary btn-lg dropdown-toggle" type="button" id="dropdownMenu2"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" dropdownToggle>
+      부서 선택 또는 추가
+    </button>
+            <button *ngIf="department" style="width: 300px" class="btn btn-success btn-lg dropdown-toggle" type="button" id="dropdownMenu2"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" dropdownToggle>
+      {{department.d_name}}
+    </button>
+            <div style="width: 300px" class="dropdown-menu" aria-labelledby="dropdownMenu2" *dropdownMenu>
+              <button class="dropdown-item" (click)="onDepartmentChange(department)" type="button" *ngFor="let line of lines">
+          {{department.d_name}}
+      </button>
+             <button class="dropdown-item" (click)="addDepartmentLine()">부서 추가</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-3" *ngIf="company">
+          <div class="dropdown" dropdown>
+            <button *ngIf="!department" style="width: 300px" class="btn btn-secondary btn-lg dropdown-toggle" type="button" id="dropdownMenu2"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" dropdownToggle>
+      부서 선택 또는 추가
+    </button>
+            <button *ngIf="department" style="width: 300px" class="btn btn-success btn-lg dropdown-toggle" type="button" id="dropdownMenu2"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" dropdownToggle>
+      {{department.d_name}}
+    </button>
+            <div style="width: 300px" class="dropdown-menu" aria-labelledby="dropdownMenu2" *dropdownMenu>
+              <button class="dropdown-item" (click)="onDepartmentChange(department)" type="button" *ngFor="let line of lines">
+          {{department.d_name}}
+      </button>
+             <button class="dropdown-item" (click)="addDepartmentLine()">부서 추가</button>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="row animated fadeIn">
+  
+        <ng-template #itemTemplate let-item="item" let-onCollapseExpand="onCollapseExpand" let-onCheckedChange="onCheckedChange">
+          <div class="form-check">
+            <i *ngIf="item.children" (click)="onCollapseExpand()" aria-hidden="true" class="fa" [class.fa-caret-right]="item.collapsed"
+              [class.fa-caret-down]="!item.collapsed"></i> {{item.text}}
+            <label class="form-check-label">
+                  <i class="fa fa-trash" aria-hidden="true" title="Remove" (click)="removeItem(item)"></i>
+              </label>
+          </div>
+        </ng-template>
+  
+        <div class="col-8">
+          <div class="card animated fadeIn" style="margin-top: 15px;">
+            <div class="card-header">
+              <strong>MES 데이터베이스정보입니다. </strong>
+            </div>
+            <div class="card-block">
+              <div class="row" style="padding: 5px">
+                <div class="form-group">
+                  <div class="d-inline-block">
+                    <ngx-treeview [items]="items" [itemTemplate]="itemTemplate">
+                    </ngx-treeview>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="col-4" *ngIf="addFactoryView">
+          <div class="card" style="margin-top: 15px; margin-left: 15px;">
+            <div class="card-header">
+              <strong>공장 추가</strong>
+            </div>
+            <div class="card-block">
+              <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                <div class="form-group">
+                  <label for="company">공장 이름</label>
+                  <input type="text" #factoryName class="form-control" id="company" placeholder="공장 이름을 입력하세요.">
+                </div>
+              </form>
+            </div>
+            <div class="card-footer">
+              <button type="submit" (click)="factoryAdd(factoryName.value)" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> 확인</button>
+              <button type="reset" (click)="cancelFactoryAdd()" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> 취소</button>
+            </div>
+          </div>
+        </div>
+  
+        <div class="col-4" *ngIf="addLineView">
+          <div class="card" style="margin-top: 15px; margin-left: 15px;">
+            <div class="card-header">
+              <strong>라인 추가</strong>
+            </div>
+            <div class="card-block">
+              <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                <div class="form-group row">
+                  <label class="col-6 form-control-label" for="text-input">라인 이름 입력</label>
+                  <div class="col-6">
+                    <input #lineName>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-6 form-control-label" for="text-input">라인 생산 제품명 입력</label>
+                  <div class="col-6">
+                    <input #productName>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-6 form-control-label" for="text-input">제품 재고량 입력</label>
+                  <div class="col-6">
+                    <input #stockAmount>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-6 form-control-label" for="text-input">제품 상한재고량 입력</label>
+                  <div class="col-6">
+                    <input #stockLimitAmount>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="card-footer">
+              <button type="submit" (click)="lineAdd(lineName.value, productName.value, stockAmount.value, stockLimitAmount.value)" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> 확인</button>
+              <button type="reset" (click)="cancelLineAdd()" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> 취소</button>
+            </div>
+          </div>
+        </div>
+  
+        <div class="col-4" *ngIf="addProcessView">
+          <div class="card" style="margin-top: 15px; margin-left: 15px;">
+            <div class="card-header">
+              <strong>공정 추가</strong>
+              <small class="text-muted">공정과 공정사이의 데이터및 코드 입력 필요!</small>
+            </div>
+            <div class="card-block">
+              <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                <div class="form-group">
+                  <label>공정 이름</label>
+                  <input type="text" #processName class="form-control" placeholder="공정 이름을 입력하세요.">
+                </div>
+                <div class="form-group">
+                  <label>공정 코드</label>
+                  <input type="number" #processCode class="form-control" id="company" placeholder="공정 코드를 입력하세요.">
+                </div>
+              </form>
+            </div>
+            <div class="card-footer">
+              <button type="submit" (click)="processAdd(processName.value, processCode.value)" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> 확인</button>
+              <button type="reset" (click)="cancelProcessAdd()" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> 취소</button>
+            </div>
+          </div>
+        </div>
+  
+      </div>
   </tab>
-
+  
 </tabset>
 
