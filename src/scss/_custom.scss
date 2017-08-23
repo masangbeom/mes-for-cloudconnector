@@ -1,79 +1,80 @@
+@font-face { font-family: 'NanumGothicBold';
+  src: url(./NanumGothicBold.ttf) format('truetype'); 
+ }
+
+
 // Here you can add other styles
 .main{
-  // background-image: url('../assets/img/graybackground.png');
+  // background-image: url('../assets/img/silver-diamond-plate.jpg');
+  // background-repeat: no-repeat;
+  // background-position: center;
+  // background-size: cover;
 }
 
 .round-button {
   display: block;
-  margin-left: 30px;
+  margin-left: 20px;
   margin-bottom: 20px;
   margin-top: 20px;
   padding-bottom: 3px;
   width: 110px;
-  height: 110px;
-  background: #ffffff;
-  color: black;
+  height: 80px;
+  background: #263238;
+  color: #ffffff;
   text-align: center;
+  border: 1px solid #687074;
   text-decoration: none;
-  box-shadow: 0 0 5px black;
-  font-size: 15px;
+  // box-shadow: 0 0 5px black;
+  font-size: 18px;
   font-weight: bold;
   transition: 800ms ease all;
 }
 
 .round-button:hover {
-  background: #607d8b;
+  background: #3b444a;
 }
 
 .round-button-arrow {
   display: block;
-  margin-left: 30px;
-  margin-bottom: 10px;
-  margin-top: 53px;
-  width: 40px;
-  height: 40px;
-  line-height: 50px;
-  border: 2px solid black;
-  border-radius: 50%;
-  color: black;
+  margin-left: 20px;
+  margin-bottom: 15px;
+  margin-top: 45px;
+  width: 20px;
+  height: 30px;
+  border: none;
   text-align: center;
   text-decoration: none;
-  background: #ffffff;
-  box-shadow: 0 0 4px black;
+  background: #263238;
   cursor: pointer;
   transition: 1000ms ease all;
   outline: none;
+  background-image: url('../assets/img/arr_wh.png'); 
+  background-size:contain;
+  background-repeat: no-repeat;
 }
 
-.round-button-arrow:hover {
-  background: gray;
-}
-
-.round-button-arrow img {
-  display: block;
-  padding: 12%;
-  height: auto;
-}
 
 .round-button-end {
   display: block;
-  margin-left: 25px;
+  margin-left: 20px;
   margin-bottom: 20px;
-  margin-top: 25px;
+  margin-top: 20px;
+  padding-bottom: 3px;
   width: 110px;
+  height: 80px;
+  background: #263238;
   color: #ffffff;
   text-align: center;
+  border: 1px solid #687074;
   text-decoration: none;
-  background: #b00;
-  box-shadow: 0 0 5px black;
+  // box-shadow: 0 0 5px black;
   font-size: 18px;
   font-weight: bold;
-  transition: 1000ms ease all;
+  transition: 800ms ease all;
 }
 
 .round-button-end:hover {
-  color: #000;
-  background: #ffffff;
+  background: #3b444a;
 }
 
 .progress2{
@@ -266,6 +267,11 @@
   transition:800ms ease all;
 }
 
+.slash {
+  background:url(http://cdn.zetawiki.com/png/slash.png);
+  background-size:100% 100%;
+}
+
 div.gantt_default_corner div{
     display: none;
   }
@@ -277,17 +283,18 @@ div.gantt_default_corner div{
   margin-bottom: 10px;
   margin-top: 10px;
   padding-bottom: 3px;
-  background: #b0bec5;
-  width: 55px;
-  height: 55px;
-  border: 2px solid black;
-  border-radius: 50%;
-  color: black;
+  background: #00aadd;
+  width: 90px;
+  height: 90px;
+  border: 1px solid #0883af;
+  border-radius: 10px;
+  color: #ffffff;
   text-align: center;
   text-decoration: none;
   box-shadow: 0 0 5px black;
-  font-size: 8px;
+  font-size: 13px;
   font-weight: bold;
+  font-family: NanumGothicBold;
   transition: 800ms ease all;
 }
 
@@ -298,49 +305,45 @@ div.gantt_default_corner div{
 .round-button-arrow2 {
   display: block;
   margin-left: 15px;
-  margin-bottom: 5px;
-  margin-top: 25px;
+  margin-bottom: 15px;
+  margin-top: 40px;
   width: 20px;
-  height: 20px;
-  line-height: 25px;
-  border: 2px solid black;
-  border-radius: 50%;
-  color: black;
+  height: 30px;
+  
+  // color: black;
+  border: none;
   text-align: center;
   text-decoration: none;
   background: #ffffff;
-  box-shadow: 0 0 4px black;
   cursor: pointer;
   transition: 1000ms ease all;
   outline: none;
 }
 
-.round-button-arrow2:hover {
-  background: gray;
-}
-
-.round-button-arrow2 img {
-  display: block;
-  padding: 12%;
-  height: auto;
-}
+// .round-button-arrow2 img {
+//   display: block;
+//   padding: 12%;
+//   height: auto;
+// }
 
 .round-button-end2 {
   display: block;
-  margin-left: 12.5px;
+  margin-left: 15px;
   margin-bottom: 10px;
-  margin-top: 12.5px;
-  border: 2px solid black;
-  border-radius: 50%;
-  width: 55px;
+  margin-top: 10px;
+  padding-bottom: 3px;
+  background: #303030;
+  width: 90px;
+  height: 90px;
+  border: none;
+  border-radius: 10px;
   color: #ffffff;
   text-align: center;
   text-decoration: none;
-  background: #b00;
-  box-shadow: 0 0 5px black;
-  font-size: 9px;
+  font-size: 13px;
   font-weight: bold;
-  transition: 1000ms ease all;
+  font-family: NanumGothicBold;
+  transition: 800ms ease all;
 }
 
 .round-button-end2:hover {

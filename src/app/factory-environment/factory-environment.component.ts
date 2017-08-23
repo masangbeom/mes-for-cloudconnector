@@ -13,7 +13,7 @@ export class FactoryEnvironmentComponent {
   
   constructor(public dataProvider: DataProvider) { 
     this.factories = this.dataProvider.sampleFactories();
-    
+    this.onChange(this.factories[0])
   }
   onChange(factory){
     this.factory = factory;

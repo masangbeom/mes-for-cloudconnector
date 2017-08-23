@@ -1,12 +1,12 @@
 <!-- 로그인 -->
- <!-- <div *ngIf="!isAccept" class="app flex-row align-items-center">
-  <div class="container">
+ <div *ngIf="!isAccept" class="app flex-row align-items-center">
+  <div class="container" style="width: 1553px;">
     <div class="row justify-content-center">
       <div class="col-md-8">
         <div class="card-group mb-0">
           <div class="card p-4">
             <div class="card-block">
-              <h1>로그인</h1>
+              <h1 style="font-family: NanumGothicBold; font-weight: bold; font-size: 56px;">LOGIN</h1>
               <p class="text-muted">사원 ID와 PASSWORD를 통해 로그인.</p>
               <div class="input-group mb-3">
                 <span class="input-group-addon"><i class="icon-user"></i></span>
@@ -23,17 +23,17 @@
               </div>
             </div>
           </div>
-          <div class="card card-inverse card-primary py-5 d-md-down-none" style="width:44%">
-            <div class="card-block text-center" style="background-image: url('../../assets/img/logo.png'); background-size: contain; background-repeat: no-repeat; background-position: center;">
+          <div class="card card-inverse py-5 d-md-down-none" style="width: 50%; background-image: url('../../assets/img/ban.png'); background-size: cover; background-position: center;">
+            <div class="card-block text-center" >
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div> -->
+</div>
 
-<header class="app-header navbar">
+<header class="app-header navbar" *ngIf="isAccept">
     <ul class="nav navbar-nav mr-auto d-md-down-none">
         <li class="nav-item">
             <a class="nav-link navbar-toggler" href="#" appSidebarToggler>&#9776;</a>
@@ -51,7 +51,7 @@
     </div>
 </header>
 
-<div  class="app-body">
+<div *ngIf="isAccept"  class="app-body">
     <div class="sidebar">
         <nav class="sidebar-nav">
             <ul class="nav">
@@ -62,7 +62,7 @@
                     <li class="nav-title">
                         MES
                 </li>
-                <li class="nav-item">
+                <li class="nav-item"> 
                     <a class="nav-link" routerLinkActive="active" [routerLink]="['/line-process-monitoring']"><i class="icon-speedometer"></i> 라인&공정모니터링</a>
                 </li>
                 <li class="nav-item">
@@ -89,7 +89,7 @@
 
 
     <!-- Main content -->
-    <main class="main">
+    <main *ngIf="isAccept" class="main">
         <!-- Breadcrumb -->
         <ol class="breadcrumb">
             <app-breadcrumbs></app-breadcrumbs>
@@ -103,7 +103,7 @@
 </div>
 
 
-<footer class="app-footer">
+<footer *ngIf="isAccept" class="app-footer">
     <a href="http://www.soosang.com/smain.html">MES - For CloudConnector</a> &copy; 2017 creativeLabs.
     <span class="float-right">Powered by <a href="http://www.soosang.com/smain.html">MES - For CloudConnector</a>
     </span>

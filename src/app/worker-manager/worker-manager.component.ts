@@ -1,11 +1,11 @@
 import { AngularFireDatabase } from 'angularfire2/database';
 import { DataProvider } from './../../providers/data';
-import { Component } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 
 @Component({
   templateUrl: 'worker-manager.component.html'
 })
-export class WorkerManagerComponent {
+export class WorkerManagerComponent implements OnInit{
   private companies: any;
   private departments: any;
   private teams: any;
@@ -19,7 +19,14 @@ export class WorkerManagerComponent {
     this.db.list('companies').subscribe(companies=>{
       this.companies = companies;
     })
-    
+    setTimeout(()=>{
+      this.onCompanyChange(this.companies[0]);
+      this.onDepartmentChange(this.departments[0]);
+      this.onTeamChange(this.teams[0]);
+      }, 1500)
+  }
+  ngOnInit(){
+  
   }
 
   onCompanyChange(company){
@@ -28,6 +35,7 @@ export class WorkerManagerComponent {
       if(departments)
       this.departments = departments;
     })
+    
   }
 
   onDepartmentChange(department){

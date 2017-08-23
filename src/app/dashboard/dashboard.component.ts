@@ -49,6 +49,10 @@ export class DashboardComponent {
   constructor(public dataProvider: DataProvider, public db: AngularFireDatabase) {
     this.factories = this.dataProvider.sampleFactories();
     this.onChange(this.factories[0]);
+    // this.db.list('factories').subscribe(factories=>{
+    //   this.factories = factories;
+    //   this.onChange(factories[0]);
+    // })
   }
 
   onChange(factory) {
@@ -68,6 +72,32 @@ export class DashboardComponent {
         line.lineRunning = false;
       }
     });
+    // this.factory = factory;
+    // this.db.list('factories/'+this.factory.factoryKey+'/lines/').subscribe(lines=>{
+    //   this.lines = lines;
+    //   this.lines.forEach(line => {
+    //     let count = 0;
+    //     this.db.list('factories/'+this.factory.factoryKey+'/lines/'+line.lineKey+'/processes/', {
+    //       query: {
+    //         orderByChild: 'p_code',
+    //         startAt: 1
+    //       }
+    //     }).subscribe(processes=>{
+    //       console.log(processes)
+    //       line.processes = processes;
+    //       processes.forEach(process => {
+    //         if (process.p_error) {
+    //           count += 1;
+    //         }
+    //       });
+    //       if (count == 0) {
+    //         line.lineRunning = true;
+    //       } else {
+    //         line.lineRunning = false;
+    //       }
+    //     })
+    //   });
+    // })
   }
 
   isEven(n) {

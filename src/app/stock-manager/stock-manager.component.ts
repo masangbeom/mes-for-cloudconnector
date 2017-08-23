@@ -8,6 +8,7 @@ export class StockManagerComponent {
 
   constructor(public dataProvider: DataProvider) { 
     this.warehouses = this.dataProvider.sampleWareHouse();
+    this.onChange(this.warehouses[0]);
   }
 
   private select_view: any = "daily";

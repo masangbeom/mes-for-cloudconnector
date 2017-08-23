@@ -30,7 +30,7 @@ export class DataProvider {
       l_code: 1
     }, {
       p_code: 3,
-      p_name: '렉킹(소재투입)',
+      p_name: '렉킹',
       description: '설명',
       pro_code: '제품 번호',
       p_error: false,

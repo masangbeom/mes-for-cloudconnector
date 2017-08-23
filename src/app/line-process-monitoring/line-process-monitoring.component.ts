@@ -9,12 +9,6 @@ import * as moment from 'moment';
 })
 
 export class LineProcessMonitoringComponent implements OnInit{
-  ngOnInit(){
-
-  }
-  ngDoCheck(){
-    console.log('change');
-  }
   private factories: any;
   private factory: any;
   private line: any;
@@ -177,6 +171,44 @@ export class LineProcessMonitoringComponent implements OnInit{
     })
   }
 
+  ngOnInit(){
+    //Factory & Line 시연용 미리 선택
+    this.db.object('factories/'+"-KrnDUBL-Zwz5ERpbaB_").subscribe(factory=>{
+      this.factory = factory;
+    })
+  this.db.list('factories/'+"-KrnDUBL-Zwz5ERpbaB_"+'/lines/').subscribe(lines=>{
+    this.lines = lines;
+  })
+  this.db.object('factories/'+"-KrnDUBL-Zwz5ERpbaB_"+'/lines/'+"-Kro-5OHW8Yy4G8uZIF4").subscribe(line=>{
+    this.line = line;
+  })
+  
+  let count = 0;
+  this.db.list('factories/'+"-KrnDUBL-Zwz5ERpbaB_"+'/lines/'+"-Kro-5OHW8Yy4G8uZIF4"+'/processes/', {
+    query: {
+      orderByChild: 'p_code',
+      startAt: 1
+    }
+  }).subscribe(processes=>{
+    this.processes = processes;
+    processes.forEach(process => {
+      if (process.p_error) {
+        count += 1;
+      }
+    });
+    if (count == 0) {
+      this.lineRunning = true;
+    } else {
+      this.lineRunning = false;
+    }
+  })
+  
+  this.randomInterval = setInterval(() => {
+    this.randomize();
+  }, 5000)
+  this.process=null
+  }
+
   onChange(factory) {
     this.factory = factory;
     this.db.list('factories/'+this.factory.factoryKey+'/lines/').subscribe(lines=>{
@@ -253,10 +285,10 @@ export class LineProcessMonitoringComponent implements OnInit{
         cycle_time: Math.round(Math.random() * 10),
         running_time: Math.round(moment.duration(Date.now() - process.createTime).asMinutes())
       })
-    }, 5000)
+    }, 3000)
     setTimeout(()=>{
       clearInterval(this.ProcessRandomGenerate)
-    }, 30000)
+    }, 15000)
     
   }
 

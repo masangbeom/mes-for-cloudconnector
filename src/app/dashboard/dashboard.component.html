@@ -15,21 +15,22 @@
             <div class="row">
             <div *ngFor="let process of line.processes">
               <button *ngIf="!(process.p_code % 2 == 0) && !process.p_error" class="round-button2">{{process.p_name}}<br/></button>
-              <button *ngIf="!(process.p_code % 2 == 0) && process.p_error" class="round-button2" style="background-image: url('../assets/img/stop.png'); background-size:contain; padding-top: 5px;">{{process.p_name}}</button>
+              <button *ngIf="!(process.p_code % 2 == 0) && process.p_error" class="round-button2" style="background: #a8a8a8; background-image:url(http://cdn.zetawiki.com/png/slash.png); background-size:contain; padding-top: 5px;border: 1px solid #838383;
+              border-radius: 10px;">{{process.p_name}}</button>
               <button *ngIf="(process.p_code % 2 == 0) && !(process.p_code == line.processes.length)  && process.p_error" class="round-button-arrow2"
-                style="background-image: url('../assets/img/stop.png'); background-size:contain;">
+                style="background-image: url('../assets/img/arr.png'); background-size:contain;  background-repeat: no-repeat;">
       </button>
               <button *ngIf="(process.p_code % 2 == 0) && !(process.p_code == line.processes.length) && !process.p_error" class="round-button-arrow2"
-                style="background-image: url('../assets/img/right-arrow1.png'); background-size:contain;">
+                style="background-image: url('../assets/img/arr.png'); background-size:contain;background-repeat: no-repeat;">
       </button>
-              <button *ngIf="(process.p_code % 2 == 0) && (process.p_code == line.processes.length)" class="round-button-arrow2" style="background-image: url('../assets/img/right-arrow1.png'); background-size:contain;">
+              <button *ngIf="(process.p_code % 2 == 0) && (process.p_code == line.processes.length)" class="round-button-arrow2" style="background-image: url('../assets/img/arr.png'); background-size:contain; background-repeat: no-repeat;">
       </button>
             </div>
             <button class="round-button-end2">라인 종료</button>
             </div>
           </div>
           <div class="col-2">
-         <ul class="horizontal-bars type-2">
+         <ul class="horizontal-bars type-2" style="margin-top: 30px">
                 <li>
                   <span class="title">생 산 량</span>
                   <span class="value">51,223 <span class="text-muted small">(15%)</span></span>
