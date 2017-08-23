@@ -54,9 +54,9 @@
           <div class="row">
             <div *ngFor="let process of processes">
               <button (click)="processClick(process)" *ngIf="!isEven(process.p_code) && !process.p_error" class="round-button">{{process.p_name}}<br/></button>
-              <button (click)="processClick(process)" *ngIf="!isEven(process.p_code) && process.p_error" class="round-button" style="background-image: url('../assets/img/stop.png'); background-size:contain; padding-top: 5px;">{{process.p_name}}</button>
+              <button (click)="processClick(process)" *ngIf="!isEven(process.p_code) && process.p_error" class="round-button" style="background-image: url('../assets/img/stop.png'); background-size: 70% 90%; background-repeat: no-repeat; background-position: center; color:#000; padding-top: 5px;">{{process.p_name}}</button>
               <button (click)="processClick(process)" *ngIf="isEven(process.p_code) && !isLineEnd(process.p_code)  && process.p_error"
-                class="round-button-arrow" style="background-image: url('../assets/img/stop.png'); background-size:contain;">
+                class="round-button-arrow">
       </button>
               <button (click)="processClick(process)" *ngIf="isEven(process.p_code) && !isLineEnd(process.p_code) && !process.p_error"
                 class="round-button-arrow">

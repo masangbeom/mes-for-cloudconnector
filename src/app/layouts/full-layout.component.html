@@ -1,5 +1,6 @@
 <!-- 로그인 -->
- <div *ngIf="!isAccept" class="app flex-row align-items-center">
+<div *ngIf="!isAccept"  class="app-body" style="background-image: url('../assets/img/bgpattern2.png');">
+ <div class="app flex-row align-items-center">
   <div class="container" style="width: 1553px;">
     <div class="row justify-content-center">
       <div class="col-md-8">
@@ -31,6 +32,7 @@
       </div>
     </div>
   </div>
+</div>
 </div>
 
 <header class="app-header navbar" *ngIf="isAccept">
@@ -69,7 +71,7 @@
                     <a class="nav-link" routerLinkActive="active" [routerLink]="['/schedule-manager']"><i class="icon-calendar"></i> 일정 관리</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/poor-manager']"><i class="icon-energy"></i> 불량 관리</a>
+                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/poor-manager']"><i class="icon-energy"></i> 품질 관리</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" routerLinkActive="active" [routerLink]="['/stock-manager']"><i class="icon-basket-loaded"></i> 재고 관리</a>

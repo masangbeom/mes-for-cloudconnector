@@ -19,11 +19,11 @@ export class WorkerManagerComponent implements OnInit{
     this.db.list('companies').subscribe(companies=>{
       this.companies = companies;
     })
-    setTimeout(()=>{
-      this.onCompanyChange(this.companies[0]);
-      this.onDepartmentChange(this.departments[0]);
-      this.onTeamChange(this.teams[0]);
-      }, 1500)
+    // setTimeout(()=>{
+    //   this.onCompanyChange(this.companies[0]);
+    //   this.onDepartmentChange(this.departments[0]);
+    //   this.onTeamChange(this.teams[0]);
+    //   }, 1500)
   }
   ngOnInit(){
   

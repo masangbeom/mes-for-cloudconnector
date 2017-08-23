@@ -1,5 +1,5 @@
 <tabset>
-  <tab style="background: #cfd8dc;" *ngFor="let factory of factories" (select)="onChange(factory)">
+  <tab class="animated fadeIn" style="background: #ffffff" *ngFor="let factory of factories" (select)="onChange(factory)">
     <ng-template tabHeading>
       <i class="icon-speedometer"></i> {{factory.title}}
     </ng-template>
@@ -29,7 +29,7 @@
             <button class="round-button-end2">라인 종료</button>
             </div>
           </div>
-          <div class="col-2">
+          <div class="col-2" style="border: 3px solid #b0bec5; border-top: 0; border-bottom: 0; border-right: 0;">
          <ul class="horizontal-bars type-2" style="margin-top: 30px">
                 <li>
                   <span class="title">생 산 량</span>

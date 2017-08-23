@@ -8,7 +8,7 @@ const routes: Routes = [
     path: '',
     component: PoorManagerComponent,
     data: {
-      title: '불량 관리'
+      title: '품질 관리'
     }
   }
 ];

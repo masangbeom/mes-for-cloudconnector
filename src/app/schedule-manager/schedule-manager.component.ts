@@ -47,33 +47,33 @@ export class ScheduleManagerComponent implements OnInit{
 
   ngOnInit(){
     //Factory & Line 시연용 미리 선택
-    this.db.object('factories/'+"-KrnDUBL-Zwz5ERpbaB_").subscribe(factory=>{
-      this.factory = factory;
-    })
-    this.db.list('factories/'+"-KrnDUBL-Zwz5ERpbaB_"+'/lines/').subscribe(lines=>{
-      this.lines = lines;
-    })
-    this.db.object('/tasks').subscribe((tasks)=>{
-      this.tempTasks = tasks;
-    }) 
-    for(let i=0; i<this.tempTasks.length; i++){  
-        this.tempTasks[i] = {
-          start: this.tempTasks[i].start,
-          end: this.tempTasks[i].end,
-          id: this.tempTasks[i].id,
-          text: this.tempTasks[i].text,
-          complete: this.tempTasks[i].complete,
-          width: this.tempTasks[i].complete + '%'
-        }
-     }
-      for(let i=0; i<this.config.tasks.length; i++){  
-    if(this.config.tasks[i].complete == 100){
-      this.config.tasks[i].complete += "<strong> (완료)</strong>"
-    }
-    this.config.tasks[i].text += " (" + this.config.tasks[i].start;
-    this.config.tasks[i].text += " ~ ";
-    this.config.tasks[i].text += this.config.tasks[i].end+ ") ";
-    }
+    // this.db.object('factories/'+"-KrnDUBL-Zwz5ERpbaB_").subscribe(factory=>{
+    //   this.factory = factory;
+    // })
+    // this.db.list('factories/'+"-KrnDUBL-Zwz5ERpbaB_"+'/lines/').subscribe(lines=>{
+    //   this.lines = lines;
+    // })
+    // this.db.object('/tasks').subscribe((tasks)=>{
+    //   this.tempTasks = tasks;
+    // }) 
+    // for(let i=0; i<this.tempTasks.length; i++){  
+    //     this.tempTasks[i] = {
+    //       start: this.tempTasks[i].start,
+    //       end: this.tempTasks[i].end,
+    //       id: this.tempTasks[i].id,
+    //       text: this.tempTasks[i].text,
+    //       complete: this.tempTasks[i].complete,
+    //       width: this.tempTasks[i].complete + '%'
+    //     }
+    //  }
+    //   for(let i=0; i<this.config.tasks.length; i++){  
+    // if(this.config.tasks[i].complete == 100){
+    //   this.config.tasks[i].complete += "<strong> (완료)</strong>"
+    // }
+    // this.config.tasks[i].text += " (" + this.config.tasks[i].start;
+    // this.config.tasks[i].text += " ~ ";
+    // this.config.tasks[i].text += this.config.tasks[i].end+ ") ";
+    // }
   }
 
   onChange(factory){

@@ -79,10 +79,10 @@
                 <td style="padding-top: 10px; padding-bottom: 10px;">{{worker.w_phone}}</td>
                 <td style="padding-top: 10px; padding-bottom: 10px;">{{worker.w_email}}</td>
                 <td style="padding-top: 10px; padding-bottom: 10px;" *ngIf="worker.w_isWork">
-                  <span class="badge badge-success">O</span>
+                  <span class="badge"><img src="../assets/img/o.png" style="width:15px; height:15px"></span>
                 </td>
                 <td *ngIf="!worker.w_isWork" style="padding-top: 10px; padding-bottom: 10px;">
-                  <span class="badge badge-danger">X</span>
+                  <span class="badge"><img src="../assets/img/x.png" style="width:15px; height:15px"></span>
                 </td>
               </tr>
             </tbody>
