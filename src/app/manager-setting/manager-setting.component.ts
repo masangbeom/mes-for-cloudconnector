@@ -6,6 +6,7 @@ import { TreeviewI18n, TreeviewItem, TreeviewConfig, TreeviewHelper, TreeviewCom
   TreeviewEventParser, OrderDownlineTreeviewEventParser, DownlineTreeviewItem } from 'ngx-treeview';
 import * as moment from 'moment';
 import * as _ from 'lodash';
+import { ModalDirective } from 'ngx-bootstrap/modal/modal.component';
 
 @Injectable()
 export class ProductTreeviewConfig extends TreeviewConfig {
@@ -31,7 +32,9 @@ export class ProductTreeviewConfig extends TreeviewConfig {
 
 export class ManagerSettingComponent implements OnInit {
   @ViewChild(TreeviewComponent) treeviewComponent: TreeviewComponent;
+  @ViewChild('dangerModal') public dangerModal:ModalDirective;
   items: TreeviewItem[];
+  private item: any;
 
   private isAccept: boolean = false;
 
@@ -89,6 +92,11 @@ export class ManagerSettingComponent implements OnInit {
 
   ngOnInit() {
     
+  }
+
+  showDeleteModal(item){
+    this.item = item;
+    this.dangerModal.show();
   }
 
   countProps(obj) {
@@ -199,14 +207,14 @@ export class ManagerSettingComponent implements OnInit {
     });
   }
 
-  removeItem(item: TreeviewItem) {
+  removeItem() {
     let isRemoved = false;
     
     for (const tmpItem of this.items) {
-      if (tmpItem === item) {
-        _.remove(this.items, item);
+      if (tmpItem === this.item) {
+        _.remove(this.items, this.item);
       } else {
-        isRemoved = TreeviewHelper.removeItem(tmpItem, item);
+        isRemoved = TreeviewHelper.removeItem(tmpItem, this.item);
         if (isRemoved) {
           break;
         }
@@ -217,7 +225,8 @@ export class ManagerSettingComponent implements OnInit {
       this.treeviewComponent.raiseSelectedChange();
     }
 
-    this.db.object('factories/'+item.value).remove();
+    this.db.object('factories/'+this.item.value).remove();
+    this.dangerModal.hide();
   }
 
 

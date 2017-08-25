@@ -15,12 +15,16 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 // Tabs Component
 import { TabsModule } from 'ngx-bootstrap/tabs';
 
+// Modal Component
+import { ModalModule } from 'ngx-bootstrap/modal';
+
 @NgModule({
   imports: [
     ManagerSettingRoutingModule,
     TreeviewModule.forRoot(),
     BsDropdownModule,
     CommonModule,
+    ModalModule.forRoot(),
     FormsModule, ReactiveFormsModule,
     AngularFireDatabaseModule,
     TabsModule,

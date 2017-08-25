@@ -29,6 +29,24 @@
   </div>
 </div>
 
+
+<div bsModal #dangerModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">삭제하시겠습니까?</h4>
+        <button type="button" class="close" (click)="dangerModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-danger" (click)="removeItem()" >삭제</button>
+        <button type="button" class="btn btn-secondary" (click)="dangerModal.hide()">취소</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <tabset *ngIf="isAccept">
   <tab>
     <ng-template tabHeading>
@@ -89,7 +107,7 @@
           <i *ngIf="item.children" (click)="onCollapseExpand()" aria-hidden="true" class="fa" [class.fa-caret-right]="item.collapsed"
             [class.fa-caret-down]="!item.collapsed"></i> {{item.text}}
           <label class="form-check-label">
-                <i class="fa fa-trash" aria-hidden="true" title="Remove" (click)="removeItem(item)"></i>
+                <i class="fa fa-trash" aria-hidden="true" title="Remove" (click)="showDeleteModal(item)"></i>
             </label>
         </div>
       </ng-template>
@@ -503,4 +521,3 @@
   </tab>
   
 </tabset>
-
