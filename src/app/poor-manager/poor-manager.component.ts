@@ -45,7 +45,6 @@ export class PoorManagerComponent implements OnInit{
   public pieChartData:number[];
   public pieChartType:string = 'pie';
 
-
   constructor(public dataProvider: DataProvider, public db: AngularFireDatabase) {
     this.db.list('factories').subscribe(factories=>{
       this.factories = factories;
@@ -113,7 +112,6 @@ export class PoorManagerComponent implements OnInit{
     // this.randomInterval = setInterval(() => {
     //   this.randomize();
     // }, 3000)
-
     this.pieChartLabels = ['외관불량', '치수불량','설비고장'];
     this.pieChartData = [this.line.poor_num1, this.line.poor_num2, this.line.poor_num3];
   }

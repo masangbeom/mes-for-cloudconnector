@@ -33,8 +33,12 @@ export class ProductTreeviewConfig extends TreeviewConfig {
 export class ManagerSettingComponent implements OnInit {
   @ViewChild(TreeviewComponent) treeviewComponent: TreeviewComponent;
   @ViewChild('dangerModal') public dangerModal:ModalDirective;
+  @ViewChild('modifyModal') public modifyModal:ModalDirective;
+  @ViewChild('taskModifyModal') public taskModifyModal:ModalDirective;
   items: TreeviewItem[];
   private item: any;
+
+  private task: any;
 
   private isAccept: boolean = false;
 
@@ -99,12 +103,14 @@ export class ManagerSettingComponent implements OnInit {
     this.dangerModal.show();
   }
 
-  countProps(obj) {
-    let count = 0;
-    for (let p in obj) {
-      obj.hasOwnProperty(p) && count++;
-    }
-    return count; 
+  showModifyModal(item){
+    this.item = item;
+    this.modifyModal.show();
+  }
+
+  showModifyTask(task){
+    this.taskModifyModal.show();
+    this.task=task;
   }
 
   deleteTask(task){
@@ -139,9 +145,29 @@ export class ManagerSettingComponent implements OnInit {
     console.log(moment(this.endDate).subtract(1, 'months').format('YYYY-MM-DD'))
   }
 
-  modifyTask(task){
-    let temp = this.tempTasks;
-    
+  modifyTask(name, id){
+    let temp= [];
+    this.db.object('/tasks').subscribe((tasks)=>{
+      if(tasks){
+      temp = tasks
+      }
+    })
+    for(let i=0; i<temp.length; i++){
+      if(temp[i].id == this.task.id){
+        temp[i] = {
+          complete: (Math.floor(Math.random() * 100)+1),
+          end: moment(this.endDate).subtract(1, 'months').format('YYYY-MM-DD'),
+          start: moment(this.startDate).subtract(1, 'months').format('YYYY-MM-DD'),
+          id: id,
+          text: name,
+          width: (Math.floor(Math.random() * 100)+1)+'%'
+        }
+      }
+    }
+    this.db.object('/').update({
+      tasks: temp
+    })
+    this.taskModifyModal.hide();
   }
 
   // 공장/라인/공정 Tree-View 설정
@@ -154,13 +180,12 @@ export class ManagerSettingComponent implements OnInit {
           ]
       });
       temp1.children.splice(0,1);
-        
         for (let i = 0; i < factories.length; i++) {
           
           this.db.list('factories/' + factories[i].$key + '/lines').subscribe(lines => {
             if (lines) {
               let temp2 = new TreeviewItem({
-                text: factories[i].title, value: factories[i].$key, children: [
+                text: factories[i].name, value: factories[i].$key, children: [
                     { text: 'temp', value: 0 },
                 ]
             });
@@ -196,7 +221,6 @@ export class ManagerSettingComponent implements OnInit {
                 })
               }
               temp1.children.push(temp2);
-              
             }
         });
           
@@ -227,6 +251,21 @@ export class ManagerSettingComponent implements OnInit {
 
     this.db.object('factories/'+this.item.value).remove();
     this.dangerModal.hide();
+  }
+
+  modifyProcess(name, code) {
+    let process_code:number = +code;
+    if(process_code > 0){
+    this.db.object('factories/'+this.item.value).update({
+      p_code: process_code,
+      p_name: name
+      });
+    }else{
+      this.db.object('factories/'+this.item.value).update({
+        name: name
+      })
+    }
+    this.modifyModal.hide();
   }
 
 
@@ -264,7 +303,7 @@ export class ManagerSettingComponent implements OnInit {
 
   factoryAdd(factoryName) {
     let _factory = {
-      title: factoryName
+      name: factoryName
     }
     this.db.list('factories/').push(_factory).then((success) => {
       this.db.object('factories/' + success.key).update({

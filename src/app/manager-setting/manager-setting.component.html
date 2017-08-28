@@ -47,6 +47,82 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<div bsModal #modifyModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-info" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 *ngIf="item" class="modal-title">[{{item.text}}] 수정</h4>
+        <button type="button" class="close" (click)="modifyModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+          <div class="form-group">
+            <label *ngIf="item">[{{item.text}}] 이름 변경</label>
+            <input type="text" #processName class="form-control" placeholder="변경하실 이름을 입력하세요.">
+          </div>
+          <div class="form-group">
+            <label *ngIf="item">[{{item.text}}] 코드 변경(공정일 경우에만 입력)</label>
+            <input type="number" #processCode class="form-control" id="company" placeholder="공정 코드를 입력하세요.">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-info" (click)="modifyProcess(processName.value, processCode.value)" >수정</button>
+        <button type="button" class="btn btn-secondary" (click)="modifyModal.hide()">취소</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div bsModal #taskModifyModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-info" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 *ngIf="task" class="modal-title">[{{task.text}}] 수정</h4>
+          <button type="button" class="close" (click)="modifyModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+              <div class="form-group">
+                <label>일정 이름</label>
+                <input type="text" #taskName class="form-control" placeholder="일정 제목을 입력하세요.">
+              </div>
+              <div class="form-group">
+                <label>일정 ID</label>
+                <input type="number" #taskId class="form-control" placeholder="일정 ID는 중복불가.">
+              </div>
+              <div class="form-group">
+                <label>시작일 설정</label>
+                <div style="width: 300px; height: 50px" class="input-group">
+                  <input class="form-control" placeholder="시작 날짜" name="dp1" [(ngModel)]="startDate" ngbDatepicker #d1="ngbDatepicker">
+                  <div class="input-group-addon" (click)="d1.toggle()">
+                    <i class="icon-calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>종료일 설정</label>
+                <div style="width: 300px; height: 50px" class="input-group">
+                  <input class="form-control" placeholder="종료 날짜" name="dp2" [(ngModel)]="endDate" ngbDatepicker #d2="ngbDatepicker">
+                  <div class="input-group-addon" (click)="d2.toggle()">
+                    <i class="icon-calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></i>
+                  </div>
+                </div>
+              </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-info" (click)="modifyTask(taskName.value, taskId.value)" >수정</button>
+          <button type="button" class="btn btn-secondary" (click)="taskModifyModal.hide()">취소</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 <tabset *ngIf="isAccept">
   <tab>
     <ng-template tabHeading>
@@ -62,13 +138,13 @@
   </button>
           <button *ngIf="factory" style="width: 300px" class="btn btn-success btn-lg dropdown-toggle" type="button" id="dropdownMenu2"
             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" dropdownToggle>
-    {{factory.title}}
+    {{factory.name}}
   </button>
 
           <div style="width: 300px;" class="dropdown-menu" aria-labelledby="dropdownMenu2" *dropdownMenu>
             <div *ngIf="factories">
               <button class="dropdown-item" (click)="onChange(factory)" *ngFor="let factory of factories">
-        {{factory.title}}
+        {{factory.name}}
     </button></div>
             <button class="dropdown-item" (click)="addFactory()">공장 추가</button>
           </div>
@@ -107,7 +183,8 @@
           <i *ngIf="item.children" (click)="onCollapseExpand()" aria-hidden="true" class="fa" [class.fa-caret-right]="item.collapsed"
             [class.fa-caret-down]="!item.collapsed"></i> {{item.text}}
           <label class="form-check-label">
-                <i class="fa fa-trash" aria-hidden="true" title="Remove" (click)="showDeleteModal(item)"></i>
+              <i class="fa fa-pencil-square-o" aria-hidden="true" title="Remove" (click)="showModifyModal(item)"></i>
+              <i class="fa fa-trash" aria-hidden="true" title="Remove" (click)="showDeleteModal(item)"></i>
             </label>
         </div>
       </ng-template>
@@ -272,6 +349,7 @@
               <th>진행률</th>
               <th>예상 종료일</th>
               <th>일정 ID</th>
+              <th>일정 수정</th>
               <th>일정 삭제</th>
             </tr>
           </thead>
@@ -306,7 +384,10 @@
                 <strong>{{task.id}}</strong>
               </td>
               <td>
-                <button style="border: none; background: none;" (click)="deleteWorker(worker)"><i class="icon-trash"></i>삭제</button>
+                  <button style="border: none; background: none;" (click)="showModifyTask(task)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> 수정</button>
+               </td>
+              <td>
+                <button style="border: none; background: none;" (click)="deleteTask(task)"><i class="fa fa-trash"></i> 삭제</button>
               </td>
             </tr>
           </tbody>

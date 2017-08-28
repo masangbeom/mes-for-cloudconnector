@@ -1,7 +1,7 @@
 <tabset>
   <tab class="animated fadeIn" style="background: #ffffff" *ngFor="let factory of factories" (select)="onChange(factory)">
     <ng-template tabHeading>
-      <i class="icon-speedometer"></i> {{factory.title}}
+      <i class="icon-speedometer"></i> {{factory.name}}
     </ng-template>
     <div class="card card-accent-primary row" *ngFor="let line of lines" style="padding: 0;">
       <div class="card-header" style="font-size: 20px;">

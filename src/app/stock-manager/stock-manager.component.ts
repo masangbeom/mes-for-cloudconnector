@@ -8,6 +8,7 @@ export class StockManagerComponent {
 
   constructor(public dataProvider: DataProvider) { 
     this.warehouses = this.dataProvider.sampleWareHouse();
+    console.log(this.warehouses)
     this.onChange(this.warehouses[0]);
   }
 

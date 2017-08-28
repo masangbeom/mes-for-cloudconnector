@@ -324,21 +324,21 @@ export class DataProvider {
 
 
     let factory1 = {
-      title: "Factory 1",
+      name: "Factory 1",
       description: "공장 설명",
       lines: lines,
       products: this.sampleProducts(),
       wares: this.sampleFactoryWare(4)
     }
     let factory2 = {
-      title: "Factory 2",
+      name: "Factory 2",
       description: "공장 설명",
       lines: lines2,
       products: this.sampleProducts(),
       wares: this.sampleFactoryWare(3)
     }
     let factory3 = {
-      title: "Factory 3",
+      name: "Factory 3",
       description: "공장 설명",
       lines: lines,
       products: this.sampleProducts(),
@@ -346,7 +346,7 @@ export class DataProvider {
     }
     
     let factory4 = {
-      title: "Factory 4",
+      name: "Factory 4",
       description: "공장 설명",
       lines: lines2,
       products: this.sampleProducts(),
@@ -432,22 +432,22 @@ export class DataProvider {
     products4.push(product2);
 
     let warehouse1 = {
-      title: "warehouse 1",
+      name: "warehouse 1",
       description: "창고 설명",
       products: products1,
     }
     let warehouse2 = {
-      title: "warehouse 2",
+      name: "warehouse 2",
       description: "창고 설명",
       products: products2,
     }
     let warehouse3 = {
-      title: "warehouse 3",
+      name: "warehouse 3",
       description: "창고 설명",
       products: products3,
     }
     let warehouse4 = {
-      title: "warehouse 4",
+      name: "warehouse 4",
       description: "창고 설명",
       products: products4,
     }

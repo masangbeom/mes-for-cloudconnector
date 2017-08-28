@@ -7,12 +7,12 @@
   </button>
       <button *ngIf="factory" style="width: 300px" class="btn btn-success btn-lg dropdown-toggle" type="button" id="dropdownMenu2"
         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" dropdownToggle>
-    {{factory.title}}
+    {{factory.name}}
   </button>
 
       <div style="width: 300px;" class="dropdown-menu" aria-labelledby="dropdownMenu2" *dropdownMenu>
         <button class="dropdown-item" (click)="onChange(factory)" *ngFor="let factory of factories">
-        {{factory.title}}
+        {{factory.name}}
     </button>
       </div>
     </div>

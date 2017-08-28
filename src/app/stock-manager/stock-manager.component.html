@@ -7,11 +7,11 @@
   </button>
       <button *ngIf="warehouse" style="width: 300px" class="btn btn-success btn-lg dropdown-toggle" type="button" id="dropdownMenu2"
         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" dropdownToggle>
-    {{warehouse.title}}
+    {{warehouse.name}}
   </button>
       <div style="width: 300px;" class="dropdown-menu" aria-labelledby="dropdownMenu2" *dropdownMenu>
         <button class="dropdown-item" (click)="onChange(warehouse)" *ngFor="let warehouse of warehouses">
-        {{warehouse.title}}
+        {{warehouse.name}}
     </button>
       </div>
     </div>
@@ -21,11 +21,11 @@
 <div *ngIf="warehouse" class="row" style="margin-top: 15px;">
   <div class="col-5">
     <div class="animated fadeIn">
-      <span class="badge" style="color:#000; font-size: 17px; margin-bottom: 10px;">{{warehouse.title}} 재고 정보</span>
+      <span class="badge" style="color:#000; font-size: 17px; margin-bottom: 10px;">{{warehouse.name}} 재고 정보</span>
       <div class="card">
         <div class="card-block">
           <div *ngFor="let tempWare of warehouses">
-            <div *ngIf="warehouse.title == tempWare.title">
+            <div *ngIf="warehouse.name == tempWare.name">
               <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend"
                 [chartType]="barChartType" [colors]="barChartColors" (chartClick)="chartClicked($event)"></canvas>
             </div>
@@ -47,7 +47,7 @@
         </div>
         <div class="card-block">
           <div *ngFor="let tempWare of warehouses">
-            <div *ngIf="warehouse.title == tempWare.title">
+            <div *ngIf="warehouse.name == tempWare.name">
               <canvas baseChart class="chart"
           [datasets]="lineChartData"
           [labels]="lineChartLabels"
