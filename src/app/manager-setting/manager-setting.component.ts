@@ -230,7 +230,7 @@ export class ManagerSettingComponent implements OnInit {
       }
     });
   }
-
+      
   removeItem() {
     let isRemoved = false;
     
@@ -267,8 +267,6 @@ export class ManagerSettingComponent implements OnInit {
     }
     this.modifyModal.hide();
   }
-
-
 
   login(password) {
     this.db.object('/').subscribe(DB => {
@@ -411,11 +409,60 @@ export class ManagerSettingComponent implements OnInit {
   private company: any;
   private department: any;
   private team: any;
+  private worker: any;
 
   private addCompanyView:boolean;
   private addDepartmentView:boolean;
   private addTeamView:boolean;
   private addWorkerView:boolean;
+  @ViewChild('workerModifyModal') public workerModifyModal:ModalDirective;
+
+  modifyName(name, CASE:number){
+    switch(CASE){
+      case 1:{
+          this.db.object('/companies/'+this.company.companyKey).update({
+            c_name: name
+          }).then(success=>{
+            this.company = success;
+          })
+        break;
+      };
+      case 2:{
+        this.db.object('/companies/'+this.company.companyKey+'/departments/'+this.department.departmentKey).update({
+          d_name: name
+        }).then(success=>{
+          this.department = success;
+        })
+        break;
+      };
+      case 3:{
+        this.db.object('/companies/'+this.company.companyKey+'/departments/'+this.department.departmentKey+'/teams/'+this.team.teamKey).update({
+          t_name: name
+        }).then(success=>{
+          this.team = success;
+        })
+        break;
+      };
+    }
+  }
+
+  modifyWorker(worker){
+    this.worker=worker;
+    this.workerModifyModal.show();
+  }
+  workerModify(w_position, w_class, w_name, w_enter, w_phone, w_email){
+    this.db.object('/companies/'+this.company.companyKey+'/departments/'+this.department.departmentKey+'/teams/'+this.team.teamKey+'/workers/'+this.worker.workerKey).update({
+      w_class: w_class,
+      w_email: w_email,
+      w_enter: w_enter,
+      w_name: w_name,
+      w_phone: w_phone,
+      w_position: w_position
+    }).then(success=>{
+      this.worker = success;
+      this.workerModifyModal.hide()
+    })
+  }
 
   onCompanyChange(company){
     this.company = company;

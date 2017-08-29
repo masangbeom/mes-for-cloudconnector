@@ -81,7 +81,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h4 *ngIf="task" class="modal-title">[{{task.text}}] 수정</h4>
-          <button type="button" class="close" (click)="modifyModal.hide()" aria-label="Close">
+          <button type="button" class="close" (click)="taskModifyModal.hide()" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -122,6 +122,51 @@
       </div>
     </div>
   </div>
+
+  <div bsModal #workerModifyModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-info" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 *ngIf="worker" class="modal-title">[{{worker.w_name}}] 정보 수정</h4>
+            <button type="button" class="close" (click)="workerModifyModal.hide()" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+              <div class="form-group">
+                <label>직위</label>
+                <input type="text" #workerPosition class="form-control" placeholder="변경하실 직위를 입력하세요.">
+              </div>
+              <div class="form-group">
+                  <label>직급</label>
+                  <input type="text" #workerClass class="form-control" placeholder="변경하실 직급 입력하세요.">
+              </div>
+              <div class="form-group">
+                  <label>이름</label>
+                  <input type="text" #workerName class="form-control" placeholder="변경하실 이름을 입력하세요.">
+              </div>
+              <div class="form-group">
+                  <label>입사일</label>
+                  <input type="text" #workerEnter class="form-control" placeholder="변경하실 입사일을 입력하세요.">
+              </div>
+              <div class="form-group">
+                  <label>Phone</label>
+                  <input type="text" #workerPhone class="form-control" placeholder="변경하실 번호를 입력하세요.">
+              </div>
+              <div class="form-group">
+                  <label>E-mail</label>
+                 <input type="text" #workerEmail class="form-control" placeholder="변경하실 이메일을 입력하세요.">
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-info" (click)="workerModify(workerPosition.value, workerClass.value, workerName.value, workerEnter.value, workerPhone.value, workerEmail.value)" >수정</button>
+            <button type="button" class="btn btn-secondary" (click)="workerModifyModal.hide()">취소</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
 <tabset *ngIf="isAccept">
   <tab>
@@ -420,7 +465,16 @@
               <button class="dropdown-item" (click)="addCompany()">본부 추가</button>
             </div>
           </div>
-  
+          <div *ngIf="company" class="form-group" style="margin-top: 10px">
+            <div class="row">
+              <div class="col-8" style="padding-right: 0px;">
+                <input (keyup.enter)="modifyName(companyName.value, 1)" type="text" #companyName class="form-control" placeholder="회사 이름 수정.">
+              </div>
+              <div class="col-4" style="padding: 0px;">
+                <button style="background:none; border:none; font-size:20px" (click)="modifyName(companyName.value, 1)"><i class="fa fa-pencil-square-o" aria-hidden="false"></i></button>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="col-3" *ngIf="company">
           <div class="dropdown" dropdown>
@@ -439,6 +493,16 @@
              <button class="dropdown-item" (click)="addDepartment()">부서 추가</button>
             </div>
           </div>
+          <div *ngIf="department" class="form-group" style="margin-top: 10px">
+              <div class="row">
+                <div class="col-8" style="padding-right: 0px;">
+                  <input (keyup.enter)="modifyName(departmentName.value, 2)" type="text" #departmentName class="form-control" placeholder="부서 이름 수정.">
+                </div>
+                <div class="col-4" style="padding: 0px;">
+                  <button style="background:none; border:none; font-size:20px" (click)="modifyName(departmentName.value, 2)"><i class="fa fa-pencil-square-o" aria-hidden="false"></i></button>
+                </div>
+              </div>
+            </div>
         </div>
         <div class="col-3" *ngIf="department">
           <div class="dropdown" dropdown>
@@ -457,6 +521,16 @@
              <button class="dropdown-item" (click)="addTeam()">팀 추가</button>
             </div>
           </div>
+          <div *ngIf="team" class="form-group" style="margin-top: 10px">
+              <div class="row">
+                <div class="col-8" style="padding-right: 0px;">
+                  <input (keyup.enter)="modifyName(teamName.value, 3);" type="text" #teamName class="form-control" placeholder="팀 이름 수정.">
+                </div>
+                <div class="col-4" style="padding: 0px;">
+                  <button style="background:none; border:none; font-size:20px" (click)="modifyName(teamName.value, 3);"><i class="fa fa-pencil-square-o" aria-hidden="false"></i></button>
+                </div>
+              </div>
+            </div>
         </div>
         <div class="col-3" *ngIf="team">
           <button *ngIf="!process" style="width: 200px" class="btn btn-secondary btn-lg bg-primary" (click)="addWorker()"><i class="icon-user-follow"></i> 팀원 등록</button>
@@ -563,7 +637,7 @@
     </div>
     <div *ngIf="workers" class="row">
       <div class="col animated fadeIn">
-      <span class="badge" style="color: #000; font-size: 17px; margin-top:20px; margin-bottom: 10px;">{{team.t_name}}</span>
+      <span class="badge" style="color: #000; font-size: 17px; margin-top:0; margin-bottom: 10px;">{{team.t_name}}</span>
         <table class="table table-bordered table-striped table-sm" style="background: #ffffff; text-align: center;">
                 <thead>
                   <tr>
@@ -575,6 +649,7 @@
                     <th style="padding-top: 20px;padding-bottom: 20px;color: #ffffff;background-color: #424242; text-align: center;">E-mail</th>
                     <th style="padding-top: 20px;padding-bottom: 20px;color: #ffffff;background-color: #424242; text-align: center;">출근여부 및 변경</th>
                     <th style="padding-top: 20px;padding-bottom: 20px;color: #ffffff;background-color: #424242; text-align: center;">삭제</th>
+                    <th style="padding-top: 20px;padding-bottom: 20px;color: #ffffff;background-color: #424242; text-align: center;">수정</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -592,7 +667,10 @@
                       <button style="border: none; background: none;" (click)="workCheck(worker)"><img src="../assets/img/x.png" style="width:15px; height:15px"></button>
                     </td>
                     <td style="padding-top: 10px; padding-bottom: 10px;">
-                      <button style="border: none; background: none;" (click)="deleteWorker(worker)"><i class="icon-trash"></i>삭제</button>
+                      <button style="border: none; background: none; font-size:20px;" (click)="deleteWorker(worker)"><i class="fa fa-trash"></i></button>
+                    </td>
+                    <td>
+                      <button style="background:none; border:none; font-size:20px" (click)="modifyWorker(worker)"><i class="fa fa-pencil-square-o" style="padding-bottom:0; margin-top:13px"></i></button>
                     </td>
                   </tr>
                 </tbody>
