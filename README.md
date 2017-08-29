@@ -10,8 +10,8 @@
     - DataBase & Server : Firebase
 
 
-    $npm i
-    $ng serve
+>   $npm i
+>   $ng serve
 
 * * *
 
