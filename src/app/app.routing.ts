@@ -51,10 +51,6 @@ export const routes: Routes = [
         path: 'manager-setting',
         loadChildren: './manager-setting/manager-setting.module#ManagerSettingModule'
       },
-      {
-        path: 'google-chart',
-        loadChildren: './google-chart/google-chart.module#GoogleChartModule'
-      },
     ]
   }
 ];

@@ -26,6 +26,7 @@
     "@angular/upgrade": "4.2.5",
     "@ng-bootstrap/ng-bootstrap": "^1.0.0-alpha.29",
     "@types/dhtmlxgantt": "^4.0.33",
+    "angular-nvd3": "^1.0.9",
     "angularfire2": "^4.0.0-rc.2-next",
     "chart.js": "2.6.0",
     "core-js": "2.4.1",
